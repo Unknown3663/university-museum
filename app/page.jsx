@@ -1,5 +1,10 @@
 import Image from "next/image";
-import Navbar from "./components/Navbar";
+import dynamic from "next/dynamic";
+
+// Dynamically import Navbar if it's heavy
+const Navbar = dynamic(() => import("./components/Navbar"), {
+  loading: () => <div className="h-20 bg-black/20" />,
+});
 
 export default function Home() {
   return (
@@ -8,12 +13,12 @@ export default function Home() {
       <div className="fixed inset-0 w-full h-full -z-10">
         <Image
           src="/museum.webp"
-          alt="University Museum"
+          alt="University Museum Building"
           fill
-          className="object-cover"
           priority
-          quality={90}
+          quality={80}
           sizes="100vw"
+          className="object-cover"
         />
         {/* Overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40"></div>

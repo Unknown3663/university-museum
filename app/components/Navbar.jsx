@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useState } from 'react'
+import Link from "next/link";
+import { useState } from "react";
 
 export default function Navbar() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md border-b border-white/10">
@@ -12,7 +12,10 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Left side - Team Name */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-white font-serif text-xl font-semibold hover:text-gray-200">
+            <Link
+              href="/"
+              className="text-white font-serif text-xl font-semibold hover:text-gray-200"
+            >
               Museum Team
             </Link>
           </div>
@@ -67,17 +70,21 @@ export default function Navbar() {
         </div>
 
         {/* Search Bar - Expandable */}
-        {isSearchOpen && (
-          <div className="pb-4 animate-fade-in">
+        <div
+          className={`overflow-hidden transition-all duration-500 ease-in-out ${
+            isSearchOpen ? "max-h-24 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="pb-4">
             <input
               type="text"
               placeholder="Search the museum..."
-              className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white/50"
-              autoFocus
+              className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 outline-none focus:outline-none focus-visible:outline-none transition-all duration-200"
+              autoFocus={isSearchOpen}
             />
           </div>
-        )}
+        </div>
       </div>
     </nav>
-  )
+  );
 }
