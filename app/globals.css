@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
+
+/* Custom animations and utilities */
+@layer utilities {
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+  
+  .backdrop-blur-navbar {
+    backdrop-filter: blur(12px);
+  }
+}
+
+/* Ensure smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
