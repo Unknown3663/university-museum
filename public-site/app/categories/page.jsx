@@ -1,6 +1,28 @@
 import Image from "next/image";
-import Navbar from "../components/layout/Navbar";
-import { CATEGORIES } from "../lib/constants";
+import Navbar from "../components/Navbar";
+
+const CATEGORIES = [
+  {
+    id: 1,
+    title: "Art & Paintings",
+    description: "Explore classical and modern art pieces",
+  },
+  {
+    id: 2,
+    title: "Archaeology",
+    description: "Discover ancient artifacts and civilizations",
+  },
+  {
+    id: 3,
+    title: "Historical Artifacts",
+    description: "Learn about historical objects and their stories",
+  },
+  {
+    id: 4,
+    title: "Natural History",
+    description: "Experience the wonders of natural world",
+  },
+];
 
 export const metadata = {
   title: "Categories - Tourist Guidance Museum",

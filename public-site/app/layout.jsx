@@ -5,24 +5,23 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   display: "swap",
-  preload: true, // Add preload
+  preload: true,
 });
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
-  preload: true, // Add preload
+  preload: true,
 });
 
 export const metadata = {
-  title: "University Museum - Explore History and Heritage",
+  title: "Tourist Guidance Museum - Explore History and Heritage",
   description:
-    "Welcome to our University Museum. Explore history and heritage through time.",
-  keywords: ["museum", "university", "history", "heritage", "exhibition"], // Add keywords
+    "Welcome to Tourist Guidance Museum. Explore history and heritage through time.",
+  keywords: ["museum", "university", "history", "heritage", "exhibition"],
   openGraph: {
-    // Add social media preview
-    title: "University Museum",
+    title: "Tourist Guidance Museum",
     description: "Explore history and heritage through time",
     type: "website",
   },

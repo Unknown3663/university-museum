@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -8,15 +9,25 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        suppressHydrationWarning
+      >
         <div className="flex justify-between items-center h-16">
-          {/* Left side - Team Name */}
+          {/* Left side - Logo and Team Name */}
           <div className="flex-shrink-0">
             <Link
               href="/"
-              className="text-white font-serif text-xl font-semibold hover:text-gray-200"
+              className="flex items-center gap-3 text-white font-serif text-xl font-semibold hover:text-gray-200 transition-colors"
             >
-              Museum Team
+              <Image
+                src="/TGM.png"
+                alt="TGM Logo"
+                width={40}
+                height={40}
+                className="object-contain"
+              />
+              <span>Tourist Guidance Museum</span>
             </Link>
           </div>
 
@@ -81,6 +92,7 @@ export default function Navbar() {
               placeholder="Search the museum..."
               className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 outline-none focus:outline-none focus-visible:outline-none transition-all duration-200"
               autoFocus={isSearchOpen}
+              suppressHydrationWarning
             />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import Navbar from "../components/layout/Navbar";
+import Navbar from "../components/Navbar";
 
 export const metadata = {
   title: "Our Team - Tourist Guidance Museum",
