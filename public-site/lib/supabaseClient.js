@@ -5,13 +5,18 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Fetch only published exhibits for public site
-export async function getPublishedExhibits() {
-  const { data, error } = await supabase
+// Fetch exhibits with optional published filter
+export async function getExhibits(publishedOnly = false) {
+  let query = supabase
     .from("exhibits")
     .select("*")
-    .eq("published", true)
     .order("created_at", { ascending: false });
+
+  if (publishedOnly) {
+    query = query.eq("published", true);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("Error fetching exhibits:", error);
@@ -19,4 +24,9 @@ export async function getPublishedExhibits() {
   }
 
   return data;
+}
+
+// Legacy function - kept for backward compatibility
+export async function getPublishedExhibits() {
+  return getExhibits(true);
 }

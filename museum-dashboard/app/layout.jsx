@@ -10,6 +10,11 @@ const inter = Inter({
 export const metadata = {
   title: "Museum Dashboard - Admin Panel",
   description: "Manage museum exhibits and content",
+  icons: {
+    icon: "/tgm-dashboard.jpg",
+    shortcut: "/tgm-dashboard.jpg",
+    apple: "/tgm-dashboard.jpg",
+  },
 };
 
 export default function RootLayout({ children }) {

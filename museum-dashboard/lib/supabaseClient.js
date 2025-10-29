@@ -1,32 +1,64 @@
 import { createClient } from "@supabase/supabase-js";
 
+// ============ ENVIRONMENT VALIDATION ============
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Missing Supabase environment variables");
+}
+
+// ============ SUPABASE CLIENT ============
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// ============ ERROR HANDLER ============
+/**
+ * Centralized error handler
+ * @param {Error} error - The error object
+ * @param {string} context - Context description for the error
+ */
+function handleError(error, context = "") {
+  const message = context
+    ? `❌ [${context}]: ${error.message}`
+    : `❌ ${error.message}`;
+  console.error(message);
+  throw error;
+}
 
 // ============ AUTH FUNCTIONS ============
 export async function signIn(email, password) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-  if (error) throw error;
-  return data;
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    handleError(error, "Signing in");
+  }
 }
 
 export async function signOut() {
-  const { error } = await supabase.auth.signOut();
-  if (error) throw error;
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+  } catch (error) {
+    handleError(error, "Signing out");
+  }
 }
 
 export async function getUser() {
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-  if (error) throw error;
-  return user;
+  try {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+    if (error) throw error;
+    return user;
+  } catch (error) {
+    handleError(error, "Getting user");
+  }
 }
 
 export async function isAuthenticated() {
@@ -40,96 +72,118 @@ export async function isAuthenticated() {
 
 // ============ EXHIBIT FUNCTIONS ============
 export async function getExhibits(publishedOnly = false) {
-  let query = supabase
-    .from("exhibits")
-    .select("*")
-    .order("created_at", { ascending: false });
+  try {
+    let query = supabase
+      .from("exhibits")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-  if (publishedOnly) {
-    query = query.eq("published", true);
+    if (publishedOnly) {
+      query = query.eq("published", true);
+    }
+
+    const { data, error } = await query;
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    handleError(error, "Fetching exhibits");
   }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error("Error fetching exhibits:", error);
-    throw error;
-  }
-
-  return data;
 }
 
 export async function createExhibit(exhibit) {
-  const { data, error } = await supabase
-    .from("exhibits")
-    .insert([exhibit])
-    .select()
-    .single();
+  try {
+    const { data, error } = await supabase
+      .from("exhibits")
+      .insert([exhibit])
+      .select()
+      .single();
 
-  if (error) {
-    console.error("Error creating exhibit:", error);
-    throw error;
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    handleError(error, "Creating exhibit");
   }
-
-  return data;
 }
 
 export async function updateExhibit(id, updates) {
-  const { data, error } = await supabase
-    .from("exhibits")
-    .update(updates)
-    .eq("id", id)
-    .select()
-    .single();
+  try {
+    const { data, error } = await supabase
+      .from("exhibits")
+      .update(updates)
+      .eq("id", id)
+      .select()
+      .single();
 
-  if (error) {
-    console.error("Error updating exhibit:", error);
-    throw error;
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    handleError(error, "Updating exhibit");
   }
-
-  return data;
 }
 
 export async function deleteExhibit(id) {
-  // First, get the exhibit to delete its image
-  const { data: exhibit } = await supabase
-    .from("exhibits")
-    .select("image_url")
-    .eq("id", id)
-    .single();
+  try {
+    // First, get the exhibit to delete its image
+    const { data: exhibit } = await supabase
+      .from("exhibits")
+      .select("image_url")
+      .eq("id", id)
+      .single();
 
-  if (exhibit?.image_url) {
-    await deleteImage(exhibit.image_url);
+    if (exhibit?.image_url) {
+      await deleteImage(exhibit.image_url);
+    }
+
+    const { error } = await supabase.from("exhibits").delete().eq("id", id);
+
+    if (error) throw error;
+  } catch (error) {
+    handleError(error, "Deleting exhibit");
   }
+}
 
-  const { error } = await supabase.from("exhibits").delete().eq("id", id);
-
-  if (error) {
-    console.error("Error deleting exhibit:", error);
-    throw error;
-  }
+/**
+ * Toggle publish status of an exhibit
+ * @param {string} id - Exhibit ID
+ * @param {boolean} publishStatus - New publish status
+ */
+export async function togglePublish(id, publishStatus) {
+  return await updateExhibit(id, { published: publishStatus });
 }
 
 // ============ IMAGE FUNCTIONS ============
 export async function uploadImage(file) {
-  const fileExt = file.name.split(".").pop();
-  const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
-  const filePath = `${fileName}`;
+  try {
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+    const filePath = `${fileName}`;
 
-  const { error: uploadError } = await supabase.storage
-    .from("exhibit-images")
-    .upload(filePath, file);
+    const { error: uploadError } = await supabase.storage
+      .from("exhibit-images")
+      .upload(filePath, file);
 
-  if (uploadError) {
-    console.error("Error uploading image:", uploadError);
-    throw uploadError;
+    if (uploadError) {
+      console.error("Storage upload error:", uploadError);
+      if (
+        uploadError.message?.includes("row-level security") ||
+        uploadError.message?.includes("policy")
+      ) {
+        throw new Error(
+          "Storage permission error. Please configure Supabase Storage policies to allow authenticated users to upload images. See console for details."
+        );
+      }
+      throw uploadError;
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("exhibit-images").getPublicUrl(filePath);
+
+    return publicUrl;
+  } catch (error) {
+    handleError(error, "Uploading image");
   }
-
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from("exhibit-images").getPublicUrl(filePath);
-
-  return publicUrl;
 }
 
 export async function deleteImage(imageUrl) {
@@ -141,10 +195,8 @@ export async function deleteImage(imageUrl) {
       .from("exhibit-images")
       .remove([path]);
 
-    if (error) {
-      console.error("Error deleting image:", error);
-    }
-  } catch (err) {
-    console.error("Error parsing image URL:", err);
+    if (error) throw error;
+  } catch (error) {
+    handleError(error, "Deleting image");
   }
 }

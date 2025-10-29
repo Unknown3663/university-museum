@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "../../lib/auth";
+import { signIn } from "../../lib/supabaseClient";
 
 export default function LoginPage() {
   const router = useRouter();
