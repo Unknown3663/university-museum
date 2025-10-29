@@ -7,11 +7,14 @@ node_modules/
 /coverage
 
 # Next.js
-/.next/
-/out/
+.next/
+out/
+*.next
 
 # Production
 /build
+build/
+dist/
 
 # Misc
 .DS_Store
@@ -23,7 +26,12 @@ yarn-debug.log*
 yarn-error.log*
 
 # Local env files
+.env
 .env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Vercel
 .vercel
@@ -31,3 +39,14 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
