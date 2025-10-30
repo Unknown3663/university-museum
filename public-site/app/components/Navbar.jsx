@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar";
 const SITE_CONFIG = {
   name: "Tourist Guidance Museum",
   description: "Explore history and heritage through time",
-  logo: "/TGM.png",
+  logo: "/tgm-public.png",
 };
 
 const NAV_LINKS = [
