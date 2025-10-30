@@ -35,7 +35,7 @@ export default function Categories() {
       {/* Background Image */}
       <div className="fixed inset-0 w-full h-full -z-10">
         <Image
-          src="/hieroglyphics-background.jpg"
+          src="/backgrounds/hieroglyphics-background.jpg"
           alt="Ancient Hieroglyphics Background"
           fill
           priority

@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import BackgroundImage from "./components/BackgroundImage";
 import Hero from "./components/HeroSection";
 import ScrollIndicator from "./components/ScrollIndicator";
+import SideLogos from "./components/SideLogos";
 
 // Dynamically import Navbar
 const Navbar = dynamic(() => import("./components/Navbar"), {
@@ -12,10 +13,11 @@ export default function Home() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden">
       <BackgroundImage
-        src="/museum.webp"
+        src="/backgrounds/college-background.jpg"
         alt="Tourist Guidance Museum Building"
       />
       <Navbar />
+      <SideLogos />
       <Hero />
       <ScrollIndicator />
     </main>

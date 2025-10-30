@@ -9,7 +9,7 @@ import SearchBar from "./SearchBar";
 const SITE_CONFIG = {
   name: "Tourist Guidance Museum",
   description: "Explore history and heritage through time",
-  logo: "/tgm-public.png",
+  logo: "/logos/tgm-public.png",
 };
 
 const NAV_LINKS = [

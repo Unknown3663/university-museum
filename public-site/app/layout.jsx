@@ -22,9 +22,9 @@ export const metadata = {
     "Welcome to Tourist Guidance Museum. Explore history and heritage through time.",
   keywords: ["museum", "university", "history", "heritage", "exhibition"],
   icons: {
-    icon: "/tgm-public.png",
-    shortcut: "/tgm-public.png",
-    apple: "/tgm-public.png",
+    icon: "/logos/tgm-public.png",
+    shortcut: "/logos/tgm-public.png",
+    apple: "/logos/tgm-public.png",
   },
   openGraph: {
     title: "Tourist Guidance Museum",
