@@ -102,13 +102,24 @@ export default function Home() {
             <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-10 border border-gray-200">
               <div className="prose prose-lg max-w-none">
                 <p className="text-gray-700 leading-relaxed mb-6">
+                  One of <strong>Egypt's Vision 2030</strong> goals is{" "}
+                  <strong className="text-blue-600">
+                    "enriching cultural and sporting life,"
+                  </strong>{" "}
+                  which includes preserving Egypt's tangible and intangible
+                  heritage.
+                </p>
+
+                <p className="text-gray-700 leading-relaxed mb-6">
                   The faculty's scientific research plan is to encourage
                   researches in technological applications to preserve Egyptian
                   culture. Numerous digital and technological programs have been
                   implemented in museums and archaeological sites, and ancient
                   historical archives have been documented through. In addition
                   to, the daily launch of countless international and local
-                  platforms to serve this purpose.
+                  platforms to serve this purpose. So, launching our initiative
+                  is necessary to contribute in supporting our heritage and
+                  strengthen our identity.
                 </p>
 
                 <p className="text-gray-900 font-semibold text-lg mb-4">
