@@ -1,4 +1,54 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { supabase } from "../../lib/supabaseClient";
+
 export default function DashboardPage() {
+  const [stats, setStats] = useState({
+    total: 0,
+    published: 0,
+    drafts: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchStats();
+
+    // Listen for custom event when a new exhibit is created
+    const handleExhibitChange = () => {
+      fetchStats();
+    };
+
+    window.addEventListener("exhibitChanged", handleExhibitChange);
+
+    return () => {
+      window.removeEventListener("exhibitChanged", handleExhibitChange);
+    };
+  }, []);
+
+  const fetchStats = async () => {
+    try {
+      setLoading(true);
+
+      // Fetch all exhibits
+      const { data: allExhibits, error: allError } = await supabase
+        .from("exhibits")
+        .select("id, published");
+
+      if (allError) throw allError;
+
+      const total = allExhibits?.length || 0;
+      const published = allExhibits?.filter((ex) => ex.published).length || 0;
+      const drafts = total - published;
+
+      setStats({ total, published, drafts });
+    } catch (error) {
+      console.error("Error fetching stats:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-4">
@@ -15,7 +65,9 @@ export default function DashboardPage() {
               <p className="text-sm font-medium text-gray-600">
                 Total Exhibits
               </p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">—</p>
+              <p className="text-3xl font-bold text-gray-900 mt-2">
+                {loading ? "—" : stats.total}
+              </p>
             </div>
             <div className="text-4xl">🖼️</div>
           </div>
@@ -25,7 +77,9 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Published</p>
-              <p className="text-3xl font-bold text-green-600 mt-2">—</p>
+              <p className="text-3xl font-bold text-green-600 mt-2">
+                {loading ? "—" : stats.published}
+              </p>
             </div>
             <div className="text-4xl">✅</div>
           </div>
@@ -35,7 +89,9 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Drafts</p>
-              <p className="text-3xl font-bold text-gray-600 mt-2">—</p>
+              <p className="text-3xl font-bold text-gray-600 mt-2">
+                {loading ? "—" : stats.drafts}
+              </p>
             </div>
             <div className="text-4xl">📝</div>
           </div>

@@ -170,6 +170,9 @@ export default function UploadForm({ onSuccess }) {
       setShowToast(true);
       resetForm();
 
+      // Dispatch custom event to update dashboard stats
+      window.dispatchEvent(new Event("exhibitChanged"));
+
       // Hide toast after 3 seconds
       setTimeout(() => {
         setShowToast(false);
@@ -217,11 +220,11 @@ export default function UploadForm({ onSuccess }) {
             <label className="block text-sm font-medium text-gray-700">
               Image Preview
             </label>
-            <div className="relative w-full max-w-md mx-auto aspect-video rounded-lg overflow-hidden border-2 border-gray-200 shadow-sm">
+            <div className="relative w-full max-w-md mx-auto rounded-lg overflow-hidden border-2 border-gray-200 shadow-sm">
               <img
                 src={imagePreview}
                 alt="Preview"
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-contain max-h-96"
               />
               <button
                 type="button"

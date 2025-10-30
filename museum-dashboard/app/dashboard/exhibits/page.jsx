@@ -32,6 +32,8 @@ export default function ExhibitsPage() {
     try {
       await deleteExhibit(id);
       await loadExhibits();
+      // Notify dashboard to update stats
+      window.dispatchEvent(new Event("exhibitChanged"));
     } catch (err) {
       alert("Failed to delete exhibit");
       console.error(err);
@@ -44,6 +46,8 @@ export default function ExhibitsPage() {
     try {
       await updateExhibit(exhibit.id, { published: !exhibit.published });
       await loadExhibits();
+      // Notify dashboard to update stats
+      window.dispatchEvent(new Event("exhibitChanged"));
     } catch (err) {
       alert("Failed to update exhibit");
       console.error(err);
