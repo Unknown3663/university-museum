@@ -51,49 +51,53 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-900 mb-4">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-4">
         Dashboard Overview
       </h1>
-      <p className="text-gray-600 mb-8">
+      <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
         Welcome to the Museum Dashboard. Use the sidebar to navigate.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">
+              <p className="text-xs sm:text-sm font-medium text-gray-600">
                 Total Exhibits
               </p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">
                 {loading ? "—" : stats.total}
               </p>
             </div>
-            <div className="text-4xl">🖼️</div>
+            <div className="text-3xl sm:text-4xl">🖼️</div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Published</p>
-              <p className="text-3xl font-bold text-green-600 mt-2">
+              <p className="text-xs sm:text-sm font-medium text-gray-600">
+                Published
+              </p>
+              <p className="text-2xl sm:text-3xl font-bold text-green-600 mt-1 sm:mt-2">
                 {loading ? "—" : stats.published}
               </p>
             </div>
-            <div className="text-4xl">✅</div>
+            <div className="text-3xl sm:text-4xl">✅</div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Drafts</p>
-              <p className="text-3xl font-bold text-gray-600 mt-2">
+              <p className="text-xs sm:text-sm font-medium text-gray-600">
+                Drafts
+              </p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-600 mt-1 sm:mt-2">
                 {loading ? "—" : stats.drafts}
               </p>
             </div>
-            <div className="text-4xl">📝</div>
+            <div className="text-3xl sm:text-4xl">📝</div>
           </div>
         </div>
       </div>

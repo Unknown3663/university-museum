@@ -1,4 +1,5 @@
 // Enhanced UploadForm component with image preview, category dropdown, progress bar, and success toast
+// MOBILE RESPONSIVE VERSION
 "use client";
 
 import { useState } from "react";
@@ -195,7 +196,7 @@ export default function UploadForm({ onSuccess }) {
     <>
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-lg shadow-md p-6 space-y-6 relative"
+        className="bg-white rounded-lg shadow-md p-4 sm:p-6 space-y-4 sm:space-y-6 relative"
       >
         {/* Progress Bar */}
         {uploading && uploadProgress > 0 && (
@@ -209,7 +210,7 @@ export default function UploadForm({ onSuccess }) {
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 sm:px-4 sm:py-3 rounded-lg text-sm">
             {error}
           </div>
         )}
@@ -224,7 +225,7 @@ export default function UploadForm({ onSuccess }) {
               <img
                 src={imagePreview}
                 alt="Preview"
-                className="w-full h-auto object-contain max-h-96"
+                className="w-full h-auto object-contain max-h-64 sm:max-h-96"
               />
               <button
                 type="button"
@@ -272,13 +273,13 @@ export default function UploadForm({ onSuccess }) {
             onChange={handleChange}
             required
             aria-required="true"
-            className={`w-full px-4 py-2 border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${
+            className={`w-full px-3 py-2 sm:px-4 text-sm sm:text-base border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${
               fieldErrors.title ? "border-red-500 bg-red-50" : "border-gray-300"
             }`}
             placeholder="Enter exhibit title"
           />
           {fieldErrors.title && (
-            <p className="text-red-600 text-sm mt-1">{fieldErrors.title}</p>
+            <p className="text-red-600 text-xs sm:text-sm mt-1">{fieldErrors.title}</p>
           )}
         </div>
 
@@ -298,7 +299,7 @@ export default function UploadForm({ onSuccess }) {
             required
             aria-required="true"
             rows={4}
-            className={`w-full px-4 py-2 border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${
+            className={`w-full px-3 py-2 sm:px-4 text-sm sm:text-base border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${
               fieldErrors.description
                 ? "border-red-500 bg-red-50"
                 : "border-gray-300"
@@ -306,7 +307,7 @@ export default function UploadForm({ onSuccess }) {
             placeholder="Enter exhibit description"
           />
           {fieldErrors.description && (
-            <p className="text-red-600 text-sm mt-1">
+            <p className="text-red-600 text-xs sm:text-sm mt-1">
               {fieldErrors.description}
             </p>
           )}
@@ -325,7 +326,7 @@ export default function UploadForm({ onSuccess }) {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 bg-white"
+            className="w-full px-3 py-2 sm:px-4 text-sm sm:text-base border border-gray-300 rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 bg-white"
           >
             <option value="">Select a category</option>
             {CATEGORIES.map((cat) => (
@@ -351,7 +352,7 @@ export default function UploadForm({ onSuccess }) {
               name="customCategory"
               value={formData.customCategory}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${
+              className={`w-full px-3 py-2 sm:px-4 text-sm sm:text-base border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${
                 fieldErrors.customCategory
                   ? "border-red-500 bg-red-50"
                   : "border-gray-300"
@@ -359,7 +360,7 @@ export default function UploadForm({ onSuccess }) {
               placeholder="Enter custom category"
             />
             {fieldErrors.customCategory && (
-              <p className="text-red-600 text-sm mt-1">
+              <p className="text-red-600 text-xs sm:text-sm mt-1">
                 {fieldErrors.customCategory}
               </p>
             )}
@@ -381,17 +382,17 @@ export default function UploadForm({ onSuccess }) {
             accept="image/*"
             onChange={handleImageChange}
             aria-label="Upload exhibit image"
-            className={`w-full px-4 py-2 border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${
+            className={`w-full px-3 py-2 sm:px-4 text-xs sm:text-sm border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${
               fieldErrors.image ? "border-red-500 bg-red-50" : "border-gray-300"
             }`}
           />
           {fieldErrors.image && (
-            <p className="text-red-600 text-sm mt-1">{fieldErrors.image}</p>
+            <p className="text-red-600 text-xs sm:text-sm mt-1">{fieldErrors.image}</p>
           )}
           {image && !fieldErrors.image && (
-            <p className="text-sm text-gray-600 mt-2 flex items-center gap-2">
+            <p className="text-xs sm:text-sm text-gray-600 mt-2 flex items-center gap-2">
               <svg
-                className="w-4 h-4 text-green-600"
+                className="w-4 h-4 text-green-600 flex-shrink-0"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -401,7 +402,7 @@ export default function UploadForm({ onSuccess }) {
                   clipRule="evenodd"
                 />
               </svg>
-              Selected: {image.name} ({(image.size / 1024).toFixed(0)}KB)
+              <span className="truncate">Selected: {image.name} ({(image.size / 1024).toFixed(0)}KB)</span>
             </p>
           )}
         </div>
@@ -419,19 +420,19 @@ export default function UploadForm({ onSuccess }) {
           />
           <label
             htmlFor="published"
-            className="ml-2 text-sm font-medium text-gray-700"
+            className="ml-2 text-xs sm:text-sm font-medium text-gray-700"
           >
             Publish immediately
           </label>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <button
             type="submit"
             disabled={uploading}
             aria-busy={uploading}
-            className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-md flex items-center justify-center gap-2"
+            className="flex-1 bg-blue-600 text-white px-4 py-2.5 sm:px-6 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-md flex items-center justify-center gap-2"
           >
             {uploading && (
               <svg
@@ -462,7 +463,7 @@ export default function UploadForm({ onSuccess }) {
             type="button"
             onClick={resetForm}
             disabled={uploading}
-            className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-md"
+            className="px-4 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-md"
           >
             Reset
           </button>
@@ -471,15 +472,15 @@ export default function UploadForm({ onSuccess }) {
 
       {/* Success Toast */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 bg-green-600 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3 animate-fade-in z-50">
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 left-4 sm:left-auto bg-green-600 text-white px-4 py-3 sm:px-6 sm:py-4 rounded-lg shadow-2xl flex items-center gap-3 animate-fade-in z-50">
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
               clipRule="evenodd"
             />
           </svg>
-          <span className="font-medium">✅ Exhibit uploaded successfully!</span>
+          <span className="font-medium text-sm sm:text-base">✅ Exhibit uploaded successfully!</span>
         </div>
       )}
     </>

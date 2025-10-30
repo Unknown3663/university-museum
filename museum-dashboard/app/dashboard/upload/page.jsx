@@ -17,20 +17,22 @@ export default function UploadPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Upload New Exhibit</h1>
-        <p className="text-gray-600 mt-1">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          Upload New Exhibit
+        </h1>
+        <p className="text-sm sm:text-base text-gray-600 mt-1">
           Add a new exhibit to the museum collection
         </p>
       </div>
 
       {success && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
+        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 text-sm sm:text-base">
           Exhibit created successfully! Redirecting...
         </div>
       )}
 
-      <div className="max-w-3xl">
+      <div className="max-w-full lg:max-w-3xl">
         <UploadForm onSuccess={handleSuccess} />
       </div>
     </div>
