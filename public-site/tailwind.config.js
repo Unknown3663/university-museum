@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "475px", // Extra small devices
+      },
       fontFamily: {
         serif: ["var(--font-playfair)"],
         sans: ["var(--font-inter)"],

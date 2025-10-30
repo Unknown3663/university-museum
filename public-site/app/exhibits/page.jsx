@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import Navbar from "../components/Navbar";
 import ExhibitCard from "../components/ExhibitCard";
 
@@ -119,24 +120,44 @@ export default function Exhibits() {
 
   return (
     <main
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100"
+      className="relative min-h-screen w-full overflow-hidden"
       suppressHydrationWarning
     >
+      {/* Background Image */}
+      <div className="fixed inset-0 w-full h-full -z-10">
+        <Image
+          src="/hieroglyphics-background.jpg"
+          alt="Ancient Hieroglyphics Background"
+          fill
+          priority
+          quality={80}
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/60"></div>
+      </div>
+
       <Navbar />
 
-      <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+      <div className="pt-20 sm:pt-24 pb-12 sm:pb-16 px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
+            <h1
+              className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-3 sm:mb-4 px-4"
+              style={{ textShadow: "2px 2px 8px rgba(0,0,0,0.8)" }}
+            >
               Our Exhibits
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p
+              className="text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl mx-auto px-4"
+              style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
+            >
               Explore our curated collection of exhibits from around the world
             </p>
           </motion.div>
@@ -146,19 +167,19 @@ export default function Exhibits() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-6"
+            className="mb-4 sm:mb-6"
           >
             <div className="max-w-2xl mx-auto relative">
               <input
                 type="text"
-                placeholder="Search exhibits by title or description..."
+                placeholder="Search exhibits..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 py-3 pl-12 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+                className="w-full px-4 sm:px-5 py-2.5 sm:py-3 pl-10 sm:pl-12 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm text-sm sm:text-base"
                 aria-label="Search exhibits"
               />
               <svg
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
+                className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -179,36 +200,42 @@ export default function Exhibits() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-8 space-y-4"
+              className="mb-6 sm:mb-8 space-y-4"
             >
               {/* Category Filter */}
               {categories.length > 1 && (
-                <div className="flex items-center justify-center gap-2 flex-wrap">
-                  <span className="text-sm font-medium text-gray-700 mr-2">
+                <div className="flex items-center justify-center gap-2 flex-wrap px-2">
+                  <span
+                    className="text-xs sm:text-sm font-medium text-white mr-1 sm:mr-2 w-full sm:w-auto text-center sm:text-left mb-2 sm:mb-0"
+                    style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
+                  >
                     Filter:
                   </span>
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => setSelectedCategory(category)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                        selectedCategory === category
-                          ? "bg-blue-600 text-white shadow-md scale-105"
-                          : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm hover:shadow-md"
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {categories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => setSelectedCategory(category)}
+                        className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 ${
+                          selectedCategory === category
+                            ? "bg-blue-600 text-white shadow-md scale-105"
+                            : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm hover:shadow-md"
+                        }`}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
               {/* Sort + Results Count */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 px-2">
+                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
                   <label
                     htmlFor="sort"
-                    className="text-sm font-medium text-gray-700"
+                    className="text-xs sm:text-sm font-medium text-white"
+                    style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
                   >
                     Sort by:
                   </label>
@@ -216,7 +243,7 @@ export default function Exhibits() {
                     id="sort"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm bg-white text-sm"
+                    className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm bg-white text-xs sm:text-sm"
                   >
                     <option value="newest">Newest</option>
                     <option value="oldest">Oldest</option>
@@ -225,14 +252,20 @@ export default function Exhibits() {
                   </select>
                 </div>
 
-                <p className="text-sm text-gray-600">
+                <p
+                  className="text-xs sm:text-sm text-white text-center"
+                  style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
+                >
                   Showing {processedExhibits.length}{" "}
                   {processedExhibits.length === 1 ? "exhibit" : "exhibits"}
                   {selectedCategory !== "All" && (
-                    <span className="font-medium"> in {selectedCategory}</span>
+                    <span className="font-medium hidden sm:inline">
+                      {" "}
+                      in {selectedCategory}
+                    </span>
                   )}
                   {searchQuery && (
-                    <span className="font-medium">
+                    <span className="font-medium hidden sm:inline">
                       {" "}
                       matching "{searchQuery}"
                     </span>
@@ -244,7 +277,7 @@ export default function Exhibits() {
 
           {/* Loading State - Skeleton */}
           {loading && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {[...Array(6)].map((_, i) => (
                 <SkeletonCard key={i} />
               ))}
@@ -256,10 +289,10 @@ export default function Exhibits() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center bg-red-50 border border-red-200 rounded-lg p-12"
+              className="text-center bg-red-50 border border-red-200 rounded-lg p-6 sm:p-12"
             >
               <svg
-                className="mx-auto h-16 w-16 text-red-400 mb-4"
+                className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-red-400 mb-3 sm:mb-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -271,13 +304,15 @@ export default function Exhibits() {
                   d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                 />
               </svg>
-              <p className="text-xl text-red-700 mb-2">
+              <p className="text-lg sm:text-xl text-red-700 mb-2">
                 Failed to load exhibits
               </p>
-              <p className="text-sm text-red-600 mb-4">{error}</p>
+              <p className="text-xs sm:text-sm text-red-600 mb-3 sm:mb-4 px-4">
+                {error}
+              </p>
               <button
                 onClick={fetchExhibits}
-                className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
+                className="px-4 sm:px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium text-sm sm:text-base"
               >
                 Retry
               </button>
@@ -289,10 +324,10 @@ export default function Exhibits() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center bg-white rounded-lg shadow-lg p-12"
+              className="text-center bg-white rounded-lg shadow-lg p-6 sm:p-12"
             >
               <svg
-                className="mx-auto h-16 w-16 text-gray-400 mb-4"
+                className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mb-3 sm:mb-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -304,7 +339,7 @@ export default function Exhibits() {
                   d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              <p className="text-xl text-gray-600 mb-2">
+              <p className="text-base sm:text-xl text-gray-600 mb-2 px-4">
                 {searchQuery
                   ? `No exhibits found matching "${searchQuery}"`
                   : selectedCategory === "All"
@@ -317,7 +352,7 @@ export default function Exhibits() {
                     setSelectedCategory("All");
                     setSearchQuery("");
                   }}
-                  className="mt-4 text-blue-600 hover:text-blue-700 font-medium"
+                  className="mt-3 sm:mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base"
                 >
                   Clear filters
                 </button>
@@ -330,7 +365,7 @@ export default function Exhibits() {
             <>
               <motion.div
                 layout
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
               >
                 <AnimatePresence mode="popLayout">
                   {paginatedExhibits.map((exhibit, index) => {
@@ -367,19 +402,19 @@ export default function Exhibits() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="mt-12 flex justify-center items-center gap-4"
+                  className="mt-8 sm:mt-12 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4"
                 >
                   <button
                     onClick={() =>
                       setCurrentPage((prev) => Math.max(1, prev - 1))
                     }
                     disabled={currentPage === 1}
-                    className="px-6 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md"
+                    className="w-full sm:w-auto px-4 sm:px-6 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md text-sm sm:text-base"
                   >
                     Previous
                   </button>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-center">
                     {[...Array(totalPages)].map((_, i) => {
                       const pageNum = i + 1;
                       // Show first, last, current, and adjacent pages
@@ -392,7 +427,7 @@ export default function Exhibits() {
                           <button
                             key={pageNum}
                             onClick={() => setCurrentPage(pageNum)}
-                            className={`w-10 h-10 rounded-lg font-medium transition-all ${
+                            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg font-medium transition-all text-sm sm:text-base ${
                               currentPage === pageNum
                                 ? "bg-blue-600 text-white shadow-md"
                                 : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
@@ -406,7 +441,10 @@ export default function Exhibits() {
                         pageNum === currentPage + 2
                       ) {
                         return (
-                          <span key={pageNum} className="text-gray-400">
+                          <span
+                            key={pageNum}
+                            className="text-gray-400 text-sm sm:text-base"
+                          >
                             ...
                           </span>
                         );
@@ -420,7 +458,7 @@ export default function Exhibits() {
                       setCurrentPage((prev) => Math.min(totalPages, prev + 1))
                     }
                     disabled={currentPage === totalPages}
-                    className="px-6 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md"
+                    className="w-full sm:w-auto px-4 sm:px-6 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md text-sm sm:text-base"
                   >
                     Next
                   </button>
