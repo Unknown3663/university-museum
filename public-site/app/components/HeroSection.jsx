@@ -29,7 +29,7 @@ export default function HeroSection() {
 
           {/* CTA Button */}
           <div className="pt-2 sm:pt-4">
-            <Button href="#explore">About Us</Button>
+            <Button href="#about">About Us</Button>
           </div>
         </div>
       </div>
