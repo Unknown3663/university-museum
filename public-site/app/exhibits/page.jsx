@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import ExhibitCard from "../components/ExhibitCard";
+import SignatureLogo from "../components/SignatureLogo";
+import Footer from "../components/Footer";
 
 const EXHIBITS_PER_PAGE = 6;
 
@@ -21,7 +23,8 @@ export default function Exhibits() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch("/api/exhibits");
+      // Fetch all exhibits by setting a high limit
+      const response = await fetch("/api/exhibits?limit=100");
       const result = await response.json();
 
       if (!response.ok) {
@@ -107,6 +110,9 @@ export default function Exhibits() {
       className="relative min-h-screen w-full overflow-hidden"
       suppressHydrationWarning
     >
+      {/* Signature Logo - Always visible */}
+      <SignatureLogo />
+
       {/* Background Image */}
       <div className="fixed inset-0 w-full h-full -z-10">
         <Image
@@ -416,6 +422,9 @@ export default function Exhibits() {
           )}
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

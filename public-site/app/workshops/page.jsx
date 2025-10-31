@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Navbar from "../components/Navbar";
+import SignatureLogo from "../components/SignatureLogo";
+import Footer from "../components/Footer";
 import { getWorkshops } from "../../lib/supabaseClient";
 
 export const metadata = {
@@ -21,7 +23,10 @@ export default async function Workshops() {
   };
 
   return (
-    <main className="relative min-h-screen w-full overflow-hidden">
+    <main className="relative min-h-screen w-full flex flex-col">
+      {/* Signature Logo - Always visible */}
+      <SignatureLogo />
+
       {/* Background Image */}
       <div className="fixed inset-0 w-full h-full -z-10">
         <Image
@@ -38,8 +43,8 @@ export default async function Workshops() {
 
       <Navbar />
 
-      <div className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <div className="flex-1 pt-24 sm:pt-28 md:pt-32 pb-0 px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto pb-12 sm:pb-16">
           {/* Header */}
           <div className="text-center mb-10 sm:mb-12 md:mb-16 bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-white/20">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-3 sm:mb-4">
@@ -128,6 +133,9 @@ export default async function Workshops() {
           )}
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

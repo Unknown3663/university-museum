@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Navbar from "../components/Navbar";
+import SignatureLogo from "../components/SignatureLogo";
+import Footer from "../components/Footer";
 
 export const metadata = {
   title: "Our Team - Tourist Guidance Museum",
@@ -30,6 +32,9 @@ const TEAM_MEMBERS = [
 export default function Team() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden">
+      {/* Signature Logo - Always visible */}
+      <SignatureLogo />
+
       {/* Background Image */}
       <div className="fixed inset-0 w-full h-full -z-10">
         <Image
@@ -164,6 +169,9 @@ export default function Team() {
           </section>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

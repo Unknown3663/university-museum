@@ -4,7 +4,9 @@ import BackgroundImage from "./components/BackgroundImage";
 import Hero from "./components/HeroSection";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SideLogos from "./components/SideLogos";
+import SignatureLogo from "./components/SignatureLogo";
 import GEMCountdown from "./components/GEMCountdown";
+import Footer from "./components/Footer";
 
 // Dynamically import Navbar
 const Navbar = dynamic(() => import("./components/Navbar"), {
@@ -19,6 +21,9 @@ export default function Home() {
         src="/backgrounds/college-background.jpg"
         alt="Tourist Guidance Museum Building"
       />
+
+      {/* Signature Logo - Hidden in hero section, visible after scrolling */}
+      <SignatureLogo hideOnHeroSection={true} />
 
       {/* Hero Section */}
       <div className="relative min-h-screen w-full overflow-hidden">
@@ -156,6 +161,9 @@ export default function Home() {
       <section className="relative bg-gradient-to-b from-gray-900 to-black py-16 sm:py-20 lg:py-24">
         <GEMCountdown />
       </section>
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }
