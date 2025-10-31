@@ -19,7 +19,7 @@ const TEAM_MEMBERS = [
   { name: "Mohand Hesham", role: "Team Leader" },
   { name: "Ziad Khalaf", role: "Curator" },
   { name: "Mahmoud Farghly", role: "Curator" },
-  { name: "Mala Amr", role: "Curator" },
+  { name: "Malak Amr", role: "Curator" },
   { name: "Romaysaa Mohamed", role: "Curator" },
   { name: "Rogena Hany", role: "Curator" },
   { name: "Shahd Esaam", role: "Curator" },
