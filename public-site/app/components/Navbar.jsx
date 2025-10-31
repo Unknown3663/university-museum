@@ -15,7 +15,7 @@ const SITE_CONFIG = {
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/team", label: "Team" },
-  { href: "/categories", label: "Categories" },
+  { href: "/workshops", label: "Workshops" },
   { href: "/exhibits", label: "Exhibits" },
 ];
 

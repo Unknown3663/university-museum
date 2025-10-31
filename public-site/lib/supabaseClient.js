@@ -36,3 +36,24 @@ export async function getExhibits(publishedOnly = false) {
 export async function getPublishedExhibits() {
   return getExhibits(true);
 }
+
+// Fetch workshops with optional published filter
+export async function getWorkshops(publishedOnly = true) {
+  let query = supabase
+    .from("workshops")
+    .select("*")
+    .order("order", { ascending: true });
+
+  if (publishedOnly) {
+    query = query.eq("published", true);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error("Error fetching workshops:", error);
+    return [];
+  }
+
+  return data;
+}

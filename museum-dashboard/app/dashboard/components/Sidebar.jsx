@@ -7,6 +7,7 @@ const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: "📊" },
   { name: "Upload", href: "/dashboard/upload", icon: "📤" },
   { name: "Exhibits", href: "/dashboard/exhibits", icon: "🖼️" },
+  { name: "Workshops", href: "/dashboard/workshops", icon: "🎓" },
 ];
 
 export default function Sidebar({ isOpen, onClose }) {

@@ -90,11 +90,11 @@ The website now supports the following responsive breakpoints:
 - Tablet (640px-1024px): 50vw
 - Desktop (1024px+): 33vw
 
-### 5. **Categories Page**
+### 5. **Workshops Page**
 
 - ✅ Responsive top padding (pt-24 → pt-32)
 - ✅ Responsive header with adjusted font sizes
-- ✅ Grid: 1 column (mobile) → 2 columns (tablet) → 4 columns (desktop)
+- ✅ Workshop cards with order badges
 - ✅ Mobile-optimized card padding
 - ✅ Responsive border radius
 - ✅ Touch-friendly card sizing
@@ -215,7 +215,7 @@ text-xs sm:text-sm
 - [ ] Verify search functionality on all sizes
 - [ ] Test pagination on exhibits page
 - [ ] Check image loading and optimization
-- [ ] Verify category filters wrap properly
+- [ ] Verify filters wrap properly
 - [ ] Test form inputs on touch devices
 - [ ] Check landscape orientation on mobile
 - [ ] Verify no horizontal scroll on any viewport
@@ -274,7 +274,7 @@ text-xs sm:text-sm
 - `/app/components/HeroSection.jsx` - Responsive hero section
 - `/app/components/ExhibitCard.jsx` - Responsive card component
 - `/app/exhibits/page.jsx` - Responsive exhibits page
-- `/app/categories/page.jsx` - Responsive categories page
+- `/app/workshops/page.jsx` - Responsive workshops page
 - `/app/team/page.jsx` - Responsive team page
 - `/tailwind.config.js` - Custom breakpoints and theme
 

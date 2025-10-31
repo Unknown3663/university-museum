@@ -8,21 +8,24 @@ export default function DashboardPage() {
     total: 0,
     published: 0,
     drafts: 0,
+    workshops: 0,
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchStats();
 
-    // Listen for custom event when a new exhibit is created
-    const handleExhibitChange = () => {
+    // Listen for custom events when exhibits or workshops change
+    const handleChange = () => {
       fetchStats();
     };
 
-    window.addEventListener("exhibitChanged", handleExhibitChange);
+    window.addEventListener("exhibitChanged", handleChange);
+    window.addEventListener("workshopChanged", handleChange);
 
     return () => {
-      window.removeEventListener("exhibitChanged", handleExhibitChange);
+      window.removeEventListener("exhibitChanged", handleChange);
+      window.removeEventListener("workshopChanged", handleChange);
     };
   }, []);
 
@@ -41,7 +44,16 @@ export default function DashboardPage() {
       const published = allExhibits?.filter((ex) => ex.published).length || 0;
       const drafts = total - published;
 
-      setStats({ total, published, drafts });
+      // Fetch workshops
+      const { data: allWorkshops, error: workshopError } = await supabase
+        .from("workshops")
+        .select("id");
+
+      if (workshopError) throw workshopError;
+
+      const workshops = allWorkshops?.length || 0;
+
+      setStats({ total, published, drafts, workshops });
     } catch (error) {
       console.error("Error fetching stats:", error);
     } finally {
@@ -58,7 +70,7 @@ export default function DashboardPage() {
         Welcome to the Museum Dashboard. Use the sidebar to navigate.
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
         <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -98,6 +110,20 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="text-3xl sm:text-4xl">📝</div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs sm:text-sm font-medium text-gray-600">
+                Workshops
+              </p>
+              <p className="text-2xl sm:text-3xl font-bold text-blue-600 mt-1 sm:mt-2">
+                {loading ? "—" : stats.workshops}
+              </p>
+            </div>
+            <div className="text-3xl sm:text-4xl">🎓</div>
           </div>
         </div>
       </div>

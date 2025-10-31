@@ -1,4 +1,4 @@
-// Enhanced UploadForm component with image preview, category dropdown, progress bar, and success toast
+// Enhanced UploadForm component with image preview, progress bar, and success toast
 // MOBILE RESPONSIVE VERSION
 "use client";
 
@@ -7,21 +7,10 @@ import { createExhibit, uploadImage } from "../../../lib/supabaseClient";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
-const CATEGORIES = [
-  "Art",
-  "Archaeology",
-  "History",
-  "Nature",
-  "Culture",
-  "Other",
-];
-
 export default function UploadForm({ onSuccess }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    category: "",
-    customCategory: "",
     published: false,
   });
   const [image, setImage] = useState(null);
@@ -79,8 +68,7 @@ export default function UploadForm({ onSuccess }) {
 
   const resetForm = () => {
     // Confirm before clearing if form has data
-    const hasData =
-      formData.title || formData.description || formData.category || image;
+    const hasData = formData.title || formData.description || image;
     if (
       hasData &&
       !window.confirm("Are you sure you want to clear the form?")
@@ -91,8 +79,6 @@ export default function UploadForm({ onSuccess }) {
     setFormData({
       title: "",
       description: "",
-      category: "",
-      customCategory: "",
       published: false,
     });
     setImage(null);
@@ -118,10 +104,6 @@ export default function UploadForm({ onSuccess }) {
 
     if (!image) {
       errors.image = "Please select an image";
-    }
-
-    if (formData.category === "Other" && !formData.customCategory.trim()) {
-      errors.customCategory = "Please specify a custom category";
     }
 
     setFieldErrors(errors);
@@ -150,17 +132,10 @@ export default function UploadForm({ onSuccess }) {
         setUploadProgress(70);
       }
 
-      // Get final category value
-      const finalCategory =
-        formData.category === "Other"
-          ? formData.customCategory
-          : formData.category;
-
       // Create exhibit
       await createExhibit({
         title: formData.title,
         description: formData.description,
-        category: finalCategory,
         published: formData.published,
         image_url: imageUrl,
       });
@@ -279,7 +254,9 @@ export default function UploadForm({ onSuccess }) {
             placeholder="Enter exhibit title"
           />
           {fieldErrors.title && (
-            <p className="text-red-600 text-xs sm:text-sm mt-1">{fieldErrors.title}</p>
+            <p className="text-red-600 text-xs sm:text-sm mt-1">
+              {fieldErrors.title}
+            </p>
           )}
         </div>
 
@@ -313,60 +290,6 @@ export default function UploadForm({ onSuccess }) {
           )}
         </div>
 
-        {/* Category Dropdown */}
-        <div>
-          <label
-            htmlFor="category"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Category
-          </label>
-          <select
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="w-full px-3 py-2 sm:px-4 text-sm sm:text-base border border-gray-300 rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 bg-white"
-          >
-            <option value="">Select a category</option>
-            {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Custom Category Field (shown when "Other" is selected) */}
-        {formData.category === "Other" && (
-          <div className="animate-fade-in">
-            <label
-              htmlFor="customCategory"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Custom Category <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="customCategory"
-              type="text"
-              name="customCategory"
-              value={formData.customCategory}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 sm:px-4 text-sm sm:text-base border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${
-                fieldErrors.customCategory
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-              }`}
-              placeholder="Enter custom category"
-            />
-            {fieldErrors.customCategory && (
-              <p className="text-red-600 text-xs sm:text-sm mt-1">
-                {fieldErrors.customCategory}
-              </p>
-            )}
-          </div>
-        )}
-
         {/* Image Upload Field */}
         <div>
           <label
@@ -387,7 +310,9 @@ export default function UploadForm({ onSuccess }) {
             }`}
           />
           {fieldErrors.image && (
-            <p className="text-red-600 text-xs sm:text-sm mt-1">{fieldErrors.image}</p>
+            <p className="text-red-600 text-xs sm:text-sm mt-1">
+              {fieldErrors.image}
+            </p>
           )}
           {image && !fieldErrors.image && (
             <p className="text-xs sm:text-sm text-gray-600 mt-2 flex items-center gap-2">
@@ -402,7 +327,9 @@ export default function UploadForm({ onSuccess }) {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="truncate">Selected: {image.name} ({(image.size / 1024).toFixed(0)}KB)</span>
+              <span className="truncate">
+                Selected: {image.name} ({(image.size / 1024).toFixed(0)}KB)
+              </span>
             </p>
           )}
         </div>
@@ -473,14 +400,20 @@ export default function UploadForm({ onSuccess }) {
       {/* Success Toast */}
       {showToast && (
         <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 left-4 sm:left-auto bg-green-600 text-white px-4 py-3 sm:px-6 sm:py-4 rounded-lg shadow-2xl flex items-center gap-3 animate-fade-in z-50">
-          <svg className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <svg
+            className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
             <path
               fillRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
               clipRule="evenodd"
             />
           </svg>
-          <span className="font-medium text-sm sm:text-base">✅ Exhibit uploaded successfully!</span>
+          <span className="font-medium text-sm sm:text-base">
+            ✅ Exhibit uploaded successfully!
+          </span>
         </div>
       )}
     </>

@@ -38,9 +38,6 @@ export default function ExhibitList({ exhibits, onDelete, onTogglePublish }) {
                 Exhibit
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Category
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -72,11 +69,6 @@ export default function ExhibitList({ exhibits, onDelete, onTogglePublish }) {
                         {exhibit.description}
                       </div>
                     </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    {exhibit.category || "—"}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -141,25 +133,17 @@ export default function ExhibitList({ exhibits, onDelete, onTogglePublish }) {
                 </div>
               </div>
 
-              {/* Category and Status */}
-              <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">Category</p>
-                  <p className="text-sm font-medium text-gray-900">
-                    {exhibit.category || "—"}
-                  </p>
-                </div>
-                <div>
-                  <span
-                    className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                      exhibit.published
-                        ? "bg-green-100 text-green-800"
-                        : "bg-gray-100 text-gray-800"
-                    }`}
-                  >
-                    {exhibit.published ? "Published" : "Draft"}
-                  </span>
-                </div>
+              {/* Status */}
+              <div className="mb-4 pb-4 border-b border-gray-200">
+                <span
+                  className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                    exhibit.published
+                      ? "bg-green-100 text-green-800"
+                      : "bg-gray-100 text-gray-800"
+                  }`}
+                >
+                  {exhibit.published ? "Published" : "Draft"}
+                </span>
               </div>
 
               {/* Actions */}

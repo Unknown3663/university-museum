@@ -18,7 +18,7 @@ museum-project/- 🎨 Styled with Tailwind CSS
 
 │   │   ├── team/             # Team page- 🎯 Glass-morphism navbar effect
 
-│   │   ├── categories/       # Categories page- 📖 Museum-style typography (Playfair Display)
+│   │   ├── workshops/        # Workshops page- 📖 Museum-style typography (Playfair Display)
 
 │   │   ├── exhibits/         # Public exhibit gallery (Supabase)
 
@@ -112,9 +112,9 @@ cp .env.local.example .env.local│   ├── team/
 
 # Add your Supabase credentials to .env.local│   │   └── page.jsx           # Team page
 
-npm run dev│   ├── categories/
+npm run dev│   ├── workshops/
 
-# Opens on http://localhost:3000│   │   └── page.jsx           # Categories page
+# Opens on http://localhost:3000│   │   └── page.jsx           # Workshops page
 
 ```│   ├── layout.jsx             # Root layout with fonts
 
@@ -142,7 +142,7 @@ cd museum-dashboard && npm run dev -- -p 3001└── package.json             
 
 - **Team** (`/team`) - Team members page (placeholder)
 
-```sql- **Categories** (`/categories`) - Museum categories page (placeholder)
+```sql- **Workshops** (`/workshops`) - Heritage awareness workshops page
 
 -- Create exhibits table
 
@@ -154,7 +154,7 @@ title TEXT NOT NULL,- **Next.js 15** - React framework with SSR and HMR
 
 description TEXT NOT NULL,- **React 18** - UI library
 
-category TEXT,- **Tailwind CSS** - Utility-first CSS framework
+category TEXT, -- (deprecated, kept for backward compatibility)- **Tailwind CSS** - Utility-first CSS framework
 
 image_url TEXT,- **Google Fonts** - Playfair Display (serif) and Inter (sans-serif)
 
@@ -217,7 +217,7 @@ In Supabase → **Authentication** → **Users** → **Add User**:
 ### Public Site (`public-site/`)
 - ✅ Fullscreen homepage with hero image
 - ✅ Responsive Navbar with search
-- ✅ Categories page
+- ✅ Workshops page
 - ✅ Team page
 - ✅ **Exhibits page** (fetches published exhibits from Supabase)
 - ✅ Tailwind CSS animations

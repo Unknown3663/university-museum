@@ -200,3 +200,78 @@ export async function deleteImage(imageUrl) {
     handleError(error, "Deleting image");
   }
 }
+
+// ============ WORKSHOP FUNCTIONS ============
+/**
+ * Fetch all workshops (ordered by order number)
+ */
+export async function getWorkshops() {
+  try {
+    const { data, error } = await supabase
+      .from("workshops")
+      .select("*")
+      .order("order", { ascending: true });
+
+    if (error) throw error;
+    return data || [];
+  } catch (error) {
+    handleError(error, "Fetching workshops");
+  }
+}
+
+/**
+ * Create a new workshop
+ */
+export async function createWorkshop(workshopData) {
+  try {
+    const { data, error } = await supabase
+      .from("workshops")
+      .insert([workshopData])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    handleError(error, "Creating workshop");
+  }
+}
+
+/**
+ * Update an existing workshop
+ */
+export async function updateWorkshop(id, updates) {
+  try {
+    const { data, error } = await supabase
+      .from("workshops")
+      .update(updates)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    handleError(error, "Updating workshop");
+  }
+}
+
+/**
+ * Delete a workshop
+ */
+export async function deleteWorkshop(id) {
+  try {
+    const { error } = await supabase.from("workshops").delete().eq("id", id);
+
+    if (error) throw error;
+  } catch (error) {
+    handleError(error, "Deleting workshop");
+  }
+}
+
+/**
+ * Toggle workshop publish status
+ */
+export async function toggleWorkshopPublish(id, publishStatus) {
+  return await updateWorkshop(id, { published: publishStatus });
+}

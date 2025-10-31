@@ -12,7 +12,6 @@ export default function Exhibits() {
   const [exhibits, setExhibits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,24 +41,9 @@ export default function Exhibits() {
     fetchExhibits();
   }, []);
 
-  // Extract unique categories from exhibits
-  const categories = useMemo(() => {
-    const uniqueCategories = [
-      ...new Set(exhibits.map((exhibit) => exhibit.category).filter(Boolean)),
-    ];
-    return ["All", ...uniqueCategories];
-  }, [exhibits]);
-
   // Filter, search, and sort exhibits
   const processedExhibits = useMemo(() => {
     let filtered = exhibits;
-
-    // Filter by category
-    if (selectedCategory !== "All") {
-      filtered = filtered.filter(
-        (exhibit) => exhibit.category === selectedCategory
-      );
-    }
 
     // Search by title or description
     if (searchQuery.trim()) {
@@ -91,7 +75,7 @@ export default function Exhibits() {
     }
 
     return sorted;
-  }, [exhibits, selectedCategory, searchQuery, sortBy]);
+  }, [exhibits, searchQuery, sortBy]);
 
   // Pagination
   const totalPages = Math.ceil(processedExhibits.length / EXHIBITS_PER_PAGE);
@@ -103,7 +87,7 @@ export default function Exhibits() {
   // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [searchQuery, sortBy]);
 
   // Skeleton loader component
   const SkeletonCard = () => (
@@ -194,41 +178,14 @@ export default function Exhibits() {
             </div>
           </motion.div>
 
-          {/* Controls: Category Filter + Sort */}
+          {/* Controls: Sort */}
           {!loading && !error && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-6 sm:mb-8 space-y-4"
+              className="mb-6 sm:mb-8"
             >
-              {/* Category Filter */}
-              {categories.length > 1 && (
-                <div className="flex items-center justify-center gap-2 flex-wrap px-2">
-                  <span
-                    className="text-xs sm:text-sm font-medium text-white mr-1 sm:mr-2 w-full sm:w-auto text-center sm:text-left mb-2 sm:mb-0"
-                    style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
-                  >
-                    Filter:
-                  </span>
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {categories.map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 ${
-                          selectedCategory === category
-                            ? "bg-blue-600 text-white shadow-md scale-105"
-                            : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm hover:shadow-md"
-                        }`}
-                      >
-                        {category}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* Sort + Results Count */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 px-2">
                 <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
@@ -258,12 +215,6 @@ export default function Exhibits() {
                 >
                   Showing {processedExhibits.length}{" "}
                   {processedExhibits.length === 1 ? "exhibit" : "exhibits"}
-                  {selectedCategory !== "All" && (
-                    <span className="font-medium hidden sm:inline">
-                      {" "}
-                      in {selectedCategory}
-                    </span>
-                  )}
                   {searchQuery && (
                     <span className="font-medium hidden sm:inline">
                       {" "}
@@ -342,19 +293,16 @@ export default function Exhibits() {
               <p className="text-base sm:text-xl text-gray-600 mb-2 px-4">
                 {searchQuery
                   ? `No exhibits found matching "${searchQuery}"`
-                  : selectedCategory === "All"
-                  ? "No exhibits available at the moment."
-                  : `No exhibits found in ${selectedCategory}.`}
+                  : "No exhibits available at the moment."}
               </p>
-              {(selectedCategory !== "All" || searchQuery) && (
+              {searchQuery && (
                 <button
                   onClick={() => {
-                    setSelectedCategory("All");
                     setSearchQuery("");
                   }}
                   className="mt-3 sm:mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base"
                 >
-                  Clear filters
+                  Clear search
                 </button>
               )}
             </motion.div>
