@@ -4,6 +4,7 @@ import BackgroundImage from "./components/BackgroundImage";
 import Hero from "./components/HeroSection";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SideLogos from "./components/SideLogos";
+import GEMCountdown from "./components/GEMCountdown";
 
 // Dynamically import Navbar
 const Navbar = dynamic(() => import("./components/Navbar"), {
@@ -149,6 +150,11 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* GEM Countdown Section */}
+      <section className="relative bg-gradient-to-b from-gray-900 to-black py-16 sm:py-20 lg:py-24">
+        <GEMCountdown />
       </section>
     </main>
   );
