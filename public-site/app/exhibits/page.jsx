@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import Navbar from "../components/Navbar";
 import ExhibitCard from "../components/ExhibitCard";
 import SignatureLogo from "../components/SignatureLogo";
@@ -11,12 +12,22 @@ import Footer from "../components/Footer";
 const EXHIBITS_PER_PAGE = 6;
 
 export default function Exhibits() {
+  const searchParams = useSearchParams();
+  const urlSearch = searchParams.get("search") || "";
+
   const [exhibits, setExhibits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(urlSearch);
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Update search query when URL params change
+  useEffect(() => {
+    if (urlSearch) {
+      setSearchQuery(urlSearch);
+    }
+  }, [urlSearch]);
 
   const fetchExhibits = async () => {
     try {
