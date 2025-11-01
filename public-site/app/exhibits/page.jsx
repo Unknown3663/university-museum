@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -11,7 +11,7 @@ import Footer from "../components/Footer";
 
 const EXHIBITS_PER_PAGE = 6;
 
-export default function Exhibits() {
+function ExhibitsContent() {
   const searchParams = useSearchParams();
   const urlSearch = searchParams.get("search") || "";
 
@@ -437,5 +437,40 @@ export default function Exhibits() {
       {/* Footer */}
       <Footer />
     </main>
+  );
+}
+
+// Loading component for Suspense fallback
+function ExhibitsLoading() {
+  return (
+    <main className="relative min-h-screen w-full overflow-hidden">
+      <SignatureLogo />
+      <div className="fixed inset-0 w-full h-full -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black"></div>
+      </div>
+      <Navbar />
+      <div className="pt-20 sm:pt-24 pb-12 sm:pb-16 px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 sm:mb-12">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-3 sm:mb-4">
+              Our Exhibits
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-200">
+              Loading...
+            </p>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </main>
+  );
+}
+
+// Wrap the component with Suspense
+export default function Exhibits() {
+  return (
+    <Suspense fallback={<ExhibitsLoading />}>
+      <ExhibitsContent />
+    </Suspense>
   );
 }
