@@ -1,316 +1,377 @@
-# 🏛️ Tourist Guidance Museum - Full Stack Project# University Museum Website
+<div align="center">
 
-A complete museum management system with a **public-facing website** and a **private admin dashboard** for managing exhibits.A modern, responsive museum homepage built with Next.js 15 and React 18.
+# 🏛️ Tourist Guidance Museum
 
-## 📁 Project Structure## Features
+### Digital Platform for Heritage Preservation and Education
 
-````- ✨ Server-Side Rendering (SSR) with Next.js 15
+_Faculty of Tourism and Hotels, Minia University_
 
-museum-project/- 🎨 Styled with Tailwind CSS
+[![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com/)
 
-│- 🖼️ Fullscreen background image with overlay
-
-├── public-site/              # 🌐 Public website (Next.js 15 + React 18)- 🎭 Smooth animations and transitions
-
-│   ├── app/- 📱 Fully responsive design
-
-│   │   ├── page.jsx          # Homepage with hero section- 🔍 Interactive search functionality
-
-│   │   ├── team/             # Team page- 🎯 Glass-morphism navbar effect
-
-│   │   ├── workshops/        # Workshops page- 📖 Museum-style typography (Playfair Display)
-
-│   │   ├── exhibits/         # Public exhibit gallery (Supabase)
-
-│   │   └── components/       # Reusable components## Getting Started
-
-│   ├── lib/
-
-│   │   └── supabaseClient.js # Supabase integration### Prerequisites
-
-│   └── package.json
-
-│Make sure you have Node.js 18+ installed on your system.
-
-├── museum-dashboard/         # 🔒 Admin CMS (Next.js 15 + React 18)
-
-│   ├── app/### Installation
-
-│   │   ├── login/            # Authentication
-
-│   │   └── dashboard/1. Navigate to the project directory:
-
-│   │       ├── page.jsx      # Dashboard overview```bash
-
-│   │       ├── upload/       # Upload new exhibitscd museum-website
-
-│   │       ├── exhibits/     # Manage exhibits```
-
-│   │       └── components/   # Dashboard components
-
-│   ├── lib/2. Install dependencies:
-
-│   │   └── supabaseClient.js # Supabase CRUD + Auth```bash
-
-│   └── package.jsonnpm install
-
-│```
-
-└── README.md                 # This file
-
-```3. Add your museum image:
-
-   - Place your `museum.webp` file in the `public/` folder
-
-## 🚀 Getting Started
-
-### Running the Development Server
-
-### Prerequisites
-
-```bash
-
-- **Node.js** 18+ and npmnpm run dev
-
-- **Supabase** account ([supabase.com](https://supabase.com))```
-
-
-
-### 1️⃣ Setup Public SiteOpen [http://localhost:3000](http://localhost:3000) in your browser to see the result.
-
-
-
-```bash### Building for Production
-
-cd public-site
-
-npm install```bash
-
-cp .env.local.example .env.localnpm run build
-
-# Add your Supabase credentials to .env.localnpm start
-
-npm run dev```
-
-# Opens on http://localhost:3000
-
-```## Project Structure
-
-
-
-### 2️⃣ Setup Dashboard```
-
-museum-website/
-
-```bash├── app/
-
-cd museum-dashboard│   ├── components/
-
-npm install│   │   └── Navbar.jsx         # Reusable navigation component
-
-cp .env.local.example .env.local│   ├── team/
-
-# Add your Supabase credentials to .env.local│   │   └── page.jsx           # Team page
-
-npm run dev│   ├── workshops/
-
-# Opens on http://localhost:3000│   │   └── page.jsx           # Workshops page
-
-```│   ├── layout.jsx             # Root layout with fonts
-
-│   ├── page.jsx               # Homepage
-
-To run both apps simultaneously, use different ports:│   └── globals.css            # Global styles and Tailwind
-
-```bash├── public/
-
-# Public site (default port 3000)│   └── museum.webp            # Main background image (add yours here)
-
-cd public-site && npm run dev├── next.config.js             # Next.js configuration
-
-├── tailwind.config.js         # Tailwind CSS configuration
-
-# Dashboard (port 3001)├── postcss.config.js          # PostCSS configuration
-
-cd museum-dashboard && npm run dev -- -p 3001└── package.json               # Dependencies and scripts
-
-````
-
-### 3️⃣ Setup Supabase Database## Pages
-
-**SQL Schema** (run in Supabase SQL Editor):- **Home** (`/`) - Fullscreen museum homepage with background image
-
-- **Team** (`/team`) - Team members page (placeholder)
-
-```sql- **Workshops** (`/workshops`) - Heritage awareness workshops page
-
--- Create exhibits table
-
-CREATE TABLE exhibits (## Technologies Used
-
-id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-
-title TEXT NOT NULL,- **Next.js 15** - React framework with SSR and HMR
-
-description TEXT NOT NULL,- **React 18** - UI library
-
-category TEXT, -- (deprecated, kept for backward compatibility)- **Tailwind CSS** - Utility-first CSS framework
-
-image_url TEXT,- **Google Fonts** - Playfair Display (serif) and Inter (sans-serif)
-
-published BOOLEAN DEFAULT false,
-
-created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),## Customization
-
-updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-
-);### Changing Colors
-
-Edit `tailwind.config.js` to customize the color scheme.
-
--- Enable Row Level Security
-
-ALTER TABLE exhibits ENABLE ROW LEVEL SECURITY;### Changing Fonts
-
-Modify the font imports in `app/layout.jsx`.
-
--- Policy: Allow public read access to published exhibits
-
-CREATE POLICY "Public can view published exhibits"### Adding Content
-
-ON exhibits FOR SELECTReplace placeholder content in `app/team/page.jsx` and `app/categories/page.jsx`.
-
-USING (published = true);
-
-## License
-
--- Policy: Authenticated users can do everything
-
-CREATE POLICY "Authenticated users full access"This project is created for educational purposes.
-
-ON exhibits FOR ALL
-USING (auth.role() = 'authenticated');
-
-```
-
-**Storage Setup:**
-
-1. Go to **Storage** in Supabase
-2. Create a bucket named: `exhibit-images`
-3. Make it **public**
-4. Add this policy:
-```
-
-Allow public read: bucket_id = 'exhibit-images'
-Allow authenticated insert/update/delete
-
-````
-
-### 4️⃣ Create Admin User
-
-In Supabase → **Authentication** → **Users** → **Add User**:
-- Email: your-email@example.com
-- Password: (create a strong password)
-
-## 🎨 Features
-
-### Public Site (`public-site/`)
-- ✅ Fullscreen homepage with hero image
-- ✅ Responsive Navbar with search
-- ✅ Workshops page
-- ✅ Team page
-- ✅ **Exhibits page** (fetches published exhibits from Supabase)
-- ✅ Tailwind CSS animations
-
-### Admin Dashboard (`museum-dashboard/`)
-- ✅ Secure login (Supabase Auth)
-- ✅ Dashboard overview
-- ✅ Upload new exhibits with images
-- ✅ Manage exhibits (edit, delete, publish/unpublish)
-- ✅ Sidebar navigation
-- ✅ Protected routes
-
-## 🛠️ Tech Stack
-
-| Technology | Purpose |
-|-----------|---------|
-| **Next.js 15** | React framework (App Router) |
-| **React 18** | UI library |
-| **Tailwind CSS** | Styling |
-| **Supabase** | Database, Auth, Storage |
-| **Vercel** | Deployment (recommended) |
-
-## 📝 Environment Variables
-
-Both apps need `.env.local`:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-````
-
-Get these from **Supabase Dashboard** → **Settings** → **API**.
-
-## 🚢 Deployment
-
-### Deploy Public Site (Vercel)
-
-```bash
-cd public-site
-vercel deploy
-```
-
-### Deploy Dashboard (Vercel)
-
-```bash
-cd museum-dashboard
-vercel deploy
-```
-
-**Important:** Add environment variables in Vercel project settings!
-
-## 📚 Common Commands
-
-```bash
-# Install dependencies
-npm install
-
-# Development server
-npm run dev
-
-# Production build
-npm run build
-
-# Start production server
-npm start
-
-# Lint code
-npm run lint
-```
-
-## 🔒 Security Notes
-
-- ✅ Dashboard requires authentication
-- ✅ RLS policies protect database
-- ✅ Public site only shows published exhibits
-- ✅ Image uploads validated on client & server
-- ⚠️ Never commit `.env.local` to Git
-
-## 🤝 Contributing
-
-1. Both apps are **self-contained** (separate package.json)
-2. They share the **same Supabase project**
-3. Public site = read-only exhibits
-4. Dashboard = full CRUD access
-
-## 📄 License
-
-MIT License - Free to use and modify
+</div>
 
 ---
 
-**Need Help?**
+## 📖 About The Project
 
-- [Next.js Docs](https://nextjs.org/docs)
-- [Supabase Docs](https://supabase.com/docs)
-- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+This platform supports the **Friends of Museum** initiative at the Faculty of Tourism and Hotels, Minia University. Launched to coincide with the opening of the **Grand Egyptian Museum** (November 1st, 2025), this digital platform aims to foster Egyptian identity and heritage preservation.
+
+### 🎯 Initiative: "It's Your Own: Protect Your Identity"
+
+The platform serves dual purposes:
+
+1. **Public Heritage Portal** - Showcasing the educational museum's collection of archaeological artifact replicas
+2. **Administrative Dashboard** - Managing exhibits, workshops, and educational content
+
+---
+
+## ✨ Key Features
+
+### 🌐 Public Website
+
+<table>
+<tr>
+<td width="50%">
+
+#### 🏠 Interactive Homepage
+
+- Dynamic hero section with museum imagery
+- Smooth scroll animations
+- Responsive design for all devices
+- College and university branding integration
+
+</td>
+<td width="50%">
+
+#### 🔍 Smart Search
+
+- Real-time exhibit search
+- Live results with thumbnails
+- Filter by title and description
+- Mobile-optimized interface
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### 🎨 Exhibits Gallery
+
+- Comprehensive artifact catalog
+- High-quality image display
+- Detailed descriptions (Arabic & English)
+- Pagination for easy browsing
+
+</td>
+<td width="50%">
+
+#### 📚 Educational Content
+
+- Workshop announcements
+- Team member profiles
+- Initiative goals and objectives
+- GEM countdown integration
+
+</td>
+</tr>
+</table>
+
+### 🔐 Admin Dashboard
+
+<table>
+<tr>
+<td width="50%">
+
+#### 📊 Management Portal
+
+- Secure authentication system
+- Real-time statistics dashboard
+- Intuitive navigation sidebar
+- Mobile-responsive interface
+
+</td>
+<td width="50%">
+
+#### 🖼️ Exhibit Management
+
+- Upload exhibits with images
+- Edit existing artifacts
+- Publish/unpublish control
+- Bulk operations support
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### 📅 Workshop Management
+
+- Create workshop events
+- Order and schedule control
+- Date and description management
+- Publish status tracking
+
+</td>
+<td width="50%">
+
+#### 🎯 Content Control
+
+- Draft and publish workflow
+- Image optimization
+- Multi-language support ready
+- SEO-friendly structure
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🎨 Design Highlights
+
+### Visual Identity
+
+- **Typography**: Playfair Display (serif) for elegance, Inter (sans-serif) for readability
+- **Color Palette**: Museum-inspired earth tones with modern blue accents
+- **Imagery**: High-quality backgrounds featuring Egyptian heritage
+- **Animations**: Smooth Framer Motion transitions for enhanced UX
+
+### User Experience
+
+- ⚡ **Fast Loading**: Optimized images and lazy loading
+- 📱 **Mobile First**: Responsive design from 320px to 4K displays
+- ♿ **Accessible**: WCAG compliant with ARIA labels
+- 🎯 **Intuitive**: Clear navigation and user flows
+
+---
+
+## 🏗️ Technical Architecture
+
+### Frontend Stack
+
+```
+Next.js 15 (App Router)
+├── React 18 Server Components
+├── Tailwind CSS + PostCSS
+├── Framer Motion Animations
+├── Next/Image Optimization
+└── Dynamic Imports
+```
+
+### Backend Services
+
+```
+Supabase Backend
+├── PostgreSQL Database
+├── Row Level Security (RLS)
+├── Authentication & Authorization
+├── Storage Buckets
+└── Real-time Subscriptions
+```
+
+### Project Structure
+
+```
+University-Museum/
+│
+├── public-site/              # Public-facing website
+│   ├── app/
+│   │   ├── page.jsx         # Homepage
+│   │   ├── exhibits/        # Exhibit gallery
+│   │   ├── workshops/       # Workshops page
+│   │   ├── team/           # Team members
+│   │   ├── api/            # API routes
+│   │   └── components/     # Reusable components
+│   ├── lib/
+│   │   └── supabaseClient.js
+│   └── public/
+│       ├── backgrounds/    # Hero images
+│       └── logos/         # Branding assets
+│
+├── museum-dashboard/         # Admin dashboard
+│   ├── app/
+│   │   ├── login/          # Authentication
+│   │   └── dashboard/
+│   │       ├── page.jsx    # Dashboard home
+│   │       ├── upload/     # Exhibit upload
+│   │       ├── exhibits/   # Exhibit management
+│   │       ├── workshops/  # Workshop management
+│   │       └── components/ # Dashboard UI
+│   └── lib/
+│       └── supabaseClient.js
+│
+└── shared/                   # Shared utilities (planned)
+```
+
+---
+
+## 🎓 Educational Mission
+
+### Platform Objectives
+
+Aligned with **Egypt's Vision 2030**, our platform contributes to:
+
+1. **Heritage Awareness** 🏺
+
+   - Conducting workshops on heritage preservation
+   - Training museum teams in best practices
+   - Implementing AI applications for heritage conservation
+
+2. **Digital Documentation** 📱
+
+   - Upgrading the educational museum catalog
+   - Maintaining comprehensive artifact database
+   - Multi-language accessibility (Arabic/English)
+
+3. **Community Engagement** 👥
+
+   - Publishing museology announcements
+   - Educational program promotion
+   - Virtual museum experiences
+
+4. **Identity Preservation** 🇪🇬
+   - Strengthening Egyptian cultural identity
+   - Promoting heritage awareness
+   - Supporting local museum initiatives
+
+---
+
+## 🛡️ Security & Performance
+
+### Security Measures
+
+- 🔐 **Authentication**: Supabase Auth with secure session management
+- 🛡️ **Authorization**: Row Level Security (RLS) policies
+- 🔒 **Data Protection**: Encrypted connections (SSL/TLS)
+- 👁️ **Access Control**: Role-based permissions
+- 🚫 **Input Validation**: Client and server-side validation
+
+### Performance Optimization
+
+- ⚡ **Static Generation**: Pre-rendered pages for speed
+- 🖼️ **Image Optimization**: Next/Image with WebP format
+- 📦 **Code Splitting**: Automatic bundle optimization
+- 🗃️ **Caching**: Smart caching strategies
+- 📊 **Monitoring**: Real-time performance tracking
+
+---
+
+## 🌟 Key Features Showcase
+
+### Public Site Features
+
+| Feature       | Description                                | Status  |
+| ------------- | ------------------------------------------ | ------- |
+| 🏠 Homepage   | Dynamic hero with museum branding          | ✅ Live |
+| 🔍 Search     | Real-time exhibit search with live results | ✅ Live |
+| 🖼️ Exhibits   | Paginated gallery with 22+ artifacts       | ✅ Live |
+| 📅 Workshops  | Workshop schedule and announcements        | ✅ Live |
+| 👥 Team       | Faculty and team member profiles           | ✅ Live |
+| 📱 Responsive | Mobile-first responsive design             | ✅ Live |
+| 🌐 SEO        | Optimized meta tags and structure          | ✅ Live |
+
+### Dashboard Features
+
+| Feature      | Description                         | Status  |
+| ------------ | ----------------------------------- | ------- |
+| 📊 Dashboard | Real-time statistics and overview   | ✅ Live |
+| ➕ Upload    | Exhibit creation with image upload  | ✅ Live |
+| ✏️ Edit      | Update existing exhibits            | ✅ Live |
+| 🗑️ Delete    | Remove exhibits with confirmation   | ✅ Live |
+| 📢 Publish   | Control exhibit visibility          | ✅ Live |
+| 📅 Workshops | Create and manage workshop events   | ✅ Live |
+| 🔒 Auth      | Secure login and session management | ✅ Live |
+
+---
+
+## 👥 The Team
+
+### Friends Of Museum Initiative
+
+**Faculty Leadership:**
+
+- Prof. Samar Mustafa - College Dean
+- Prof. Engy Elkilany - College Vice Dean
+- Dr. Gehad Mohamed - Initiative Coordinator
+
+**Museum Team:**
+
+- Mohand Hesham - Team Leader
+- Ezzat Maged - Web Developer
+- Ziad Khalaf - Curator
+- Mahmoud Farghly - Curator
+- Mala Amr - Curator
+- Romaysaa Mohamed - Curator
+- Rogena Hany - Curator
+- Shahd Esaam - Curator
+- Shahd Ahmad - Curator
+- Hanin Ahmed - Curator
+- Login Ahmed - Curator
+- Samuil Hany - Curator
+
+---
+
+## 📸 Screenshots
+
+<div align="center">
+
+### Public Website
+
+_Homepage showcasing the museum's mission and heritage_
+
+### Exhibits Gallery
+
+_Interactive catalog of 22+ archaeological artifact replicas_
+
+### Admin Dashboard
+
+_Comprehensive management portal for content administration_
+
+</div>
+
+---
+
+## 🎯 Future Enhancements
+
+- 🌍 **Multi-language Support**: Full Arabic/English bilingual interface
+- 🤖 **AI Integration**: Heritage preservation recommendations
+- 📱 **Mobile App**: Native iOS/Android applications
+- 🎥 **Virtual Tours**: 3D exhibit exploration
+- 📊 **Analytics Dashboard**: Visitor insights and engagement metrics
+- 🔔 **Notifications**: Workshop alerts and announcements
+- 💬 **Community Features**: User comments and feedback
+- 🎓 **Educational Resources**: Downloadable study materials
+
+---
+
+## 📞 Contact & Support
+
+<div align="center">
+
+**Faculty of Tourism and Hotels**  
+Minia University, Egypt
+
+🌐 [Website](https://tourism.minia.edu.eg) | 📧 [Email](mailto:tourism@minia.edu.eg)
+
+---
+
+### ⭐ Star this repository if you find it valuable!
+
+**Built with ❤️ by the Friends Of Museum Team**
+
+_"Protecting our heritage, strengthening our identity"_
+
+</div>
+
+---
+
+<div align="center">
+
+© 2025 Friends Of Museum - Faculty of Tourism and Hotels, Minia University
+
+_All rights reserved_
+
+</div>
