@@ -16,17 +16,25 @@ const Navbar = dynamic(() => import("./components/Navbar"), {
 export default function Home() {
   return (
     <main className="relative w-full">
-      {/* Fixed Background */}
-      <BackgroundImage
-        src="/backgrounds/college-background.jpg"
-        alt="Tourist Guidance Museum Building"
-      />
-
       {/* Signature Logo - Hidden in hero section, visible after scrolling */}
       <SignatureLogo hideOnHeroSection={true} />
 
-      {/* Hero Section */}
+      {/* Hero Section with Background */}
       <div className="relative min-h-screen w-full overflow-hidden">
+        {/* Hero Background - Moves with hero section */}
+        <div className="absolute inset-0 w-full h-full -z-10">
+          <Image
+            src="/backgrounds/college-background.jpg"
+            alt="Tourist Guidance Museum Building"
+            fill
+            priority
+            quality={80}
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/10"></div>
+        </div>
+
         <Navbar />
         <SideLogos />
         <Hero />

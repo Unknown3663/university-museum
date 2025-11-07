@@ -6,8 +6,8 @@ export default function SideLogos() {
   return (
     <>
       {/* Left Side Logo - College */}
-      <div className="absolute left-2 sm:left-3 md:left-4 top-20 sm:top-20 md:top-20 z-40">
-        <div className="bg-white/10 backdrop-blur-md rounded-md sm:rounded-lg p-1.5 sm:p-2 md:p-3 border border-white/20 shadow-lg hover:bg-white/20 transition-all">
+      <div className="absolute left-2 sm:left-3 md:left-4 top-20 sm:top-20 md:top-20 z-40 pointer-events-none">
+        <div className="bg-white/10 backdrop-blur-md rounded-md sm:rounded-lg p-1.5 sm:p-2 md:p-3 border border-white/20 shadow-lg">
           <Image
             src="/logos/college-logo.jpg"
             alt="College Logo"
@@ -21,8 +21,8 @@ export default function SideLogos() {
       </div>
 
       {/* Right Side Logo - University */}
-      <div className="absolute right-2 sm:right-3 md:right-4 top-20 sm:top-20 md:top-20 z-40">
-        <div className="bg-white/10 backdrop-blur-md rounded-md sm:rounded-lg p-1.5 sm:p-2 md:p-3 border border-white/20 shadow-lg hover:bg-white/20 transition-all">
+      <div className="absolute right-2 sm:right-3 md:right-4 top-20 sm:top-20 md:top-20 z-40 pointer-events-none">
+        <div className="bg-white/10 backdrop-blur-md rounded-md sm:rounded-lg p-1.5 sm:p-2 md:p-3 border border-white/20 shadow-lg">
           <Image
             src="/logos/uni-logo.jpg"
             alt="University Logo"

@@ -31,7 +31,7 @@ const TEAM_MEMBERS = [
 
 export default function Team() {
   return (
-    <main className="relative min-h-screen w-full overflow-hidden">
+    <main className="relative min-h-screen w-full">
       {/* Signature Logo - Always visible */}
       <SignatureLogo />
 

@@ -117,10 +117,7 @@ function ExhibitsContent() {
   );
 
   return (
-    <main
-      className="relative min-h-screen w-full overflow-hidden"
-      suppressHydrationWarning
-    >
+    <main className="relative min-h-screen w-full" suppressHydrationWarning>
       {/* Signature Logo - Always visible */}
       <SignatureLogo />
 
