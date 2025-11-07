@@ -2,12 +2,20 @@
 // MOBILE RESPONSIVE VERSION
 "use client";
 
-import { useState } from "react";
-import { createExhibit, uploadImage } from "../../../lib/supabaseClient";
+import { useState, useEffect } from "react";
+import {
+  createExhibit,
+  updateExhibit,
+  uploadImage,
+} from "../../../lib/supabaseClient";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
-export default function UploadForm({ onSuccess }) {
+export default function UploadForm({
+  onSuccess,
+  editMode = false,
+  initialData = null,
+}) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -20,6 +28,21 @@ export default function UploadForm({ onSuccess }) {
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+
+  // Load initial data for edit mode
+  useEffect(() => {
+    if (editMode && initialData) {
+      setFormData({
+        title: initialData.title || "",
+        description: initialData.description || "",
+        published: initialData.published || false,
+      });
+      // Set existing image preview if available
+      if (initialData.image_url) {
+        setImagePreview(initialData.image_url);
+      }
+    }
+  }, [editMode, initialData]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -102,7 +125,8 @@ export default function UploadForm({ onSuccess }) {
       errors.description = "Description is required";
     }
 
-    if (!image) {
+    // Image is required for new exhibits, optional for edits
+    if (!editMode && !image) {
       errors.image = "Please select an image";
     }
 
@@ -124,27 +148,38 @@ export default function UploadForm({ onSuccess }) {
       setUploading(true);
       setUploadProgress(10);
 
-      // Upload image
+      // Upload new image if selected
       setUploadProgress(30);
-      let imageUrl = null;
+      let imageUrl = editMode && initialData ? initialData.image_url : null;
       if (image) {
         imageUrl = await uploadImage(image);
         setUploadProgress(70);
       }
 
-      // Create exhibit
-      await createExhibit({
-        title: formData.title,
-        description: formData.description,
-        published: formData.published,
-        image_url: imageUrl,
-      });
+      // Create or update exhibit
+      if (editMode && initialData) {
+        await updateExhibit(initialData.id, {
+          title: formData.title,
+          description: formData.description,
+          published: formData.published,
+          image_url: imageUrl,
+        });
+      } else {
+        await createExhibit({
+          title: formData.title,
+          description: formData.description,
+          published: formData.published,
+          image_url: imageUrl,
+        });
+      }
 
       setUploadProgress(100);
 
       // Show success toast
       setShowToast(true);
-      resetForm();
+      if (!editMode) {
+        resetForm();
+      }
 
       // Dispatch custom event to update dashboard stats
       window.dispatchEvent(new Event("exhibitChanged"));
@@ -296,8 +331,12 @@ export default function UploadForm({ onSuccess }) {
             htmlFor="image"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
-            Image <span className="text-red-500">*</span>{" "}
-            <span className="text-gray-500 text-xs">(Max 5MB)</span>
+            Image {!editMode && <span className="text-red-500">*</span>}{" "}
+            <span className="text-gray-500 text-xs">
+              {editMode
+                ? "(Optional - leave empty to keep current image)"
+                : "(Max 5MB)"}
+            </span>
           </label>
           <input
             id="image"
@@ -383,7 +422,13 @@ export default function UploadForm({ onSuccess }) {
                 ></path>
               </svg>
             )}
-            {uploading ? "Creating..." : "Create Exhibit"}
+            {uploading
+              ? editMode
+                ? "Updating..."
+                : "Creating..."
+              : editMode
+              ? "Update Exhibit"
+              : "Create Exhibit"}
           </button>
 
           <button

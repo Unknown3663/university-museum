@@ -1,6 +1,11 @@
 import Image from "next/image";
 
-export default function ExhibitList({ exhibits, onDelete, onTogglePublish }) {
+export default function ExhibitList({
+  exhibits,
+  onDelete,
+  onTogglePublish,
+  onEdit,
+}) {
   if (exhibits.length === 0) {
     return (
       <div className="bg-white rounded-lg shadow-md p-8 sm:p-12 text-center">
@@ -84,6 +89,12 @@ export default function ExhibitList({ exhibits, onDelete, onTogglePublish }) {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
+                    onClick={() => onEdit(exhibit)}
+                    className="text-indigo-600 hover:text-indigo-900 mr-4"
+                  >
+                    Edit
+                  </button>
+                  <button
                     onClick={() => onTogglePublish(exhibit)}
                     className="text-blue-600 hover:text-blue-900 mr-4"
                   >
@@ -148,6 +159,12 @@ export default function ExhibitList({ exhibits, onDelete, onTogglePublish }) {
 
               {/* Actions */}
               <div className="flex gap-2">
+                <button
+                  onClick={() => onEdit(exhibit)}
+                  className="flex-1 px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-colors"
+                >
+                  Edit
+                </button>
                 <button
                   onClick={() => onTogglePublish(exhibit)}
                   className="flex-1 px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"

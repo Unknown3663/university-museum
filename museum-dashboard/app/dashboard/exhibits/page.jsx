@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { getExhibits, deleteExhibit } from "../../../lib/supabaseClient";
 import ExhibitList from "../components/ExhibitList";
 
 export default function ExhibitsPage() {
+  const router = useRouter();
   const [exhibits, setExhibits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -54,6 +56,12 @@ export default function ExhibitsPage() {
     }
   };
 
+  const handleEdit = (exhibit) => {
+    // Store the exhibit data in sessionStorage to be used by the upload page
+    sessionStorage.setItem("editExhibit", JSON.stringify(exhibit));
+    router.push("/dashboard/upload");
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -86,6 +94,7 @@ export default function ExhibitsPage() {
         exhibits={exhibits}
         onDelete={handleDelete}
         onTogglePublish={handleTogglePublish}
+        onEdit={handleEdit}
       />
     </div>
   );
