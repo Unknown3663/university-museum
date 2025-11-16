@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ExhibitCard({ exhibit, index = 0, priority = false }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,6 +15,23 @@ export default function ExhibitCard({ exhibit, index = 0, priority = false }) {
     setIsModalOpen(false);
     document.body.style.overflow = "unset";
   };
+
+  // Handle ESC key press
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === "Escape" && isModalOpen) {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("keydown", handleEscKey);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isModalOpen]);
 
   return (
     <>

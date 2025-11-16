@@ -2,6 +2,7 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import SignatureLogo from "../components/SignatureLogo";
 import Footer from "../components/Footer";
+import WorkshopCard from "../components/WorkshopCard";
 import { getWorkshops } from "../../lib/supabaseClient";
 
 export const metadata = {
@@ -12,15 +13,6 @@ export const metadata = {
 
 export default async function Workshops() {
   const workshops = await getWorkshops(true);
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
 
   return (
     <main className="relative min-h-screen w-full flex flex-col">
@@ -81,53 +73,9 @@ export default async function Workshops() {
               </div>
             </div>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-8">
               {workshops.map((workshop) => (
-                <div
-                  key={workshop.id}
-                  className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all duration-300"
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                    {/* Order Badge */}
-                    <div className="flex-shrink-0">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                        <span className="text-2xl sm:text-3xl font-bold text-white">
-                          {workshop.order}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                        {workshop.title}
-                      </h3>
-                      <div className="flex items-center gap-2 mb-4">
-                        <svg
-                          className="w-5 h-5 text-blue-300"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                          />
-                        </svg>
-                        <span className="text-blue-200 font-medium">
-                          {formatDate(workshop.date)}
-                        </span>
-                      </div>
-                      {workshop.description && (
-                        <p className="text-gray-200 leading-relaxed">
-                          {workshop.description}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <WorkshopCard key={workshop.id} workshop={workshop} />
               ))}
             </div>
           )}

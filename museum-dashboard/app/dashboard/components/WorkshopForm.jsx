@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { createWorkshop } from "../../../lib/supabaseClient";
+import { createWorkshop, uploadImage } from "../../../lib/supabaseClient";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
 export default function WorkshopForm({ onSuccess }) {
   const [formData, setFormData] = useState({
@@ -11,7 +13,10 @@ export default function WorkshopForm({ onSuccess }) {
     order: "",
     published: false,
   });
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [showToast, setShowToast] = useState(false);
@@ -28,9 +33,43 @@ export default function WorkshopForm({ onSuccess }) {
     }
   };
 
+  const handleImageChange = (e) => {
+    setError("");
+    setFieldErrors((prev) => ({ ...prev, image: "" }));
+
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      // Check file size (5MB limit)
+      if (file.size > MAX_FILE_SIZE) {
+        const errorMsg = `Image size must be less than 5MB. Your file is ${(
+          file.size /
+          1024 /
+          1024
+        ).toFixed(2)}MB.`;
+        setError(errorMsg);
+        setFieldErrors((prev) => ({ ...prev, image: errorMsg }));
+        e.target.value = ""; // Clear the input
+        setImage(null);
+        setImagePreview(null);
+        return;
+      }
+
+      setImage(file);
+
+      // Create image preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const resetForm = () => {
     // Confirm before clearing if form has data
-    const hasData = formData.title || formData.description || formData.date;
+    const hasData =
+      formData.title || formData.description || formData.date || image;
     if (
       hasData &&
       !window.confirm("Are you sure you want to clear the form?")
@@ -45,8 +84,14 @@ export default function WorkshopForm({ onSuccess }) {
       order: "",
       published: false,
     });
+    setImage(null);
+    setImagePreview(null);
     setError("");
     setFieldErrors({});
+    setUploadProgress(0);
+    // Clear file input
+    const fileInput = document.querySelector('input[type="file"]');
+    if (fileInput) fileInput.value = "";
   };
 
   const validateForm = () => {
@@ -64,6 +109,8 @@ export default function WorkshopForm({ onSuccess }) {
       errors.order = "Order must be a positive number";
     }
 
+    // Image is optional for workshops - no validation needed
+
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -80,6 +127,15 @@ export default function WorkshopForm({ onSuccess }) {
 
     try {
       setSubmitting(true);
+      setUploadProgress(10);
+
+      // Upload image if selected
+      let imageUrl = null;
+      if (image) {
+        setUploadProgress(30);
+        imageUrl = await uploadImage(image);
+        setUploadProgress(70);
+      }
 
       // Create workshop
       await createWorkshop({
@@ -88,7 +144,10 @@ export default function WorkshopForm({ onSuccess }) {
         date: formData.date,
         order: parseInt(formData.order),
         published: formData.published,
+        image_url: imageUrl,
       });
+
+      setUploadProgress(100);
 
       // Show success toast
       setShowToast(true);
@@ -111,6 +170,7 @@ export default function WorkshopForm({ onSuccess }) {
       console.error(err);
     } finally {
       setSubmitting(false);
+      setTimeout(() => setUploadProgress(0), 500);
     }
   };
 
@@ -118,14 +178,95 @@ export default function WorkshopForm({ onSuccess }) {
     <>
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-lg shadow-md p-4 sm:p-6 space-y-4 sm:space-y-6"
+        className="bg-white rounded-lg shadow-md p-4 sm:p-6 space-y-4 sm:space-y-6 relative"
       >
+        {/* Progress Bar */}
+        {submitting && uploadProgress > 0 && (
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 rounded-t-lg overflow-hidden">
+            <div
+              className="h-full bg-blue-600 transition-all duration-300 ease-out"
+              style={{ width: `${uploadProgress}%` }}
+            />
+          </div>
+        )}
+
         {/* Error Message */}
         {error && (
           <div className="p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-700 text-sm sm:text-base">{error}</p>
           </div>
         )}
+
+        {/* Image Preview */}
+        {imagePreview && (
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Workshop Banner Preview
+            </label>
+            <div className="relative w-full max-w-md mx-auto rounded-lg overflow-hidden border-2 border-gray-200 shadow-sm">
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-full h-auto object-contain max-h-64 sm:max-h-96"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setImage(null);
+                  setImagePreview(null);
+                  const fileInput =
+                    document.querySelector('input[type="file"]');
+                  if (fileInput) fileInput.value = "";
+                }}
+                className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-colors shadow-lg"
+                aria-label="Remove image"
+              >
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Image Upload Field */}
+        <div>
+          <label
+            htmlFor="image"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Workshop Banner{" "}
+            <span className="text-gray-500 text-xs">(Optional, max 5MB)</span>
+          </label>
+          <input
+            id="image"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            disabled={submitting}
+            className={`w-full px-3 py-2 sm:px-4 text-sm sm:text-base border rounded-lg transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed ${
+              fieldErrors.image ? "border-red-500 bg-red-50" : "border-gray-300"
+            }`}
+          />
+          {fieldErrors.image && (
+            <p className="text-red-600 text-xs sm:text-sm mt-1">
+              {fieldErrors.image}
+            </p>
+          )}
+          <p className="text-xs text-gray-500 mt-1">
+            Recommended: Landscape banner image (e.g., 1200x400px)
+          </p>
+        </div>
 
         {/* Title Field */}
         <div>
