@@ -1,11 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { createWorkshop, uploadImage } from "../../../lib/supabaseClient";
+import { useState, useEffect } from "react";
+import {
+  createWorkshop,
+  updateWorkshop,
+  uploadImage,
+} from "../../../lib/supabaseClient";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
-export default function WorkshopForm({ onSuccess }) {
+export default function WorkshopForm({
+  onSuccess,
+  editMode = false,
+  initialData = null,
+  onCancelEdit,
+}) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -20,6 +29,23 @@ export default function WorkshopForm({ onSuccess }) {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [showToast, setShowToast] = useState(false);
+
+  // Load initial data for edit mode
+  useEffect(() => {
+    if (editMode && initialData) {
+      setFormData({
+        title: initialData.title || "",
+        description: initialData.description || "",
+        date: initialData.date || "",
+        order: initialData.order?.toString() || "",
+        published: initialData.published || false,
+      });
+      // Set existing image preview if available
+      if (initialData.image_url) {
+        setImagePreview(initialData.image_url);
+      }
+    }
+  }, [editMode, initialData]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -129,29 +155,42 @@ export default function WorkshopForm({ onSuccess }) {
       setSubmitting(true);
       setUploadProgress(10);
 
-      // Upload image if selected
-      let imageUrl = null;
+      // Upload new image if selected
+      setUploadProgress(30);
+      let imageUrl = editMode && initialData ? initialData.image_url : null;
       if (image) {
-        setUploadProgress(30);
         imageUrl = await uploadImage(image);
         setUploadProgress(70);
       }
 
-      // Create workshop
-      await createWorkshop({
-        title: formData.title,
-        description: formData.description || null,
-        date: formData.date,
-        order: parseInt(formData.order),
-        published: formData.published,
-        image_url: imageUrl,
-      });
+      // Create or update workshop
+      if (editMode && initialData) {
+        await updateWorkshop(initialData.id, {
+          title: formData.title,
+          description: formData.description || null,
+          date: formData.date,
+          order: parseInt(formData.order),
+          published: formData.published,
+          image_url: imageUrl,
+        });
+      } else {
+        await createWorkshop({
+          title: formData.title,
+          description: formData.description || null,
+          date: formData.date,
+          order: parseInt(formData.order),
+          published: formData.published,
+          image_url: imageUrl,
+        });
+      }
 
       setUploadProgress(100);
 
       // Show success toast
       setShowToast(true);
-      resetForm();
+      if (!editMode) {
+        resetForm();
+      }
 
       // Dispatch custom event to update workshop list
       window.dispatchEvent(new Event("workshopChanged"));
@@ -166,7 +205,9 @@ export default function WorkshopForm({ onSuccess }) {
         if (onSuccess) onSuccess();
       }, 1500);
     } catch (err) {
-      setError(err.message || "Failed to create workshop");
+      setError(
+        err.message || `Failed to ${editMode ? "update" : "create"} workshop`
+      );
       console.error(err);
     } finally {
       setSubmitting(false);
@@ -398,16 +439,33 @@ export default function WorkshopForm({ onSuccess }) {
             disabled={submitting}
             className="flex-1 bg-blue-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
           >
-            {submitting ? "Creating..." : "Create Workshop"}
+            {submitting
+              ? editMode
+                ? "Updating..."
+                : "Creating..."
+              : editMode
+              ? "Update Workshop"
+              : "Create Workshop"}
           </button>
-          <button
-            type="button"
-            onClick={resetForm}
-            disabled={submitting}
-            className="flex-1 sm:flex-none bg-gray-200 text-gray-700 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all hover:bg-gray-300 focus:ring-4 focus:ring-gray-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
-          >
-            Clear
-          </button>
+          {editMode ? (
+            <button
+              type="button"
+              onClick={onCancelEdit}
+              disabled={submitting}
+              className="flex-1 sm:flex-none bg-gray-200 text-gray-700 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all hover:bg-gray-300 focus:ring-4 focus:ring-gray-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+            >
+              Cancel
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={resetForm}
+              disabled={submitting}
+              className="flex-1 sm:flex-none bg-gray-200 text-gray-700 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all hover:bg-gray-300 focus:ring-4 focus:ring-gray-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+            >
+              Clear
+            </button>
+          )}
         </div>
       </form>
 
@@ -429,7 +487,7 @@ export default function WorkshopForm({ onSuccess }) {
               />
             </svg>
             <span className="font-medium text-sm sm:text-base">
-              Workshop created successfully!
+              Workshop {editMode ? "updated" : "created"} successfully!
             </span>
           </div>
         </div>

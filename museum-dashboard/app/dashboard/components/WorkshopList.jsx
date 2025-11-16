@@ -7,7 +7,7 @@ import {
   toggleWorkshopPublish,
 } from "../../../lib/supabaseClient";
 
-export default function WorkshopList() {
+export default function WorkshopList({ onEdit }) {
   const [workshops, setWorkshops] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -183,6 +183,12 @@ export default function WorkshopList() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
+                    onClick={() => onEdit(workshop)}
+                    className="text-indigo-600 hover:text-indigo-900 mr-4 transition-colors"
+                  >
+                    Edit
+                  </button>
+                  <button
                     onClick={() => handleDelete(workshop.id, workshop.title)}
                     className="text-red-600 hover:text-red-900 transition-colors"
                   >
@@ -237,12 +243,20 @@ export default function WorkshopList() {
               >
                 {workshop.published ? "Published" : "Draft"}
               </button>
-              <button
-                onClick={() => handleDelete(workshop.id, workshop.title)}
-                className="text-red-600 hover:text-red-900 text-sm font-medium transition-colors"
-              >
-                Delete
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => onEdit(workshop)}
+                  className="text-indigo-600 hover:text-indigo-900 text-sm font-medium transition-colors"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(workshop.id, workshop.title)}
+                  className="text-red-600 hover:text-red-900 text-sm font-medium transition-colors"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         ))}

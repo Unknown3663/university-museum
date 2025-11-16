@@ -1,14 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WorkshopForm from "../components/WorkshopForm";
 import WorkshopList from "../components/WorkshopList";
 
 export default function WorkshopsPage() {
   const [refreshKey, setRefreshKey] = useState(0);
+  const [editWorkshop, setEditWorkshop] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  useEffect(() => {
+    // Check if we're returning from another page with edit data
+    const storedWorkshop = sessionStorage.getItem("editWorkshop");
+    if (storedWorkshop) {
+      const workshop = JSON.parse(storedWorkshop);
+      setEditWorkshop(workshop);
+      setIsEditMode(true);
+      // Clear from sessionStorage
+      sessionStorage.removeItem("editWorkshop");
+    }
+  }, []);
 
   const handleSuccess = () => {
     setRefreshKey((prev) => prev + 1);
+    setIsEditMode(false);
+    setEditWorkshop(null);
+  };
+
+  const handleEdit = (workshop) => {
+    setEditWorkshop(workshop);
+    setIsEditMode(true);
+    // Scroll to form
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditMode(false);
+    setEditWorkshop(null);
   };
 
   return (
@@ -23,12 +51,17 @@ export default function WorkshopsPage() {
         </p>
       </div>
 
-      {/* Create New Workshop Form */}
+      {/* Create/Edit Workshop Form */}
       <div>
         <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">
-          Create New Workshop
+          {isEditMode ? "Edit Workshop" : "Create New Workshop"}
         </h2>
-        <WorkshopForm onSuccess={handleSuccess} />
+        <WorkshopForm
+          onSuccess={handleSuccess}
+          editMode={isEditMode}
+          initialData={editWorkshop}
+          onCancelEdit={handleCancelEdit}
+        />
       </div>
 
       {/* Workshops List */}
@@ -36,7 +69,7 @@ export default function WorkshopsPage() {
         <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">
           All Workshops
         </h2>
-        <WorkshopList key={refreshKey} />
+        <WorkshopList key={refreshKey} onEdit={handleEdit} />
       </div>
     </div>
   );
