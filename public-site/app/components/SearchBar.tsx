@@ -112,6 +112,8 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
         isOpen ? "max-h-20 sm:max-h-24 opacity-100" : "max-h-0 opacity-0"
       }`}
       onClick={(e) => e.stopPropagation()}
+      aria-hidden={!isOpen}
+      {...(!isOpen && { inert: true })}
     >
       <div className="pb-3 sm:pb-4 relative">
         <input
@@ -122,6 +124,7 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 outline-none focus:outline-none focus-visible:outline-none focus:border-white/40 transition-all duration-200"
           suppressHydrationWarning
+          tabIndex={isOpen ? 0 : -1}
         />
 
         {/* Search Results Dropdown */}

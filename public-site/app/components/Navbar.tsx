@@ -165,6 +165,8 @@ export default function Navbar() {
           className={`overflow-hidden transition-all duration-500 ease-in-out md:hidden ${
             isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           }`}
+          aria-hidden={!isMobileMenuOpen}
+          {...(!isMobileMenuOpen && { inert: true })}
         >
           <div className="pb-4 pt-2">
             <nav className="flex flex-col space-y-2 px-4">
