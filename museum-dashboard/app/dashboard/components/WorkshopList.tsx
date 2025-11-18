@@ -6,11 +6,16 @@ import {
   deleteWorkshop,
   toggleWorkshopPublish,
 } from "../../../lib/supabaseClient";
+import type { Workshop } from "../../../../shared/types";
 
-export default function WorkshopList({ onEdit }) {
-  const [workshops, setWorkshops] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+interface WorkshopListProps {
+  onEdit: (workshop: Workshop) => void;
+}
+
+export default function WorkshopList({ onEdit }: WorkshopListProps) {
+  const [workshops, setWorkshops] = useState<Workshop[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   const fetchWorkshops = async () => {
     try {
@@ -38,7 +43,7 @@ export default function WorkshopList({ onEdit }) {
     };
   }, []);
 
-  const handleDelete = async (id, title) => {
+  const handleDelete = async (id: string, title: string): Promise<void> => {
     if (!window.confirm(`Are you sure you want to delete "${title}"?`)) {
       return;
     }
@@ -52,7 +57,10 @@ export default function WorkshopList({ onEdit }) {
     }
   };
 
-  const handleTogglePublish = async (id, currentStatus) => {
+  const handleTogglePublish = async (
+    id: string,
+    currentStatus: boolean
+  ): Promise<void> => {
     try {
       await toggleWorkshopPublish(id, !currentStatus);
       setWorkshops(
@@ -66,7 +74,7 @@ export default function WorkshopList({ onEdit }) {
     }
   };
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -170,6 +178,7 @@ export default function WorkshopList({ onEdit }) {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button
                     onClick={() =>
+                      workshop.id &&
                       handleTogglePublish(workshop.id, workshop.published)
                     }
                     className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
@@ -189,7 +198,9 @@ export default function WorkshopList({ onEdit }) {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(workshop.id, workshop.title)}
+                    onClick={() =>
+                      workshop.id && handleDelete(workshop.id, workshop.title)
+                    }
                     className="text-red-600 hover:text-red-900 transition-colors"
                   >
                     Delete
@@ -233,6 +244,7 @@ export default function WorkshopList({ onEdit }) {
             <div className="flex items-center justify-between">
               <button
                 onClick={() =>
+                  workshop.id &&
                   handleTogglePublish(workshop.id, workshop.published)
                 }
                 className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
@@ -251,7 +263,9 @@ export default function WorkshopList({ onEdit }) {
                   Edit
                 </button>
                 <button
-                  onClick={() => handleDelete(workshop.id, workshop.title)}
+                  onClick={() =>
+                    workshop.id && handleDelete(workshop.id, workshop.title)
+                  }
                   className="text-red-600 hover:text-red-900 text-sm font-medium transition-colors"
                 >
                   Delete

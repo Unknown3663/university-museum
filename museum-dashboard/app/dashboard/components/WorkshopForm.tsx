@@ -6,29 +6,45 @@ import {
   updateWorkshop,
   uploadImage,
 } from "../../../lib/supabaseClient";
+import type { Workshop } from "../../../../shared/types";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+
+interface WorkshopFormData {
+  title: string;
+  description: string;
+  date: string;
+  order: string;
+  published: boolean;
+}
+
+interface WorkshopFormProps {
+  onSuccess: () => void;
+  editMode?: boolean;
+  initialData?: Workshop | null;
+  onCancelEdit?: () => void;
+}
 
 export default function WorkshopForm({
   onSuccess,
   editMode = false,
   initialData = null,
   onCancelEdit,
-}) {
-  const [formData, setFormData] = useState({
+}: WorkshopFormProps) {
+  const [formData, setFormData] = useState<WorkshopFormData>({
     title: "",
     description: "",
     date: "",
     order: "",
     published: false,
   });
-  const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [error, setError] = useState("");
-  const [fieldErrors, setFieldErrors] = useState({});
-  const [showToast, setShowToast] = useState(false);
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [error, setError] = useState<string>("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [showToast, setShowToast] = useState<boolean>(false);
 
   // Load initial data for edit mode
   useEffect(() => {
@@ -47,8 +63,11 @@ export default function WorkshopForm({
     }
   }, [editMode, initialData]);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -59,7 +78,7 @@ export default function WorkshopForm({
     }
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setError("");
     setFieldErrors((prev) => ({ ...prev, image: "" }));
 
@@ -86,7 +105,7 @@ export default function WorkshopForm({
       // Create image preview
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result);
+        setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -116,12 +135,14 @@ export default function WorkshopForm({
     setFieldErrors({});
     setUploadProgress(0);
     // Clear file input
-    const fileInput = document.querySelector('input[type="file"]');
+    const fileInput = document.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
     if (fileInput) fileInput.value = "";
   };
 
-  const validateForm = () => {
-    const errors = {};
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
 
     if (!formData.title.trim()) {
       errors.title = "Title is required";
@@ -131,7 +152,7 @@ export default function WorkshopForm({
       errors.date = "Date is required";
     }
 
-    if (!formData.order || formData.order < 1) {
+    if (!formData.order || Number(formData.order) < 1) {
       errors.order = "Order must be a positive number";
     }
 
@@ -141,7 +162,9 @@ export default function WorkshopForm({
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     setError("");
 
@@ -164,7 +187,7 @@ export default function WorkshopForm({
       }
 
       // Create or update workshop
-      if (editMode && initialData) {
+      if (editMode && initialData && initialData.id) {
         await updateWorkshop(initialData.id, {
           title: formData.title,
           description: formData.description || null,
@@ -206,7 +229,9 @@ export default function WorkshopForm({
       }, 1500);
     } catch (err) {
       setError(
-        err.message || `Failed to ${editMode ? "update" : "create"} workshop`
+        err instanceof Error
+          ? err.message
+          : `Failed to ${editMode ? "update" : "create"} workshop`
       );
       console.error(err);
     } finally {
@@ -255,8 +280,9 @@ export default function WorkshopForm({
                 onClick={() => {
                   setImage(null);
                   setImagePreview(null);
-                  const fileInput =
-                    document.querySelector('input[type="file"]');
+                  const fileInput = document.querySelector(
+                    'input[type="file"]'
+                  ) as HTMLInputElement;
                   if (fileInput) fileInput.value = "";
                 }}
                 className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-colors shadow-lg"
@@ -349,7 +375,7 @@ export default function WorkshopForm({
             name="description"
             value={formData.description}
             onChange={handleChange}
-            rows="4"
+            rows={4}
             className="w-full px-3 py-2 sm:px-4 text-sm sm:text-base border border-gray-300 rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 resize-none"
             placeholder="Brief description of the workshop..."
           />

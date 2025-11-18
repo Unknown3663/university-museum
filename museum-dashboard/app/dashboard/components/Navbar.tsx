@@ -3,7 +3,11 @@
 import { signOut } from "../../../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 
-export default function Navbar({ onMenuToggle }) {
+interface NavbarProps {
+  onMenuToggle: () => void;
+}
+
+export default function Navbar({ onMenuToggle }: NavbarProps) {
   const router = useRouter();
 
   const handleSignOut = async () => {

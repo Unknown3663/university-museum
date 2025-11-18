@@ -17,7 +17,7 @@ export default function GEMCountdown() {
 
     const calculateTimeLeft = () => {
       const now = new Date();
-      const difference = targetDate - now;
+      const difference = targetDate.getTime() - now.getTime();
 
       if (difference <= 0) {
         setIsExpired(true);

@@ -3,13 +3,19 @@
 import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import type { Exhibit } from "../../../shared/types";
 
-export default function SearchBar({ isOpen }) {
-  const searchInputRef = useRef(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+interface SearchBarProps {
+  isOpen: boolean;
+  onClose?: () => void;
+}
+
+export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<Exhibit[]>([]);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [showResults, setShowResults] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -17,6 +23,23 @@ export default function SearchBar({ isOpen }) {
       searchInputRef.current.focus();
     }
   }, [isOpen]);
+
+  // ESC key handler to close search bar
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen && onClose) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleEsc);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, [isOpen, onClose]);
 
   // Search exhibits with debounce
   useEffect(() => {
@@ -36,7 +59,7 @@ export default function SearchBar({ isOpen }) {
 
         if (data.exhibits) {
           const filtered = data.exhibits.filter(
-            (exhibit) =>
+            (exhibit: Exhibit) =>
               exhibit.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
               exhibit.description
                 .toLowerCase()
@@ -68,7 +91,7 @@ export default function SearchBar({ isOpen }) {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [showResults]);
 
-  const handleResultClick = (exhibitId) => {
+  const handleResultClick = (exhibitId: number): void => {
     const query = searchQuery;
     setSearchQuery("");
     setShowResults(false);
@@ -123,15 +146,16 @@ export default function SearchBar({ isOpen }) {
                   {searchResults.map((exhibit) => (
                     <button
                       key={exhibit.id}
-                      onClick={() => handleResultClick(exhibit.id)}
+                      onClick={() => handleResultClick(Number(exhibit.id))}
                       className="w-full p-3 hover:bg-gray-50 transition-colors text-left flex items-start gap-3"
                     >
                       <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                        {exhibit.images && exhibit.images.length > 0 ? (
+                        {exhibit.image_url ? (
                           <Image
-                            src={exhibit.images[0]}
+                            src={exhibit.image_url}
                             alt={exhibit.title}
                             fill
+                            sizes="64px"
                             className="object-cover"
                           />
                         ) : (

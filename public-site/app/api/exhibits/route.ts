@@ -1,18 +1,19 @@
-import { supabase } from "../../../lib/supabaseClient.js";
+import { supabase } from "../../../lib/supabaseClient";
 import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 // Disable caching to always fetch fresh data
 export const revalidate = 0;
 
-export async function GET(request) {
+export async function GET(request: NextRequest) {
   try {
     // Parse query parameters from URL
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
     const search = searchParams.get("search");
     const sort = searchParams.get("sort") || "newest";
-    const page = parseInt(searchParams.get("page")) || 1;
-    const limit = parseInt(searchParams.get("limit")) || 6;
+    const page = parseInt(searchParams.get("page") || "1") || 1;
+    const limit = parseInt(searchParams.get("limit") || "6") || 6;
 
     // Validate pagination parameters
     if (page < 1 || limit < 1 || limit > 100) {
@@ -104,7 +105,7 @@ export async function GET(request) {
     return NextResponse.json(
       {
         error: "Internal server error",
-        message: error.message,
+        message: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );

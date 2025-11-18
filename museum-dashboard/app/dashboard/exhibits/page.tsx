@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getExhibits, deleteExhibit } from "../../../lib/supabaseClient";
 import ExhibitList from "../components/ExhibitList";
+import type { Exhibit } from "../../../../shared/types";
 
 export default function ExhibitsPage() {
   const router = useRouter();
-  const [exhibits, setExhibits] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [exhibits, setExhibits] = useState<Exhibit[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     loadExhibits();
@@ -28,7 +29,7 @@ export default function ExhibitsPage() {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string): Promise<void> => {
     if (!confirm("Are you sure you want to delete this exhibit?")) return;
 
     try {
@@ -42,21 +43,27 @@ export default function ExhibitsPage() {
     }
   };
 
-  const handleTogglePublish = async (exhibit) => {
+  const handleTogglePublish = async (id: string): Promise<void> => {
     // Import here to avoid circular dependency
-    const { updateExhibit } = await import("../../../lib/supabaseClient");
+    const { updateExhibit, getExhibits } = await import(
+      "../../../lib/supabaseClient"
+    );
     try {
-      await updateExhibit(exhibit.id, { published: !exhibit.published });
-      await loadExhibits();
-      // Notify dashboard to update stats
-      window.dispatchEvent(new Event("exhibitChanged"));
+      const allExhibits = await getExhibits();
+      const exhibit = allExhibits.find((e) => e.id === id);
+      if (exhibit && exhibit.id) {
+        await updateExhibit(exhibit.id, { published: !exhibit.published });
+        await loadExhibits();
+        // Notify dashboard to update stats
+        window.dispatchEvent(new Event("exhibitChanged"));
+      }
     } catch (err) {
       alert("Failed to update exhibit");
       console.error(err);
     }
   };
 
-  const handleEdit = (exhibit) => {
+  const handleEdit = (exhibit: Exhibit): void => {
     // Store the exhibit data in sessionStorage to be used by the upload page
     sessionStorage.setItem("editExhibit", JSON.stringify(exhibit));
     router.push("/dashboard/upload");

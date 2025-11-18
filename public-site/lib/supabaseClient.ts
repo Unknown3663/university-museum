@@ -1,7 +1,27 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+interface Exhibit {
+  id: string;
+  title: string;
+  description: string;
+  image_url: string | null;
+  category?: string | null;
+  published: boolean;
+  created_at: string;
+}
+
+interface Workshop {
+  id: string;
+  title: string;
+  description: string | null;
+  date: string;
+  order: number;
+  image_url: string | null;
+  published: boolean;
+}
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
@@ -12,7 +32,9 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 });
 
 // Fetch exhibits with optional published filter
-export async function getExhibits(publishedOnly = false) {
+export async function getExhibits(
+  publishedOnly: boolean = false
+): Promise<Exhibit[]> {
   let query = supabase
     .from("exhibits")
     .select("*")
@@ -29,16 +51,18 @@ export async function getExhibits(publishedOnly = false) {
     return [];
   }
 
-  return data;
+  return data as Exhibit[];
 }
 
 // Legacy function - kept for backward compatibility
-export async function getPublishedExhibits() {
+export async function getPublishedExhibits(): Promise<Exhibit[]> {
   return getExhibits(true);
 }
 
 // Fetch workshops with optional published filter
-export async function getWorkshops(publishedOnly = true) {
+export async function getWorkshops(
+  publishedOnly: boolean = true
+): Promise<Workshop[]> {
   let query = supabase
     .from("workshops")
     .select("*")
@@ -55,5 +79,5 @@ export async function getWorkshops(publishedOnly = true) {
     return [];
   }
 
-  return data;
+  return data as Workshop[];
 }

@@ -155,7 +155,10 @@ export default function Navbar() {
         </div>
 
         {/* Search Bar - Expandable */}
-        <SearchBar isOpen={isSearchOpen} />
+        <SearchBar
+          isOpen={isSearchOpen}
+          onClose={() => setIsSearchOpen(false)}
+        />
 
         {/* Mobile Menu Dropdown - Like Search Bar */}
         <div

@@ -1,11 +1,19 @@
 import Image from "next/image";
+import type { Exhibit } from "../../../../shared/types";
+
+interface ExhibitListProps {
+  exhibits: Exhibit[];
+  onDelete: (id: string) => void;
+  onTogglePublish: (id: string) => void;
+  onEdit: (exhibit: Exhibit) => void;
+}
 
 export default function ExhibitList({
   exhibits,
   onDelete,
   onTogglePublish,
   onEdit,
-}) {
+}: ExhibitListProps) {
   if (exhibits.length === 0) {
     return (
       <div className="bg-white rounded-lg shadow-md p-8 sm:p-12 text-center">
@@ -95,13 +103,13 @@ export default function ExhibitList({
                     Edit
                   </button>
                   <button
-                    onClick={() => onTogglePublish(exhibit)}
+                    onClick={() => exhibit.id && onTogglePublish(exhibit.id)}
                     className="text-blue-600 hover:text-blue-900 mr-4"
                   >
                     {exhibit.published ? "Unpublish" : "Publish"}
                   </button>
                   <button
-                    onClick={() => onDelete(exhibit.id)}
+                    onClick={() => exhibit.id && onDelete(exhibit.id)}
                     className="text-red-600 hover:text-red-900"
                   >
                     Delete
@@ -166,13 +174,13 @@ export default function ExhibitList({
                   Edit
                 </button>
                 <button
-                  onClick={() => onTogglePublish(exhibit)}
+                  onClick={() => exhibit.id && onTogglePublish(exhibit.id)}
                   className="flex-1 px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
                 >
                   {exhibit.published ? "Unpublish" : "Publish"}
                 </button>
                 <button
-                  onClick={() => onDelete(exhibit.id)}
+                  onClick={() => exhibit.id && onDelete(exhibit.id)}
                   className="flex-1 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
                 >
                   Delete

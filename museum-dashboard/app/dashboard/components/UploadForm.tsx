@@ -8,26 +8,39 @@ import {
   updateExhibit,
   uploadImage,
 } from "../../../lib/supabaseClient";
+import type { Exhibit } from "../../../../shared/types";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+
+interface FormData {
+  title: string;
+  description: string;
+  published: boolean;
+}
+
+interface UploadFormProps {
+  onSuccess: () => void;
+  editMode?: boolean;
+  initialData?: Exhibit | null;
+}
 
 export default function UploadForm({
   onSuccess,
   editMode = false,
   initialData = null,
-}) {
-  const [formData, setFormData] = useState({
+}: UploadFormProps) {
+  const [formData, setFormData] = useState<FormData>({
     title: "",
     description: "",
     published: false,
   });
-  const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [showToast, setShowToast] = useState(false);
-  const [error, setError] = useState("");
-  const [fieldErrors, setFieldErrors] = useState({});
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [showToast, setShowToast] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   // Load initial data for edit mode
   useEffect(() => {
@@ -44,8 +57,11 @@ export default function UploadForm({
     }
   }, [editMode, initialData]);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -56,7 +72,7 @@ export default function UploadForm({
     }
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setError("");
     setFieldErrors((prev) => ({ ...prev, image: "" }));
 
@@ -83,7 +99,7 @@ export default function UploadForm({
       // Create image preview
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result);
+        setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -110,12 +126,14 @@ export default function UploadForm({
     setFieldErrors({});
     setUploadProgress(0);
     // Clear file input
-    const fileInput = document.querySelector('input[type="file"]');
+    const fileInput = document.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
     if (fileInput) fileInput.value = "";
   };
 
-  const validateForm = () => {
-    const errors = {};
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
 
     if (!formData.title.trim()) {
       errors.title = "Title is required";
@@ -134,7 +152,9 @@ export default function UploadForm({
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     setError("");
 
@@ -157,7 +177,7 @@ export default function UploadForm({
       }
 
       // Create or update exhibit
-      if (editMode && initialData) {
+      if (editMode && initialData && initialData.id) {
         await updateExhibit(initialData.id, {
           title: formData.title,
           description: formData.description,
@@ -194,7 +214,7 @@ export default function UploadForm({
         if (onSuccess) onSuccess();
       }, 1500);
     } catch (err) {
-      setError(err.message || "Failed to create exhibit");
+      setError(err instanceof Error ? err.message : "Failed to create exhibit");
       console.error(err);
     } finally {
       setUploading(false);
@@ -242,8 +262,9 @@ export default function UploadForm({
                 onClick={() => {
                   setImage(null);
                   setImagePreview(null);
-                  const fileInput =
-                    document.querySelector('input[type="file"]');
+                  const fileInput = document.querySelector(
+                    'input[type="file"]'
+                  ) as HTMLInputElement;
                   if (fileInput) fileInput.value = "";
                 }}
                 className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-colors shadow-lg"

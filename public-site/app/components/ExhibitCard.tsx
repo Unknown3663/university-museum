@@ -2,9 +2,20 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import type { Exhibit } from "../../../shared/types";
 
-export default function ExhibitCard({ exhibit, index = 0, priority = false }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface ExhibitCardProps {
+  exhibit: Exhibit;
+  index?: number;
+  priority?: boolean;
+}
+
+export default function ExhibitCard({
+  exhibit,
+  index = 0,
+  priority = false,
+}: ExhibitCardProps) {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -18,7 +29,7 @@ export default function ExhibitCard({ exhibit, index = 0, priority = false }) {
 
   // Handle ESC key press
   useEffect(() => {
-    const handleEscKey = (event) => {
+    const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isModalOpen) {
         closeModal();
       }

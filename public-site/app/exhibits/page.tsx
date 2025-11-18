@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import ExhibitCard from "../components/ExhibitCard";
 import SignatureLogo from "../components/SignatureLogo";
 import Footer from "../components/Footer";
+import type { Exhibit } from "../../../shared/types";
 
 const EXHIBITS_PER_PAGE = 6;
 
@@ -15,12 +16,12 @@ function ExhibitsContent() {
   const searchParams = useSearchParams();
   const urlSearch = searchParams.get("search") || "";
 
-  const [exhibits, setExhibits] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(urlSearch);
-  const [sortBy, setSortBy] = useState("newest");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [exhibits, setExhibits] = useState<Exhibit[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>(urlSearch);
+  const [sortBy, setSortBy] = useState<string>("newest");
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   // Update search query when URL params change
   useEffect(() => {
@@ -45,7 +46,7 @@ function ExhibitsContent() {
       setExhibits(result.exhibits || []);
     } catch (err) {
       console.error("Error fetching exhibits:", err);
-      setError(err.message);
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -73,10 +74,18 @@ function ExhibitsContent() {
     const sorted = [...filtered];
     switch (sortBy) {
       case "newest":
-        sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        sorted.sort(
+          (a, b) =>
+            new Date(b.created_at || 0).getTime() -
+            new Date(a.created_at || 0).getTime()
+        );
         break;
       case "oldest":
-        sorted.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+        sorted.sort(
+          (a, b) =>
+            new Date(a.created_at || 0).getTime() -
+            new Date(b.created_at || 0).getTime()
+        );
         break;
       case "a-z":
         sorted.sort((a, b) => a.title.localeCompare(b.title));

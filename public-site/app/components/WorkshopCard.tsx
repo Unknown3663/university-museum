@@ -3,10 +3,24 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-export default function WorkshopCard({ workshop }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface Workshop {
+  id: string;
+  title: string;
+  description: string | null;
+  date: string;
+  order: number;
+  image_url: string | null;
+  published: boolean;
+}
 
-  const formatDate = (dateString) => {
+interface WorkshopCardProps {
+  workshop: Workshop;
+}
+
+export default function WorkshopCard({ workshop }: WorkshopCardProps) {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
@@ -27,7 +41,7 @@ export default function WorkshopCard({ workshop }) {
 
   // Handle ESC key press
   useEffect(() => {
-    const handleEscKey = (event) => {
+    const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isModalOpen) {
         closeModal();
       }

@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import WorkshopForm from "../components/WorkshopForm";
 import WorkshopList from "../components/WorkshopList";
+import type { Workshop } from "../../../../shared/types";
 
 export default function WorkshopsPage() {
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [editWorkshop, setEditWorkshop] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [refreshKey, setRefreshKey] = useState<number>(0);
+  const [editWorkshop, setEditWorkshop] = useState<Workshop | null>(null);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   useEffect(() => {
     // Check if we're returning from another page with edit data
@@ -27,7 +28,7 @@ export default function WorkshopsPage() {
     setEditWorkshop(null);
   };
 
-  const handleEdit = (workshop) => {
+  const handleEdit = (workshop: Workshop): void => {
     setEditWorkshop(workshop);
     setIsEditMode(true);
     // Scroll to form

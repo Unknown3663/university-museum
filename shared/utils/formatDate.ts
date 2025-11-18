@@ -1,9 +1,9 @@
 /**
  * Format a date string to a readable format
- * @param {string} dateString - ISO date string
- * @returns {string} Formatted date (e.g., "January 1, 2024")
+ * @param dateString - ISO date string
+ * @returns Formatted date (e.g., "January 1, 2024")
  */
-export function formatDate(dateString) {
+export function formatDate(dateString: string): string {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -14,11 +14,11 @@ export function formatDate(dateString) {
 
 /**
  * Truncate text to a specified length
- * @param {string} text - Text to truncate
- * @param {number} maxLength - Maximum length
- * @returns {string} Truncated text with ellipsis
+ * @param text - Text to truncate
+ * @param maxLength - Maximum length
+ * @returns Truncated text with ellipsis
  */
-export function truncateText(text, maxLength = 100) {
+export function truncateText(text: string, maxLength: number = 100): string {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength).trim() + "...";
 }

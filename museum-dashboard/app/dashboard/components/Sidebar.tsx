@@ -10,7 +10,12 @@ const navigation = [
   { name: "Workshops", href: "/dashboard/workshops", icon: "🎓" },
 ];
 
-export default function Sidebar({ isOpen, onClose }) {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   return (

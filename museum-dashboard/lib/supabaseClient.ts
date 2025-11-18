@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import type { Exhibit, Workshop } from "../../shared/types";
 
 // ============ ENVIRONMENT VALIDATION ============
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -14,10 +15,8 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 // ============ ERROR HANDLER ============
 /**
  * Centralized error handler
- * @param {Error} error - The error object
- * @param {string} context - Context description for the error
  */
-function handleError(error, context = "") {
+function handleError(error: any, context: string = ""): never {
   const message = context
     ? `❌ [${context}]: ${error.message}`
     : `❌ ${error.message}`;
@@ -26,7 +25,7 @@ function handleError(error, context = "") {
 }
 
 // ============ AUTH FUNCTIONS ============
-export async function signIn(email, password) {
+export async function signIn(email: string, password: string) {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -39,7 +38,7 @@ export async function signIn(email, password) {
   }
 }
 
-export async function signOut() {
+export async function signOut(): Promise<void> {
   try {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
@@ -61,7 +60,7 @@ export async function getUser() {
   }
 }
 
-export async function isAuthenticated() {
+export async function isAuthenticated(): Promise<boolean> {
   try {
     const user = await getUser();
     return !!user;
@@ -71,7 +70,9 @@ export async function isAuthenticated() {
 }
 
 // ============ EXHIBIT FUNCTIONS ============
-export async function getExhibits(publishedOnly = false) {
+export async function getExhibits(
+  publishedOnly: boolean = false
+): Promise<Exhibit[]> {
   try {
     let query = supabase
       .from("exhibits")
@@ -85,13 +86,13 @@ export async function getExhibits(publishedOnly = false) {
     const { data, error } = await query;
 
     if (error) throw error;
-    return data;
+    return data as Exhibit[];
   } catch (error) {
     handleError(error, "Fetching exhibits");
   }
 }
 
-export async function createExhibit(exhibit) {
+export async function createExhibit(exhibit: Exhibit): Promise<Exhibit> {
   try {
     const { data, error } = await supabase
       .from("exhibits")
@@ -100,13 +101,16 @@ export async function createExhibit(exhibit) {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Exhibit;
   } catch (error) {
     handleError(error, "Creating exhibit");
   }
 }
 
-export async function updateExhibit(id, updates) {
+export async function updateExhibit(
+  id: string,
+  updates: Partial<Exhibit>
+): Promise<Exhibit> {
   try {
     const { data, error } = await supabase
       .from("exhibits")
@@ -116,13 +120,13 @@ export async function updateExhibit(id, updates) {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Exhibit;
   } catch (error) {
     handleError(error, "Updating exhibit");
   }
 }
 
-export async function deleteExhibit(id) {
+export async function deleteExhibit(id: string): Promise<void> {
   try {
     // First, get the exhibit to delete its image
     const { data: exhibit } = await supabase
@@ -145,15 +149,16 @@ export async function deleteExhibit(id) {
 
 /**
  * Toggle publish status of an exhibit
- * @param {string} id - Exhibit ID
- * @param {boolean} publishStatus - New publish status
  */
-export async function togglePublish(id, publishStatus) {
+export async function togglePublish(
+  id: string,
+  publishStatus: boolean
+): Promise<Exhibit> {
   return await updateExhibit(id, { published: publishStatus });
 }
 
 // ============ IMAGE FUNCTIONS ============
-export async function uploadImage(file) {
+export async function uploadImage(file: File): Promise<string> {
   try {
     const fileExt = file.name.split(".").pop();
     const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
@@ -186,7 +191,7 @@ export async function uploadImage(file) {
   }
 }
 
-export async function deleteImage(imageUrl) {
+export async function deleteImage(imageUrl: string): Promise<void> {
   try {
     const path = imageUrl.split("/exhibit-images/")[1];
     if (!path) return;
@@ -205,7 +210,7 @@ export async function deleteImage(imageUrl) {
 /**
  * Fetch all workshops (ordered by order number)
  */
-export async function getWorkshops() {
+export async function getWorkshops(): Promise<Workshop[]> {
   try {
     const { data, error } = await supabase
       .from("workshops")
@@ -213,7 +218,7 @@ export async function getWorkshops() {
       .order("order", { ascending: true });
 
     if (error) throw error;
-    return data || [];
+    return (data as Workshop[]) || [];
   } catch (error) {
     handleError(error, "Fetching workshops");
   }
@@ -222,7 +227,9 @@ export async function getWorkshops() {
 /**
  * Create a new workshop
  */
-export async function createWorkshop(workshopData) {
+export async function createWorkshop(
+  workshopData: Workshop
+): Promise<Workshop> {
   try {
     const { data, error } = await supabase
       .from("workshops")
@@ -231,7 +238,7 @@ export async function createWorkshop(workshopData) {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Workshop;
   } catch (error) {
     handleError(error, "Creating workshop");
   }
@@ -240,7 +247,10 @@ export async function createWorkshop(workshopData) {
 /**
  * Update an existing workshop
  */
-export async function updateWorkshop(id, updates) {
+export async function updateWorkshop(
+  id: string,
+  updates: Partial<Workshop>
+): Promise<Workshop> {
   try {
     const { data, error } = await supabase
       .from("workshops")
@@ -250,7 +260,7 @@ export async function updateWorkshop(id, updates) {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Workshop;
   } catch (error) {
     handleError(error, "Updating workshop");
   }
@@ -259,7 +269,7 @@ export async function updateWorkshop(id, updates) {
 /**
  * Delete a workshop
  */
-export async function deleteWorkshop(id) {
+export async function deleteWorkshop(id: string): Promise<void> {
   try {
     const { error } = await supabase.from("workshops").delete().eq("id", id);
 
@@ -272,6 +282,9 @@ export async function deleteWorkshop(id) {
 /**
  * Toggle workshop publish status
  */
-export async function toggleWorkshopPublish(id, publishStatus) {
+export async function toggleWorkshopPublish(
+  id: string,
+  publishStatus: boolean
+): Promise<Workshop> {
   return await updateWorkshop(id, { published: publishStatus });
 }
