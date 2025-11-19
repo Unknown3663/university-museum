@@ -2,376 +2,210 @@
 
 # 🏛️ Tourist Guidance Museum
 
-### Digital Platform for Heritage Preservation and Education
+### Digital Platform for Heritage Preservation & Education
 
 _Faculty of Tourism and Hotels, Minia University_
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com/)
 
 </div>
 
 ---
 
-## 📖 About The Project
+## 📖 Overview
 
-This platform supports the **Friends of Museum** initiative at the Faculty of Tourism and Hotels, Minia University. Launched to coincide with the opening of the **Grand Egyptian Museum** (November 1st, 2025), this digital platform aims to foster Egyptian identity and heritage preservation.
+This monorepo powers the **Tourist Guidance Museum** digital experience:
 
-### 🎯 Initiative: "It's Your Own: Protect Your Identity"
+- `public-site/` – a public storytelling site showcasing exhibits, workshops, and the **Friends of Museum** initiative.
+- `museum-dashboard/` – a secure admin dashboard for managing exhibits and workshops.
+- `shared/` – shared types, utilities, and components used by both apps.
 
-The platform serves dual purposes:
-
-1. **Public Heritage Portal** - Showcasing the educational museum's collection of archaeological artifact replicas
-2. **Administrative Dashboard** - Managing exhibits, workshops, and educational content
-
----
-
-## ✨ Key Features
-
-### 🌐 Public Website
-
-<table>
-<tr>
-<td width="50%">
-
-#### 🏠 Interactive Homepage
-
-- Dynamic hero section with museum imagery
-- Smooth scroll animations
-- Responsive design for all devices
-- College and university branding integration
-
-</td>
-<td width="50%">
-
-#### 🔍 Smart Search
-
-- Real-time exhibit search
-- Live results with thumbnails
-- Filter by title and description
-- Mobile-optimized interface
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-#### 🎨 Exhibits Gallery
-
-- Comprehensive artifact catalog
-- High-quality image display
-- Detailed descriptions (Arabic & English)
-- Pagination for easy browsing
-
-</td>
-<td width="50%">
-
-#### 📚 Educational Content
-
-- Workshop announcements
-- Team member profiles
-- Initiative goals and objectives
-- GEM countdown integration
-
-</td>
-</tr>
-</table>
-
-### 🔐 Admin Dashboard
-
-<table>
-<tr>
-<td width="50%">
-
-#### 📊 Management Portal
-
-- Secure authentication system
-- Real-time statistics dashboard
-- Intuitive navigation sidebar
-- Mobile-responsive interface
-
-</td>
-<td width="50%">
-
-#### 🖼️ Exhibit Management
-
-- Upload exhibits with images
-- Edit existing artifacts
-- Publish/unpublish control
-- Bulk operations support
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-#### 📅 Workshop Management
-
-- Create workshop events
-- Order and schedule control
-- Date and description management
-- Publish status tracking
-
-</td>
-<td width="50%">
-
-#### 🎯 Content Control
-
-- Draft and publish workflow
-- Image optimization
-- Multi-language support ready
-- SEO-friendly structure
-
-</td>
-</tr>
-</table>
+The platform supports the initiative **“It's Your Own: Protect Your Identity”**, launched alongside the **Grand Egyptian Museum** opening (November 1st, 2025), to strengthen Egyptian identity and heritage awareness.
 
 ---
 
-## 🎨 Design Highlights
+## ✨ Core Features
 
-### Visual Identity
+### 🌐 Public Website (`public-site/`)
 
-- **Typography**: Playfair Display (serif) for elegance, Inter (sans-serif) for readability
-- **Color Palette**: Museum-inspired earth tones with modern blue accents
-- **Imagery**: High-quality backgrounds featuring Egyptian heritage
-- **Animations**: Smooth Framer Motion transitions for enhanced UX
+- 🏠 **Hero storytelling** with museum imagery, countdown to the Grand Egyptian Museum, and clear initiative messaging.
+- 🔍 **Smart search** with real‑time exhibit filtering and instant results.
+- 🖼️ **Exhibits gallery** with high‑quality images, categories, and responsive cards.
+- 📚 **Workshops & events** listing with ordering, dates, and rich descriptions.
+- 👥 **Team page** highlighting faculty, initiative leaders, and museum team.
+- 📱 **First‑class responsive design** across phones, tablets, laptops, and 4K.
 
-### User Experience
+> Detailed responsive behaviour and component notes live in `RESPONSIVE_DESIGN.md`.
 
-- ⚡ **Fast Loading**: Optimized images and lazy loading
-- 📱 **Mobile First**: Responsive design from 320px to 4K displays
-- ♿ **Accessible**: WCAG compliant with ARIA labels
-- 🎯 **Intuitive**: Clear navigation and user flows
+### 🔐 Admin Dashboard (`museum-dashboard/`)
+
+- 🔒 **Supabase Auth** login with protected routes.
+- 🖼️ **Exhibit management** – create, edit, delete, publish/unpublish exhibits with image upload to Supabase Storage.
+- 📅 **Workshop management** – create and order workshops for the public site.
+- 📊 **Content overview** – clean dashboard layout with navigation and statistics.
+- 📱 **Mobile‑ready admin UI** so content can be updated on the go.
+
+See `museum-dashboard/README.md` for schema, setup, and usage details.
 
 ---
 
-## 🏗️ Technical Architecture
+## 🏗️ Architecture
 
-### Frontend Stack
+### Tech Stack
 
-```
-Next.js 15 (App Router)
-├── React 18 Server Components
-├── Tailwind CSS + PostCSS
-├── Framer Motion Animations
-├── Next/Image Optimization
-└── Dynamic Imports
-```
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript
+- **UI:** React 18, Tailwind CSS
+- **Backend as a Service:** Supabase (PostgreSQL, Auth, Storage, RLS)
 
-### Backend Services
+### High‑Level Structure
 
-```
-Supabase Backend
-├── PostgreSQL Database
-├── Row Level Security (RLS)
-├── Authentication & Authorization
-├── Storage Buckets
-└── Real-time Subscriptions
-```
-
-### Project Structure
-
-```
+```bash
 University-Museum/
 │
-├── public-site/              # Public-facing website
+├── public-site/          # Public-facing website (Next.js 15, TS)
 │   ├── app/
-│   │   ├── page.jsx         # Homepage
-│   │   ├── exhibits/        # Exhibit gallery
-│   │   ├── workshops/       # Workshops page
-│   │   ├── team/           # Team members
-│   │   ├── api/            # API routes
-│   │   └── components/     # Reusable components
+│   │   ├── page.tsx      # Landing page
+│   │   ├── exhibits/     # Exhibits listing
+│   │   ├── workshops/    # Workshops listing
+│   │   ├── team/         # Team page
+│   │   ├── api/          # Public API (e.g. /api/exhibits)
+│   │   └── components/   # UI components (Hero, Navbar, Cards, etc.)
 │   ├── lib/
-│   │   └── supabaseClient.js
+│   │   └── supabaseClient.ts
 │   └── public/
-│       ├── backgrounds/    # Hero images
-│       └── logos/         # Branding assets
+│       ├── backgrounds/
+│       └── logos/
 │
-├── museum-dashboard/         # Admin dashboard
+├── museum-dashboard/     # Admin dashboard (Next.js 15, TS)
 │   ├── app/
-│   │   ├── login/          # Authentication
+│   │   ├── login/
 │   │   └── dashboard/
-│   │       ├── page.jsx    # Dashboard home
-│   │       ├── upload/     # Exhibit upload
-│   │       ├── exhibits/   # Exhibit management
-│   │       ├── workshops/  # Workshop management
-│   │       └── components/ # Dashboard UI
-│   └── lib/
-│       └── supabaseClient.js
+│   │       ├── exhibits/
+│   │       ├── upload/
+│   │       ├── workshops/
+│   │       └── components/
+│   ├── lib/
+│   │   └── supabaseClient.ts
+│   └── public/
 │
-└── shared/                   # Shared utilities (planned)
+└── shared/               # Cross‑app building blocks
+    ├── components/
+    ├── types/
+    │   └── index.ts
+    └── utils/
+        └── formatDate.ts
 ```
+
+---
+
+## 🚀 Getting Started
+
+> You can run each app independently. Make sure you have Node.js 18+ and npm or pnpm installed.
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/Unknown3663/University-Museum.git
+cd University-Museum
+
+# Install for both apps (from repo root)
+cd public-site && npm install
+cd ../museum-dashboard && npm install
+```
+
+### 2. Environment Variables
+
+Create `.env.local` files in both `public-site/` and `museum-dashboard/` using your Supabase project credentials.
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+For dashboard‑specific database and storage configuration (tables, RLS, buckets), follow `museum-dashboard/README.md`.
+
+### 3. Run Development Servers
+
+```bash
+# Public site
+cd public-site
+npm run dev   # default: http://localhost:3000
+
+# Admin dashboard
+cd ../museum-dashboard
+npm run dev   # often configured as http://localhost:3001
+```
+
+---
+
+## 🎨 Design & UX
+
+- 📱 **Responsive by design** – carefully tuned breakpoints for phones → 2XL screens.
+- 🎭 **Brand‑aligned visuals** – museum‑inspired palette, heritage imagery, and typography (Playfair Display + Inter).
+- ⚡ **Performance‑minded** – image optimization, lazy loading, and efficient layouts.
+- ♿ **Accessibility** – semantic structure, ARIA attributes, and keyboard‑friendly navigation.
+
+For a deep dive into breakpoints, components, and testing guidelines, see `RESPONSIVE_DESIGN.md`.
 
 ---
 
 ## 🎓 Educational Mission
 
-### Platform Objectives
+Aligned with **Egypt's Vision 2030**, the platform focuses on:
 
-Aligned with **Egypt's Vision 2030**, our platform contributes to:
-
-1. **Heritage Awareness** 🏺
-
-   - Conducting workshops on heritage preservation
-   - Training museum teams in best practices
-   - Implementing AI applications for heritage conservation
-
-2. **Digital Documentation** 📱
-
-   - Upgrading the educational museum catalog
-   - Maintaining comprehensive artifact database
-   - Multi-language accessibility (Arabic/English)
-
-3. **Community Engagement** 👥
-
-   - Publishing museology announcements
-   - Educational program promotion
-   - Virtual museum experiences
-
-4. **Identity Preservation** 🇪🇬
-   - Strengthening Egyptian cultural identity
-   - Promoting heritage awareness
-   - Supporting local museum initiatives
+1. **Heritage Awareness** – workshops, curated exhibits, and educational storytelling.
+2. **Digital Documentation** – a structured, queryable catalog of artifact replicas.
+3. **Community Engagement** – open access to museology news and educational events.
+4. **Identity Preservation** – strengthening Egyptian cultural identity through digital tools.
 
 ---
 
-## 🛡️ Security & Performance
+## 📌 Roadmap
 
-### Security Measures
-
-- 🔐 **Authentication**: Supabase Auth with secure session management
-- 🛡️ **Authorization**: Row Level Security (RLS) policies
-- 🔒 **Data Protection**: Encrypted connections (SSL/TLS)
-- 👁️ **Access Control**: Role-based permissions
-- 🚫 **Input Validation**: Client and server-side validation
-
-### Performance Optimization
-
-- ⚡ **Static Generation**: Pre-rendered pages for speed
-- 🖼️ **Image Optimization**: Next/Image with WebP format
-- 📦 **Code Splitting**: Automatic bundle optimization
-- 🗃️ **Caching**: Smart caching strategies
-- 📊 **Monitoring**: Real-time performance tracking
+- 🌍 Full Arabic/English bilingual support.
+- 🤖 AI‑assisted heritage recommendations and smart exhibit suggestions.
+- 🎥 Virtual tours and richer media experiences.
+- 📊 Analytics dashboard for visitor engagement.
+- 📱 Native mobile apps and PWA enhancements.
 
 ---
 
-## 🌟 Key Features Showcase
+## 👥 Credits
 
-### Public Site Features
+**Friends Of Museum – Faculty of Tourism and Hotels, Minia University**
 
-| Feature       | Description                                | Status  |
-| ------------- | ------------------------------------------ | ------- |
-| 🏠 Homepage   | Dynamic hero with museum branding          | ✅ Live |
-| 🔍 Search     | Real-time exhibit search with live results | ✅ Live |
-| 🖼️ Exhibits   | Paginated gallery with 22+ artifacts       | ✅ Live |
-| 📅 Workshops  | Workshop schedule and announcements        | ✅ Live |
-| 👥 Team       | Faculty and team member profiles           | ✅ Live |
-| 📱 Responsive | Mobile-first responsive design             | ✅ Live |
-| 🌐 SEO        | Optimized meta tags and structure          | ✅ Live |
+- Prof. Samar Mustafa – College Dean
+- Prof. Engy Elkilany – College Vice Dean
+- Dr. Gehad Mohamed – Initiative Coordinator
 
-### Dashboard Features
+**Museum Team**
 
-| Feature      | Description                         | Status  |
-| ------------ | ----------------------------------- | ------- |
-| 📊 Dashboard | Real-time statistics and overview   | ✅ Live |
-| ➕ Upload    | Exhibit creation with image upload  | ✅ Live |
-| ✏️ Edit      | Update existing exhibits            | ✅ Live |
-| 🗑️ Delete    | Remove exhibits with confirmation   | ✅ Live |
-| 📢 Publish   | Control exhibit visibility          | ✅ Live |
-| 📅 Workshops | Create and manage workshop events   | ✅ Live |
-| 🔒 Auth      | Secure login and session management | ✅ Live |
+- Mohand Hesham – Team Leader
+- Ezzat Maged – Web Developer
+- Ziad Khalaf – Curator
+- Mahmoud Farghly – Curator
+- Mala Amr – Curator
+- Romaysaa Mohamed – Curator
+- Rogena Hany – Curator
+- Shahd Esaam – Curator
+- Shahd Ahmad – Curator
+- Hanin Ahmed – Curator
+- Login Ahmed – Curator
+- Samuil Hany – Curator
 
 ---
-
-## 👥 The Team
-
-### Friends Of Museum Initiative
-
-**Faculty Leadership:**
-
-- Prof. Samar Mustafa - College Dean
-- Prof. Engy Elkilany - College Vice Dean
-- Dr. Gehad Mohamed - Initiative Coordinator
-
-**Museum Team:**
-
-- Mohand Hesham - Team Leader
-- Ezzat Maged - Web Developer
-- Ziad Khalaf - Curator
-- Mahmoud Farghly - Curator
-- Mala Amr - Curator
-- Romaysaa Mohamed - Curator
-- Rogena Hany - Curator
-- Shahd Esaam - Curator
-- Shahd Ahmad - Curator
-- Hanin Ahmed - Curator
-- Login Ahmed - Curator
-- Samuil Hany - Curator
-
----
-
-## 📸 Screenshots
 
 <div align="center">
 
-### Public Website
+**Faculty of Tourism and Hotels – Minia University, Egypt**  
+🌐 <a href="https://tourism.minia.edu.eg" target="_blank">tourism.minia.edu.eg</a>
 
-_Homepage showcasing the museum's mission and heritage_
-
-### Exhibits Gallery
-
-_Interactive catalog of 22+ archaeological artifact replicas_
-
-### Admin Dashboard
-
-_Comprehensive management portal for content administration_
-
-</div>
-
----
-
-## 🎯 Future Enhancements
-
-- 🌍 **Multi-language Support**: Full Arabic/English bilingual interface
-- 🤖 **AI Integration**: Heritage preservation recommendations
-- 📱 **Mobile App**: Native iOS/Android applications
-- 🎥 **Virtual Tours**: 3D exhibit exploration
-- 📊 **Analytics Dashboard**: Visitor insights and engagement metrics
-- 🔔 **Notifications**: Workshop alerts and announcements
-- 💬 **Community Features**: User comments and feedback
-- 🎓 **Educational Resources**: Downloadable study materials
-
----
-
-## 📞 Contact & Support
-
-<div align="center">
-
-**Faculty of Tourism and Hotels**  
-Minia University, Egypt
-
-🌐 [Website](https://tourism.minia.edu.eg) | 📧 [Email](mailto:tourism@minia.edu.eg)
-
----
-
-### ⭐ Star this repository if you find it valuable!
-
-**Built with ❤️ by the Friends Of Museum Team**
+If this project inspires you, consider starring the repo ⭐
 
 _"Protecting our heritage, strengthening our identity"_
-
-</div>
-
----
-
-<div align="center">
-
-© 2025 Friends Of Museum - Faculty of Tourism and Hotels, Minia University
-
-_All rights reserved_
 
 </div>
