@@ -92,16 +92,6 @@ This platform supports the initiative **“It’s Your Own: Protect Your Identit
 
 ---
 
-## 🌍 Learn More & Visit
-
-**Faculty of Tourism and Hotels – Minia University, Egypt**  
-🌐 <a href="https://tourism.minia.edu.eg" target="_blank">tourism.minia.edu.eg</a>
-
-If this project inspires you, consider sharing it with others.  
-**“Protecting our heritage, strengthening our identity.”**
-
----
-
 ## 🛠️ Technology (at a glance)
 
 - **Framework:** Next.js 15 (App Router)
