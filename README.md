@@ -4,177 +4,61 @@
 
 ### Digital Platform for Heritage Preservation & Education
 
-_Faculty of Tourism and Hotels, Minia University_
+<div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com/)
+# 🏛️ Tourist Guidance Museum
+
+### Preserving Heritage. Inspiring Identity.
+
+_Faculty of Tourism and Hotels, Minia University_
 
 </div>
 
 ---
 
-## 📖 Overview
+## 📖 About the Project
 
-This monorepo powers the **Tourist Guidance Museum** digital experience:
+The Tourist Guidance Museum is a living, evolving digital experience that brings Egypt’s rich heritage closer to everyone. It celebrates artifacts, stories, and the people who care for them — connecting communities with their cultural identity.
 
-- `public-site/` – a public storytelling site showcasing exhibits, workshops, and the **Friends of Museum** initiative.
-- `museum-dashboard/` – a secure admin dashboard for managing exhibits and workshops.
-- `shared/` – shared types, utilities, and components used by both apps.
-
-The platform supports the initiative **“It's Your Own: Protect Your Identity”**, launched alongside the **Grand Egyptian Museum** opening (November 1st, 2025), to strengthen Egyptian identity and heritage awareness.
+This platform supports the initiative **“It’s Your Own: Protect Your Identity”**, launched alongside the opening of the **Grand Egyptian Museum** (November 1st, 2025). Our goal is simple and powerful: help every visitor feel the pride of their history and the responsibility to preserve it.
 
 ---
 
-## ✨ Core Features
+## 🌟 What You’ll Find
 
-### 🌐 Public Website (`public-site/`)
-
-- 🏠 **Hero storytelling** with museum imagery, countdown to the Grand Egyptian Museum, and clear initiative messaging.
-- 🔍 **Smart search** with real‑time exhibit filtering and instant results.
-- 🖼️ **Exhibits gallery** with high‑quality images, categories, and responsive cards.
-- 📚 **Workshops & events** listing with ordering, dates, and rich descriptions.
-- 👥 **Team page** highlighting faculty, initiative leaders, and museum team.
-- 📱 **First‑class responsive design** across phones, tablets, laptops, and 4K.
-
-> Detailed responsive behaviour and component notes live in `RESPONSIVE_DESIGN.md`.
-
-### 🔐 Admin Dashboard (`museum-dashboard/`)
-
-- 🔒 **Supabase Auth** login with protected routes.
-- 🖼️ **Exhibit management** – create, edit, delete, publish/unpublish exhibits with image upload to Supabase Storage.
-- 📅 **Workshop management** – create and order workshops for the public site.
-- 📊 **Content overview** – clean dashboard layout with navigation and statistics.
-- 📱 **Mobile‑ready admin UI** so content can be updated on the go.
-
-See `museum-dashboard/README.md` for schema, setup, and usage details.
+- **Exhibits Gallery:** Explore curated collections with images, timelines, and stories behind the artifacts.
+- **Workshops & Events:** Discover educational sessions and hands-on activities designed to foster heritage awareness.
+- **Team & Initiative:** Meet the people behind the museum — faculty, curators, students, and initiative leaders.
+- **Search & Discover:** Quickly find exhibits and topics, with clear previews and accessible navigation.
 
 ---
 
-## 🏗️ Architecture
+## 💡 Why It Matters
 
-### Tech Stack
-
-- **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript
-- **UI:** React 18, Tailwind CSS
-- **Backend as a Service:** Supabase (PostgreSQL, Auth, Storage, RLS)
-
-### High‑Level Structure
-
-```bash
-University-Museum/
-│
-├── public-site/          # Public-facing website (Next.js 15, TS)
-│   ├── app/
-│   │   ├── page.tsx      # Landing page
-│   │   ├── exhibits/     # Exhibits listing
-│   │   ├── workshops/    # Workshops listing
-│   │   ├── team/         # Team page
-│   │   ├── api/          # Public API (e.g. /api/exhibits)
-│   │   └── components/   # UI components (Hero, Navbar, Cards, etc.)
-│   ├── lib/
-│   │   └── supabaseClient.ts
-│   └── public/
-│       ├── backgrounds/
-│       └── logos/
-│
-├── museum-dashboard/     # Admin dashboard (Next.js 15, TS)
-│   ├── app/
-│   │   ├── login/
-│   │   └── dashboard/
-│   │       ├── exhibits/
-│   │       ├── upload/
-│   │       ├── workshops/
-│   │       └── components/
-│   ├── lib/
-│   │   └── supabaseClient.ts
-│   └── public/
-│
-└── shared/               # Cross‑app building blocks
-    ├── components/
-    ├── types/
-    │   └── index.ts
-    └── utils/
-        └── formatDate.ts
-```
+- **Identity & Belonging:** Heritage strengthens who we are and how we see ourselves.
+- **Education & Access:** The museum makes learning accessible for students, families, and visitors everywhere.
+- **Community & Continuity:** Sharing stories ensures our culture thrives across generations.
 
 ---
 
-## 🚀 Getting Started
+## 🎭 Visitor Experience
 
-> You can run each app independently. Make sure you have Node.js 18+ and npm or pnpm installed.
-
-### 1. Clone & Install
-
-```bash
-git clone https://github.com/Unknown3663/University-Museum.git
-cd University-Museum
-
-# Install for both apps (from repo root)
-cd public-site && npm install
-cd ../museum-dashboard && npm install
-```
-
-### 2. Environment Variables
-
-Create `.env.local` files in both `public-site/` and `museum-dashboard/` using your Supabase project credentials.
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
-For dashboard‑specific database and storage configuration (tables, RLS, buckets), follow `museum-dashboard/README.md`.
-
-### 3. Run Development Servers
-
-```bash
-# Public site
-cd public-site
-npm run dev   # default: http://localhost:3000
-
-# Admin dashboard
-cd ../museum-dashboard
-npm run dev   # often configured as http://localhost:3001
-```
+- **Welcoming Design:** A storytelling homepage with iconic imagery and clear calls to explore.
+- **Smooth Navigation:** Simple, intuitive paths to exhibits, workshops, and the team.
+- **Accessible to All:** Thoughtful keyboard support, clear structure, and readable content.
+- **Responsive Everywhere:** Beautiful, consistent experience across phones, tablets, laptops, and large screens.
 
 ---
 
-## 🎨 Design & UX
+## 🗓️ Programs & Workshops
 
-- 📱 **Responsive by design** – carefully tuned breakpoints for phones → 2XL screens.
-- 🎭 **Brand‑aligned visuals** – museum‑inspired palette, heritage imagery, and typography (Playfair Display + Inter).
-- ⚡ **Performance‑minded** – image optimization, lazy loading, and efficient layouts.
-- ♿ **Accessibility** – semantic structure, ARIA attributes, and keyboard‑friendly navigation.
-
-For a deep dive into breakpoints, components, and testing guidelines, see `RESPONSIVE_DESIGN.md`.
+- Regular sessions aligned with academic goals and national identity initiatives.
+- Each workshop includes clear descriptions, dates, and highlight visuals.
+- Content evolves with participation from students, faculty, and museum partners.
 
 ---
 
-## 🎓 Educational Mission
-
-Aligned with **Egypt's Vision 2030**, the platform focuses on:
-
-1. **Heritage Awareness** – workshops, curated exhibits, and educational storytelling.
-2. **Digital Documentation** – a structured, queryable catalog of artifact replicas.
-3. **Community Engagement** – open access to museology news and educational events.
-4. **Identity Preservation** – strengthening Egyptian cultural identity through digital tools.
-
----
-
-## 📌 Roadmap
-
-- 🌍 Full Arabic/English bilingual support.
-- 🤖 AI‑assisted heritage recommendations and smart exhibit suggestions.
-- 🎥 Virtual tours and richer media experiences.
-- 📊 Analytics dashboard for visitor engagement.
-- 📱 Native mobile apps and PWA enhancements.
-
----
-
-## 👥 Credits
+## 🤝 Partners & Credits
 
 **Friends Of Museum – Faculty of Tourism and Hotels, Minia University**
 
@@ -199,13 +83,56 @@ Aligned with **Egypt's Vision 2030**, the platform focuses on:
 
 ---
 
-<div align="center">
+## 🎯 Our Commitments
+
+- **Preserve:** Document and celebrate Egypt’s heritage responsibly.
+- **Educate:** Provide clear, engaging content for all ages.
+- **Include:** Ensure accessibility and welcome diverse audiences.
+- **Evolve:** Listen, learn, and improve with the community.
+
+---
+
+## 🌍 Learn More & Visit
 
 **Faculty of Tourism and Hotels – Minia University, Egypt**  
 🌐 <a href="https://tourism.minia.edu.eg" target="_blank">tourism.minia.edu.eg</a>
 
-If this project inspires you, consider starring the repo ⭐
+If this project inspires you, consider sharing it with others.  
+**“Protecting our heritage, strengthening our identity.”**
 
-_"Protecting our heritage, strengthening our identity"_
+---
+
+## 🛠️ Technology (at a glance)
+
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript (strict mode)
+- **UI:** React 18, Tailwind CSS
+- **Animations:** Framer Motion
+- **Platform & Storage:** Supabase (Auth, Database, Storage)
+- **Hosting & Insights:** Vercel (Analytics, Speed Insights)
+
+These tools help us deliver a fast, accessible, and maintainable experience without distracting from the museum’s mission.
+
+---
+
+<div align="center">
+
+Made with care by educators, students, and curators.  
+For questions or collaboration, please reach out via the Faculty website.
+
+</div>
+- 🔄 **Sharing with others**
+- 🤝 **Contributing improvements**
+- 💬 **Providing feedback**
+
+---
+
+**"Protecting our heritage, strengthening our identity"**
+
+_Powered by Next.js, TypeScript, and ❤️_
+
+[![Built with Next.js](https://img.shields.io/badge/Built_with-Next.js-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Hosted on Vercel](https://img.shields.io/badge/Hosted_on-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com)
 
 </div>
