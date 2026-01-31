@@ -11,8 +11,8 @@ module.exports = {
         xs: "475px", // Extra small devices
       },
       fontFamily: {
-        serif: ["var(--font-playfair)"],
-        sans: ["var(--font-inter)"],
+        serif: ['"Playfair Display"', "Georgia", "serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
       },
       animation: {
         "fade-in": "fadeIn 1s ease-in",

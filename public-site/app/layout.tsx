@@ -1,23 +1,9 @@
-import { Playfair_Display, Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
+import { Metadata as NextMetadata } from "next";
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-  preload: true,
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-  preload: true,
-});
-
-export const metadata = {
+export const metadata: NextMetadata = {
   title: "Tourist Guidance Museum - Explore History and Heritage",
   description:
     "Welcome to Tourist Guidance Museum. Explore history and heritage through time.",
@@ -40,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="en">
       <body className="font-sans antialiased">
         {children}
         <SpeedInsights />
