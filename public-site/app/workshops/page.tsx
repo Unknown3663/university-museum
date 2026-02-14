@@ -1,18 +1,43 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import SignatureLogo from "../components/SignatureLogo";
 import Footer from "../components/Footer";
 import WorkshopCard from "../components/WorkshopCard";
-import { getWorkshops } from "../../lib/supabaseClient";
+import { useLanguage } from "../../../shared/i18n/LanguageContext";
 
-export const metadata = {
-  title: "Workshops - Tourist Guidance Museum",
-  description:
-    "Explore our heritage awareness workshops and educational programs.",
-};
+interface Workshop {
+  id: string;
+  title: string;
+  description: string | null;
+  date: string;
+  order: number;
+  image_url: string | null;
+  published: boolean;
+}
 
-export default async function Workshops() {
-  const workshops = await getWorkshops(true);
+export default function Workshops() {
+  const { t } = useLanguage();
+  const [workshops, setWorkshops] = useState<Workshop[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchWorkshops() {
+      try {
+        // Import the function dynamically on client side
+        const { getWorkshops } = await import("../../lib/supabaseClient");
+        const data = await getWorkshops(true);
+        setWorkshops(data);
+      } catch (error) {
+        console.error("Error fetching workshops:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchWorkshops();
+  }, []);
 
   return (
     <main className="relative min-h-screen w-full flex flex-col">
@@ -40,15 +65,19 @@ export default async function Workshops() {
           {/* Header */}
           <div className="text-center mb-10 sm:mb-12 md:mb-16 bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-white/20">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-3 sm:mb-4">
-              Workshops
+              {t("workshops.title")}
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">
-              Heritage awareness workshops and educational programs
+              {t("workshops.subtitle")}
             </p>
           </div>
 
           {/* Workshops List or Empty State */}
-          {workshops.length === 0 ? (
+          {loading ? (
+            <div className="text-center text-white py-12">
+              <p>{t("common.loading")}</p>
+            </div>
+          ) : workshops.length === 0 ? (
             <div className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-8 sm:p-12 border border-white/20 text-center">
               <div className="max-w-2xl mx-auto">
                 <svg
@@ -65,10 +94,10 @@ export default async function Workshops() {
                   />
                 </svg>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-                  Coming Soon
+                  {t("workshops.emptyTitle")}
                 </h2>
                 <p className="text-lg text-gray-200">
-                  Workshop information will be added through the dashboard.
+                  {t("workshops.emptyDescription")}
                 </p>
               </div>
             </div>

@@ -1,35 +1,35 @@
+"use client";
+
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import SignatureLogo from "../components/SignatureLogo";
 import Footer from "../components/Footer";
-
-export const metadata = {
-  title: "Our Team - Tourist Guidance Museum",
-  description: "Meet the dedicated team behind the Tourist Guidance Museum.",
-};
+import { useLanguage } from "../../../shared/i18n/LanguageContext";
 
 const FACULTY = [
-  { name: "Prof. Samar Mustafa", role: "College Dean" },
-  { name: "Prof. Engy Elkilany", role: "College Vice Dean" },
-  { name: "Dr. Gehad Mohamed", role: "Initiative coordinator" },
+  { name: "Prof. Samar Mustafa", role: "collegeDean" },
+  { name: "Prof. Engy Elkilany", role: "collegeViceDean" },
+  { name: "Dr. Gehad Mohamed", role: "initiativeCoordinator" },
 ];
 
 const TEAM_MEMBERS = [
-  { name: "Ezzat Maged", role: "Web Developer" },
-  { name: "Mohand Hesham", role: "Team Leader" },
-  { name: "Ziad Khalaf", role: "Curator" },
-  { name: "Mahmoud Farghly", role: "Curator" },
-  { name: "Malak Amr", role: "Curator" },
-  { name: "Romaysaa Mohamed", role: "Curator" },
-  { name: "Rogena Hany", role: "Curator" },
-  { name: "Shahd Esaam", role: "Curator" },
-  { name: "Shahd Ahmad", role: "Curator" },
-  { name: "Hanin Ahmed", role: "Curator" },
-  { name: "Login Ahmed", role: "Curator" },
-  { name: "Samuil Hany", role: "Curator" },
+  { name: "Ezzat Maged", role: "webDeveloper" },
+  { name: "Mohand Hesham", role: "teamLeader" },
+  { name: "Ziad Khalaf", role: "curator" },
+  { name: "Mahmoud Farghly", role: "curator" },
+  { name: "Malak Amr", role: "curator" },
+  { name: "Romaysaa Mohamed", role: "curator" },
+  { name: "Rogena Hany", role: "curator" },
+  { name: "Shahd Esaam", role: "curator" },
+  { name: "Shahd Ahmad", role: "curator" },
+  { name: "Hanin Ahmed", role: "curator" },
+  { name: "Login Ahmed", role: "curator" },
+  { name: "Samuil Hany", role: "curator" },
 ];
 
 export default function Team() {
+  const { t } = useLanguage();
+
   return (
     <main className="relative min-h-screen w-full">
       {/* Signature Logo - Always visible */}
@@ -59,14 +59,13 @@ export default function Team() {
               className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-4"
               style={{ textShadow: "2px 2px 8px rgba(0,0,0,0.8)" }}
             >
-              Our Team
+              {t("team.title")}
             </h1>
             <p
               className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto"
               style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
             >
-              Meet the dedicated individuals behind the Tourist Guidance Museum
-              initiative
+              {t("team.subtitle")}
             </p>
           </div>
 
@@ -76,7 +75,7 @@ export default function Team() {
               className="text-2xl sm:text-3xl font-serif font-bold text-white mb-6 sm:mb-8 text-center"
               style={{ textShadow: "2px 2px 6px rgba(0,0,0,0.8)" }}
             >
-              Faculty & Leadership
+              {t("team.faculty")}
             </h2>
             <div className="space-y-4">
               {FACULTY.map((member, index) => (
@@ -110,7 +109,7 @@ export default function Team() {
                         className="text-sm sm:text-base text-gray-300"
                         style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
                       >
-                        {member.role}
+                        {t(`team.roles.${member.role}`)}
                       </p>
                     </div>
                   </div>
@@ -125,7 +124,7 @@ export default function Team() {
               className="text-2xl sm:text-3xl font-serif font-bold text-white mb-6 sm:mb-8 text-center"
               style={{ textShadow: "2px 2px 6px rgba(0,0,0,0.8)" }}
             >
-              Initiative Team
+              {t("team.initiativeTeam")}
             </h2>
             <div className="space-y-4">
               {TEAM_MEMBERS.map((member, index) => (
@@ -159,7 +158,7 @@ export default function Team() {
                         className="text-sm sm:text-base text-gray-300"
                         style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
                       >
-                        {member.role}
+                        {t(`team.roles.${member.role}`)}
                       </p>
                     </div>
                   </div>

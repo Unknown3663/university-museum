@@ -64,7 +64,7 @@ export default function WorkshopForm({
   }, [editMode, initialData]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
@@ -136,7 +136,7 @@ export default function WorkshopForm({
     setUploadProgress(0);
     // Clear file input
     const fileInput = document.querySelector(
-      'input[type="file"]'
+      'input[type="file"]',
     ) as HTMLInputElement;
     if (fileInput) fileInput.value = "";
   };
@@ -163,7 +163,7 @@ export default function WorkshopForm({
   };
 
   const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
     setError("");
@@ -231,7 +231,7 @@ export default function WorkshopForm({
       setError(
         err instanceof Error
           ? err.message
-          : `Failed to ${editMode ? "update" : "create"} workshop`
+          : `Failed to ${editMode ? "update" : "create"} workshop`,
       );
       console.error(err);
     } finally {
@@ -281,7 +281,7 @@ export default function WorkshopForm({
                   setImage(null);
                   setImagePreview(null);
                   const fileInput = document.querySelector(
-                    'input[type="file"]'
+                    'input[type="file"]',
                   ) as HTMLInputElement;
                   if (fileInput) fileInput.value = "";
                 }}
@@ -470,8 +470,8 @@ export default function WorkshopForm({
                 ? "Updating..."
                 : "Creating..."
               : editMode
-              ? "Update Workshop"
-              : "Create Workshop"}
+                ? "Update Workshop"
+                : "Create Workshop"}
           </button>
           {editMode ? (
             <button

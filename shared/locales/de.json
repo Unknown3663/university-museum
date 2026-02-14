@@ -1,0 +1,186 @@
+{
+  "common": {
+    "search": "Suchen",
+    "close": "Schließen",
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "comingSoon": "Demnächst",
+    "clickToView": "Klicken Sie für Details",
+    "allRightsReserved": "Alle Rechte vorbehalten"
+  },
+  "nav": {
+    "home": "Startseite",
+    "team": "Team",
+    "workshops": "Workshops",
+    "exhibits": "Ausstellungen",
+    "toggleSearch": "Suche umschalten",
+    "toggleMenu": "Menü umschalten"
+  },
+  "home": {
+    "hero": {
+      "title": "Willkommen in unserem Museum",
+      "subtitle": "Erkunden Sie Geschichte und Erbe durch die Zeit",
+      "cta": "Über uns"
+    },
+    "about": {
+      "title": "Über uns",
+      "paragraph1": "Diese Plattform unterstützt die Initiative des Museum Friends Teams der Fakultät für Tourismus und Hotels der Universität Minia. Die Einführung der Initiative fällt mit der Eröffnung des Großen Ägyptischen Museums zusammen, das offiziell am 1. November eröffnet werden soll.",
+      "paragraph2": "Diese Initiative trägt den Namen \"Es gehört dir: Schütze deine Identität\", um die ägyptische Identität zu fördern und zur Erhaltung des Erbes zu ermutigen.",
+      "paragraph3": "Darüber hinaus beleuchtet die Plattform das Bildungsmuseum, das viele Nachbildungen archäologischer Artefakte enthält, begleitet von Identifikationsetiketten in Arabisch und Englisch, und so zur öffentlichen Sensibilisierung für das Erbe beiträgt."
+    },
+    "aims": {
+      "title": "Unsere Ziele",
+      "paragraph1": "Eines der Ziele der ägyptischen Vision 2030 ist die \"Bereicherung des kulturellen und sportlichen Lebens\", die die Erhaltung des materiellen und immateriellen Erbes Ägyptens umfasst.",
+      "paragraph2": "Der wissenschaftliche Forschungsplan der Fakultät besteht darin, Forschungen in technologischen Anwendungen zur Erhaltung der ägyptischen Kultur zu fördern. Zahlreiche digitale und technologische Programme wurden in Museen und archäologischen Stätten implementiert, und alte historische Archive wurden dokumentiert. Darüber hinaus werden täglich unzählige internationale und lokale Plattformen zu diesem Zweck gestartet. Daher ist die Einführung unserer Initiative notwendig, um zur Unterstützung unseres Erbes und zur Stärkung unserer Identität beizutragen.",
+      "mainGoals": "Die Hauptziele unserer Plattform sind wie folgt zusammengefasst:",
+      "goal1": "Durchführung von Workshops über Heritage-Bewusstsein und künstliche Anwendungen zur Heritage-Erhaltung.",
+      "goal2": "Schulung des Museumsteams, Umsetzung von Museumspraktiken und deren Verbreitung auf Hochschulebene, um das primäre Ziel der Initiative zu erreichen.",
+      "goal3": "Aktualisierung des Bildungsmuseumskatalogs.",
+      "goal4": "Aktualisierung der Museumsdatenbank.",
+      "goal5": "Veröffentlichung von Ankündigungen in den Bereichen Museologie und Heritage."
+    }
+  },
+  "exhibits": {
+    "title": "Unsere Ausstellungen",
+    "subtitle": "Erkunden Sie unsere kuratierte Sammlung von Ausstellungen aus der ganzen Welt",
+    "searchPlaceholder": "Ausstellungen durchsuchen...",
+    "sortBy": "Sortieren nach:",
+    "sortNewest": "Neueste",
+    "sortOldest": "Älteste",
+    "sortAZ": "A–Z",
+    "sortZA": "Z–A",
+    "noResults": "Keine Ausstellungen gefunden",
+    "noResultsDescription": "Versuchen Sie, Ihre Suche oder Filter anzupassen",
+    "loading": "Ausstellungen werden geladen...",
+    "error": "Fehler beim Laden der Ausstellungen. Bitte versuchen Sie es erneut.",
+    "showing": "{count} {exhibitText} anzeigen",
+    "matching": "passend zu \"{query}\"",
+    "exhibit": "Ausstellung",
+    "exhibits": "Ausstellungen",
+    "page": "Seite {current} von {total}",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "firstPage": "Erste Seite",
+    "lastPage": "Letzte Seite",
+    "filterAll": "Alle Kategorien"
+  },
+  "workshops": {
+    "title": "Workshops",
+    "subtitle": "Heritage-Bewusstseins-Workshops und Bildungsprogramme",
+    "emptyTitle": "Demnächst",
+    "emptyDescription": "Workshop-Informationen werden über das Dashboard hinzugefügt."
+  },
+  "team": {
+    "title": "Unser Team",
+    "subtitle": "Lernen Sie die engagierten Personen hinter der Tourist Guidance Museum Initiative kennen",
+    "faculty": "Fakultät & Leitung",
+    "initiativeTeam": "Initiativ-Team",
+    "roles": {
+      "collegeDean": "Dekan des Colleges",
+      "collegeViceDean": "Vizedekan des Colleges",
+      "initiativeCoordinator": "Initiativkoordinator",
+      "webDeveloper": "Webentwickler",
+      "teamLeader": "Teamleiter",
+      "curator": "Kurator"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Friends Of Museum. Alle Rechte vorbehalten."
+  },
+  "dashboard": {
+    "title": "Museums-Dashboard",
+    "signOut": "Abmelden",
+    "overview": {
+      "title": "Dashboard-Übersicht",
+      "subtitle": "Willkommen im Museums-Dashboard. Verwenden Sie die Seitenleiste zur Navigation.",
+      "totalExhibits": "Gesamtausstellungen",
+      "published": "Veröffentlicht",
+      "drafts": "Entwürfe",
+      "workshops": "Workshops"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "upload": "Hochladen",
+      "exhibits": "Ausstellungen",
+      "workshops": "Workshops",
+      "toggleMenu": "Menü umschalten"
+    },
+    "exhibits": {
+      "title": "Ausstellungen verwalten",
+      "subtitle": "Ihre Ausstellungssammlung anzeigen, bearbeiten und verwalten",
+      "refresh": "Aktualisieren",
+      "emptyTitle": "Noch keine Ausstellungen",
+      "emptyDescription": "Beginnen Sie, indem Sie Ihre erste Ausstellung über die Upload-Seite hochladen.",
+      "editButton": "Bearbeiten",
+      "deleteButton": "Löschen",
+      "confirmDelete": "Möchten Sie diese Ausstellung wirklich löschen?",
+      "deleteSuccess": "Ausstellung erfolgreich gelöscht",
+      "deleteError": "Fehler beim Löschen der Ausstellung"
+    },
+    "upload": {
+      "title": "Neue Ausstellung hochladen",
+      "subtitle": "Fügen Sie Ihrer Sammlung eine neue Ausstellung hinzu",
+      "form": {
+        "title": "Titel",
+        "titlePlaceholder": "Ausstellungstitel eingeben",
+        "description": "Beschreibung",
+        "descriptionPlaceholder": "Ausstellungsbeschreibung eingeben",
+        "category": "Kategorie",
+        "categoryPlaceholder": "Kategorie eingeben (optional)",
+        "image": "Bild",
+        "chooseImage": "Bild auswählen",
+        "changeImage": "Bild ändern",
+        "published": "Veröffentlicht",
+        "draft": "Entwurf",
+        "uploadButton": "Ausstellung hochladen",
+        "uploadingButton": "Wird hochgeladen...",
+        "updateButton": "Ausstellung aktualisieren",
+        "updatingButton": "Wird aktualisiert...",
+        "successMessage": "Ausstellung erfolgreich hochgeladen!",
+        "updateSuccessMessage": "Ausstellung erfolgreich aktualisiert!",
+        "errorMessage": "Fehler beim Hochladen der Ausstellung. Bitte versuchen Sie es erneut."
+      }
+    },
+    "workshopsPage": {
+      "title": "Workshops verwalten",
+      "subtitle": "Ihre Workshops anzeigen, bearbeiten und verwalten",
+      "addNew": "Neuen Workshop hinzufügen",
+      "refresh": "Aktualisieren",
+      "emptyTitle": "Noch keine Workshops",
+      "emptyDescription": "Beginnen Sie mit der Erstellung Ihres ersten Workshops.",
+      "editButton": "Bearbeiten",
+      "deleteButton": "Löschen",
+      "confirmDelete": "Möchten Sie diesen Workshop wirklich löschen?",
+      "deleteSuccess": "Workshop erfolgreich gelöscht",
+      "deleteError": "Fehler beim Löschen des Workshops",
+      "form": {
+        "title": "Titel",
+        "titlePlaceholder": "Workshop-Titel eingeben",
+        "description": "Beschreibung",
+        "descriptionPlaceholder": "Workshop-Beschreibung eingeben",
+        "date": "Datum",
+        "order": "Reihenfolge",
+        "orderPlaceholder": "Anzeigereihenfolge eingeben",
+        "image": "Banner-Bild",
+        "chooseImage": "Bild auswählen",
+        "changeImage": "Bild ändern",
+        "published": "Veröffentlicht",
+        "draft": "Entwurf",
+        "createButton": "Workshop erstellen",
+        "creatingButton": "Wird erstellt...",
+        "updateButton": "Workshop aktualisieren",
+        "updatingButton": "Wird aktualisiert...",
+        "cancel": "Abbrechen",
+        "successMessage": "Workshop erfolgreich erstellt!",
+        "updateSuccessMessage": "Workshop erfolgreich aktualisiert!",
+        "errorMessage": "Fehler beim Erstellen des Workshops. Bitte versuchen Sie es erneut."
+      }
+    }
+  },
+  "search": {
+    "placeholder": "Ausstellungen, Workshops durchsuchen...",
+    "noResults": "Keine Ergebnisse für \"{query}\" gefunden",
+    "exhibitsFound": "{count} Ausstellung(en) gefunden",
+    "workshopsFound": "{count} Workshop(s) gefunden"
+  }
+}

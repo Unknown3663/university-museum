@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabaseClient";
+import { useLanguage } from "../../../shared/i18n/LanguageContext";
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
@@ -11,6 +12,7 @@ export default function DashboardPage() {
     workshops: 0,
   });
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     fetchStats();
@@ -64,10 +66,10 @@ export default function DashboardPage() {
   return (
     <div>
       <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-4">
-        Dashboard Overview
+        {t("dashboard.overview.title")}
       </h1>
       <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
-        Welcome to the Museum Dashboard. Use the sidebar to navigate.
+        {t("dashboard.overview.subtitle")}
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
@@ -75,7 +77,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs sm:text-sm font-medium text-gray-600">
-                Total Exhibits
+                {t("dashboard.overview.totalExhibits")}
               </p>
               <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">
                 {loading ? "—" : stats.total}
@@ -89,7 +91,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs sm:text-sm font-medium text-gray-600">
-                Published
+                {t("dashboard.overview.published")}
               </p>
               <p className="text-2xl sm:text-3xl font-bold text-green-600 mt-1 sm:mt-2">
                 {loading ? "—" : stats.published}
@@ -103,7 +105,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs sm:text-sm font-medium text-gray-600">
-                Drafts
+                {t("dashboard.overview.drafts")}
               </p>
               <p className="text-2xl sm:text-3xl font-bold text-gray-600 mt-1 sm:mt-2">
                 {loading ? "—" : stats.drafts}
@@ -117,7 +119,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs sm:text-sm font-medium text-gray-600">
-                Workshops
+                {t("dashboard.overview.workshops")}
               </p>
               <p className="text-2xl sm:text-3xl font-bold text-blue-600 mt-1 sm:mt-2">
                 {loading ? "—" : stats.workshops}

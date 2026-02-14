@@ -2,6 +2,8 @@
 
 import { signOut } from "../../../lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import LanguageSwitcher from "../../../../shared/components/LanguageSwitcher";
+import { useLanguage } from "../../../../shared/i18n/LanguageContext";
 
 interface NavbarProps {
   onMenuToggle: () => void;
@@ -9,6 +11,7 @@ interface NavbarProps {
 
 export default function Navbar({ onMenuToggle }: NavbarProps) {
   const router = useRouter();
+  const { t } = useLanguage();
 
   const handleSignOut = async () => {
     await signOut();
@@ -23,7 +26,7 @@ export default function Navbar({ onMenuToggle }: NavbarProps) {
           <button
             onClick={onMenuToggle}
             className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-            aria-label="Toggle menu"
+            aria-label={t("dashboard.nav.toggleMenu")}
           >
             <svg
               className="h-6 w-6"
@@ -41,15 +44,18 @@ export default function Navbar({ onMenuToggle }: NavbarProps) {
           </button>
 
           <h1 className="text-lg sm:text-xl font-bold text-gray-900">
-            Museum Dashboard
+            {t("dashboard.title")}
           </h1>
         </div>
-        <button
-          onClick={handleSignOut}
-          className="px-3 py-2 sm:px-4 text-xs sm:text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-        >
-          Sign Out
-        </button>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher variant="light" />
+          <button
+            onClick={handleSignOut}
+            className="px-3 py-2 sm:px-4 text-xs sm:text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            {t("dashboard.signOut")}
+          </button>
+        </div>
       </div>
     </nav>
   );

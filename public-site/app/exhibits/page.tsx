@@ -9,6 +9,7 @@ import ExhibitCard from "../components/ExhibitCard";
 import SignatureLogo from "../components/SignatureLogo";
 import Footer from "../components/Footer";
 import type { Exhibit } from "../../../shared/types";
+import { useLanguage } from "../../../shared/i18n/LanguageContext";
 
 const EXHIBITS_PER_PAGE = 6;
 
@@ -22,6 +23,7 @@ function ExhibitsContent() {
   const [searchQuery, setSearchQuery] = useState<string>(urlSearch);
   const [sortBy, setSortBy] = useState<string>("newest");
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const { t } = useLanguage();
 
   // Update search query when URL params change
   useEffect(() => {
@@ -66,7 +68,7 @@ function ExhibitsContent() {
       filtered = filtered.filter(
         (exhibit) =>
           exhibit.title.toLowerCase().includes(query) ||
-          exhibit.description.toLowerCase().includes(query)
+          exhibit.description.toLowerCase().includes(query),
       );
     }
 
@@ -77,14 +79,14 @@ function ExhibitsContent() {
         sorted.sort(
           (a, b) =>
             new Date(b.created_at || 0).getTime() -
-            new Date(a.created_at || 0).getTime()
+            new Date(a.created_at || 0).getTime(),
         );
         break;
       case "oldest":
         sorted.sort(
           (a, b) =>
             new Date(a.created_at || 0).getTime() -
-            new Date(b.created_at || 0).getTime()
+            new Date(b.created_at || 0).getTime(),
         );
         break;
       case "a-z":
@@ -159,13 +161,13 @@ function ExhibitsContent() {
               className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-3 sm:mb-4 px-4"
               style={{ textShadow: "2px 2px 8px rgba(0,0,0,0.8)" }}
             >
-              Our Exhibits
+              {t("exhibits.title")}
             </h1>
             <p
               className="text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl mx-auto px-4"
               style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
             >
-              Explore our curated collection of exhibits from around the world
+              {t("exhibits.subtitle")}
             </p>
           </motion.div>
 
@@ -179,7 +181,7 @@ function ExhibitsContent() {
             <div className="max-w-2xl mx-auto relative">
               <input
                 type="text"
-                placeholder="Search exhibits..."
+                placeholder={t("exhibits.searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-4 sm:px-5 py-2.5 sm:py-3 pl-10 sm:pl-12 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm text-sm sm:text-base"
@@ -217,7 +219,7 @@ function ExhibitsContent() {
                     className="text-xs sm:text-sm font-medium text-white"
                     style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
                   >
-                    Sort by:
+                    {t("exhibits.sortBy")}
                   </label>
                   <select
                     id="sort"
@@ -225,10 +227,10 @@ function ExhibitsContent() {
                     onChange={(e) => setSortBy(e.target.value)}
                     className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm bg-white text-xs sm:text-sm"
                   >
-                    <option value="newest">Newest</option>
-                    <option value="oldest">Oldest</option>
-                    <option value="a-z">A–Z</option>
-                    <option value="z-a">Z–A</option>
+                    <option value="newest">{t("exhibits.sortNewest")}</option>
+                    <option value="oldest">{t("exhibits.sortOldest")}</option>
+                    <option value="a-z">{t("exhibits.sortAZ")}</option>
+                    <option value="z-a">{t("exhibits.sortZA")}</option>
                   </select>
                 </div>
 
@@ -236,12 +238,17 @@ function ExhibitsContent() {
                   className="text-xs sm:text-sm text-white text-center"
                   style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
                 >
-                  Showing {processedExhibits.length}{" "}
-                  {processedExhibits.length === 1 ? "exhibit" : "exhibits"}
+                  {t("exhibits.showing", {
+                    count: processedExhibits.length,
+                    exhibitText:
+                      processedExhibits.length === 1
+                        ? t("exhibits.exhibit")
+                        : t("exhibits.exhibits"),
+                  })}
                   {searchQuery && (
                     <span className="font-medium hidden sm:inline">
                       {" "}
-                      matching "{searchQuery}"
+                      {t("exhibits.matching", { query: searchQuery })}
                     </span>
                   )}
                 </p>
@@ -279,7 +286,7 @@ function ExhibitsContent() {
                 />
               </svg>
               <p className="text-lg sm:text-xl text-red-700 mb-2">
-                Failed to load exhibits
+                {t("exhibits.error")}
               </p>
               <p className="text-xs sm:text-sm text-red-600 mb-3 sm:mb-4 px-4">
                 {error}
@@ -288,7 +295,7 @@ function ExhibitsContent() {
                 onClick={fetchExhibits}
                 className="px-4 sm:px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium text-sm sm:text-base"
               >
-                Retry
+                {t("common.error")}
               </button>
             </motion.div>
           )}
@@ -315,8 +322,8 @@ function ExhibitsContent() {
               </svg>
               <p className="text-base sm:text-xl text-gray-600 mb-2 px-4">
                 {searchQuery
-                  ? `No exhibits found matching "${searchQuery}"`
-                  : "No exhibits available at the moment."}
+                  ? t("exhibits.noResults")
+                  : t("exhibits.noResultsDescription")}
               </p>
               {searchQuery && (
                 <button
@@ -325,7 +332,7 @@ function ExhibitsContent() {
                   }}
                   className="mt-3 sm:mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base"
                 >
-                  Clear search
+                  {t("common.search")}
                 </button>
               )}
             </motion.div>

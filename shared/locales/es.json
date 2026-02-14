@@ -1,0 +1,183 @@
+{
+  "common": {
+    "search": "Buscar",
+    "close": "Cerrar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "comingSoon": "Próximamente",
+    "clickToView": "Haga clic para ver los detalles",
+    "allRightsReserved": "Todos los derechos reservados"
+  },
+  "nav": {
+    "home": "Inicio",
+    "team": "Equipo",
+    "workshops": "Talleres",
+    "exhibits": "Exhibiciones",
+    "toggleSearch": "Alternar búsqueda",
+    "toggleMenu": "Alternar menú"
+  },
+  "home": {
+    "hero": {
+      "title": "Bienvenido a Nuestro Museo",
+      "subtitle": "Explora la historia y el patrimonio a través del tiempo",
+      "cta": "Sobre Nosotros"
+    },
+    "about": {
+      "title": "Sobre Nosotros",
+      "paragraph1": "Esta plataforma apoya la iniciativa del equipo de Amigos del Museo, Facultad de Turismo y Hoteles, Universidad de Minia. El lanzamiento de la iniciativa coincide con la inauguración del Gran Museo Egipcio, que está programado para abrir oficialmente el 1 de noviembre.",
+      "paragraph2": "Esta Iniciativa llamada \"Es tuyo: Protege tu Identidad\", para fomentar la Identidad Egipcia e instar a la preservación del Patrimonio.",
+      "paragraph3": "Además, la plataforma arroja luz sobre el museo educativo, que contiene muchas réplicas de artefactos arqueológicos, acompañadas de etiquetas de identificación en árabe e inglés, contribuyendo así a la conciencia pública sobre el patrimonio."
+    },
+    "aims": {
+      "title": "Nuestros Objetivos",
+      "paragraph1": "Uno de los objetivos de la Visión 2030 de Egipto es \"enriquecer la vida cultural y deportiva\", que incluye preservar el patrimonio tangible e intangible de Egipto.",
+      "paragraph2": "El plan de investigación científica de la facultad es fomentar investigaciones en aplicaciones tecnológicas para preservar la cultura egipcia. Se han implementado numerosos programas digitales y tecnológicos en museos y sitios arqueológicos, y se han documentado archivos históricos antiguos. Además, el lanzamiento diario de innumerables plataformas internacionales y locales para servir a este propósito. Por lo tanto, el lanzamiento de nuestra iniciativa es necesario para contribuir a apoyar nuestro patrimonio y fortalecer nuestra identidad.",
+      "mainGoals": "Los principales objetivos de nuestra plataforma se resumen de la siguiente manera:",
+      "goal1": "Realización de talleres sobre conciencia del patrimonio y aplicaciones artificiales para la preservación del patrimonio.",
+      "goal2": "Capacitación del equipo del museo, implementación de prácticas museísticas y difusión de las mismas a nivel universitario para servir al objetivo primario de la iniciativa.",
+      "goal3": "Actualización del catálogo del museo educativo.",
+      "goal4": "Actualización de la base de datos del museo.",
+      "goal5": "Publicación de anuncios sobre campos de Museología y Patrimonio."
+    }
+  },
+  "exhibits": {
+    "title": "Exhibiciones",
+    "subtitle": "Explora nuestra colección de artefactos históricos",
+    "searchPlaceholder": "Buscar exhibiciones...",
+    "sortBy": "Ordenar por",
+    "sortNewest": "Más recientes primero",
+    "sortOldest": "Más antiguos primero",
+    "sortAZ": "A-Z",
+    "sortZA": "Z-A",
+    "noResults": "No se encontraron exhibiciones",
+    "noResultsDescription": "Intenta ajustar tu búsqueda o filtros",
+    "loading": "Cargando exhibiciones...",
+    "error": "Error al cargar las exhibiciones. Por favor, inténtalo de nuevo.",
+    "showing": "Mostrando {start}-{end} de {total} exhibiciones",
+    "page": "Página {current} de {total}",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "firstPage": "Primera página",
+    "lastPage": "Última página",
+    "filterAll": "Todas las categorías"
+  },
+  "workshops": {
+    "title": "Talleres",
+    "subtitle": "Talleres de conciencia del patrimonio y programas educativos",
+    "emptyTitle": "Próximamente",
+    "emptyDescription": "La información del taller se agregará a través del panel de control."
+  },
+  "team": {
+    "title": "Nuestro Equipo",
+    "subtitle": "Conozca a las personas dedicadas detrás de la iniciativa del Museo de Orientación Turística",
+    "faculty": "Facultad y Liderazgo",
+    "initiativeTeam": "Equipo de la Iniciativa",
+    "roles": {
+      "collegeDean": "Decano del Colegio",
+      "collegeViceDean": "Vicedecano del Colegio",
+      "initiativeCoordinator": "Coordinador de la iniciativa",
+      "webDeveloper": "Desarrollador Web",
+      "teamLeader": "Líder del Equipo",
+      "curator": "Curador"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Friends Of Museum. Todos los derechos reservados."
+  },
+  "dashboard": {
+    "title": "Panel del Museo",
+    "signOut": "Cerrar sesión",
+    "overview": {
+      "title": "Resumen del Panel",
+      "subtitle": "Bienvenido al Panel del Museo. Usa la barra lateral para navegar.",
+      "totalExhibits": "Total de Exhibiciones",
+      "published": "Publicado",
+      "drafts": "Borradores",
+      "workshops": "Talleres"
+    },
+    "nav": {
+      "dashboard": "Panel",
+      "upload": "Subir",
+      "exhibits": "Exhibiciones",
+      "workshops": "Talleres",
+      "toggleMenu": "Alternar menú"
+    },
+    "exhibits": {
+      "title": "Administrar Exhibiciones",
+      "subtitle": "Ver, editar y administrar tu colección de exhibiciones",
+      "refresh": "Actualizar",
+      "emptyTitle": "Aún no hay exhibiciones",
+      "emptyDescription": "Comienza subiendo tu primera exhibición usando la página de Subir.",
+      "editButton": "Editar",
+      "deleteButton": "Eliminar",
+      "confirmDelete": "¿Estás seguro de que quieres eliminar esta exhibición?",
+      "deleteSuccess": "Exhibición eliminada exitosamente",
+      "deleteError": "Error al eliminar la exhibición"
+    },
+    "upload": {
+      "title": "Subir Nueva Exhibición",
+      "subtitle": "Agrega una nueva exhibición a tu colección",
+      "form": {
+        "title": "Título",
+        "titlePlaceholder": "Ingresa el título de la exhibición",
+        "description": "Descripción",
+        "descriptionPlaceholder": "Ingresa la descripción de la exhibición",
+        "category": "Categoría",
+        "categoryPlaceholder": "Ingresa la categoría (opcional)",
+        "image": "Imagen",
+        "chooseImage": "Elegir imagen",
+        "changeImage": "Cambiar imagen",
+        "published": "Publicado",
+        "draft": "Borrador",
+        "uploadButton": "Subir Exhibición",
+        "uploadingButton": "Subiendo...",
+        "updateButton": "Actualizar Exhibición",
+        "updatingButton": "Actualizando...",
+        "successMessage": "¡Exhibición subida exitosamente!",
+        "updateSuccessMessage": "¡Exhibición actualizada exitosamente!",
+        "errorMessage": "Error al subir la exhibición. Por favor, inténtalo de nuevo."
+      }
+    },
+    "workshopsPage": {
+      "title": "Administrar Talleres",
+      "subtitle": "Ver, editar y administrar tus talleres",
+      "addNew": "Agregar Nuevo Taller",
+      "refresh": "Actualizar",
+      "emptyTitle": "Aún no hay talleres",
+      "emptyDescription": "Comienza creando tu primer taller.",
+      "editButton": "Editar",
+      "deleteButton": "Eliminar",
+      "confirmDelete": "¿Estás seguro de que quieres eliminar este taller?",
+      "deleteSuccess": "Taller eliminado exitosamente",
+      "deleteError": "Error al eliminar el taller",
+      "form": {
+        "title": "Título",
+        "titlePlaceholder": "Ingresa el título del taller",
+        "description": "Descripción",
+        "descriptionPlaceholder": "Ingresa la descripción del taller",
+        "date": "Fecha",
+        "order": "Orden",
+        "orderPlaceholder": "Ingresa el orden de visualización",
+        "image": "Imagen de Banner",
+        "chooseImage": "Elegir imagen",
+        "changeImage": "Cambiar imagen",
+        "published": "Publicado",
+        "draft": "Borrador",
+        "createButton": "Crear Taller",
+        "creatingButton": "Creando...",
+        "updateButton": "Actualizar Taller",
+        "updatingButton": "Actualizando...",
+        "cancel": "Cancelar",
+        "successMessage": "¡Taller creado exitosamente!",
+        "updateSuccessMessage": "¡Taller actualizado exitosamente!",
+        "errorMessage": "Error al crear el taller. Por favor, inténtalo de nuevo."
+      }
+    }
+  },
+  "search": {
+    "placeholder": "Buscar exhibiciones, talleres...",
+    "noResults": "No se encontraron resultados para \"{query}\"",
+    "exhibitsFound": "{count} exhibición(es) encontrada(s)",
+    "workshopsFound": "{count} taller(es) encontrado(s)"
+  }
+}

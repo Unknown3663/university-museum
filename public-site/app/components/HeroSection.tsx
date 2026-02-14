@@ -1,6 +1,11 @@
+"use client";
+
 import Button from "./Button";
+import { useLanguage } from "../../../shared/i18n/LanguageContext";
 
 export default function HeroSection() {
+  const { t } = useLanguage();
+
   return (
     <div className="flex items-center min-h-screen px-4 sm:px-6 lg:px-8 pt-16 sm:pt-0">
       <div className="max-w-4xl w-full animate-fade-in">
@@ -13,7 +18,7 @@ export default function HeroSection() {
                 "2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6)",
             }}
           >
-            Welcome to Our Museum
+            {t("home.hero.title")}
           </h1>
 
           {/* Subtitle - Responsive sizing */}
@@ -24,12 +29,12 @@ export default function HeroSection() {
                 "2px 2px 6px rgba(0,0,0,0.8), 0 0 15px rgba(0,0,0,0.5)",
             }}
           >
-            Explore history and heritage through time
+            {t("home.hero.subtitle")}
           </p>
 
           {/* CTA Button */}
           <div className="pt-2 sm:pt-4">
-            <Button href="#about">About Us</Button>
+            <Button href="#about">{t("home.hero.cta")}</Button>
           </div>
         </div>
       </div>

@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import SearchBar from "./SearchBar";
+import LanguageSwitcher from "../../../shared/components/LanguageSwitcher";
+import { useLanguage } from "../../../shared/i18n/LanguageContext";
 
 const SITE_CONFIG = {
   name: "Tourist Guidance Museum",
@@ -12,17 +14,18 @@ const SITE_CONFIG = {
   logo: "/logos/tgm-public.png",
 };
 
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/team", label: "Team" },
-  { href: "/workshops", label: "Workshops" },
-  { href: "/exhibits", label: "Exhibits" },
-];
-
 export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { t } = useLanguage();
+
+  const NAV_LINKS = [
+    { href: "/", label: t("nav.home") },
+    { href: "/team", label: t("nav.team") },
+    { href: "/workshops", label: t("nav.workshops") },
+    { href: "/exhibits", label: t("nav.exhibits") },
+  ];
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -95,15 +98,21 @@ export default function Navbar() {
                 ></span>
               </Link>
             ))}
+
+            {/* Language Switcher */}
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile Menu Button & Search - Visible on mobile/tablet */}
           <div className="flex md:hidden items-center gap-2">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+
             {/* Mobile Search Button */}
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="text-white hover:text-gray-200 transition-colors p-2"
-              aria-label="Toggle search"
+              aria-label={t("nav.toggleSearch")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +134,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-white hover:text-gray-200 transition-colors p-2 focus:outline-none"
-              aria-label="Toggle menu"
+              aria-label={t("nav.toggleMenu")}
               aria-expanded={isMobileMenuOpen}
             >
               <svg

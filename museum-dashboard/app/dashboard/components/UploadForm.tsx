@@ -58,7 +58,7 @@ export default function UploadForm({
   }, [editMode, initialData]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
@@ -127,7 +127,7 @@ export default function UploadForm({
     setUploadProgress(0);
     // Clear file input
     const fileInput = document.querySelector(
-      'input[type="file"]'
+      'input[type="file"]',
     ) as HTMLInputElement;
     if (fileInput) fileInput.value = "";
   };
@@ -153,7 +153,7 @@ export default function UploadForm({
   };
 
   const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
     setError("");
@@ -263,7 +263,7 @@ export default function UploadForm({
                   setImage(null);
                   setImagePreview(null);
                   const fileInput = document.querySelector(
-                    'input[type="file"]'
+                    'input[type="file"]',
                   ) as HTMLInputElement;
                   if (fileInput) fileInput.value = "";
                 }}
@@ -448,8 +448,8 @@ export default function UploadForm({
                 ? "Updating..."
                 : "Creating..."
               : editMode
-              ? "Update Exhibit"
-              : "Create Exhibit"}
+                ? "Update Exhibit"
+                : "Create Exhibit"}
           </button>
 
           <button

@@ -1,0 +1,186 @@
+{
+  "common": {
+    "search": "Search",
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "Error",
+    "comingSoon": "Coming Soon",
+    "clickToView": "Click to view details",
+    "allRightsReserved": "All rights reserved"
+  },
+  "nav": {
+    "home": "Home",
+    "team": "Team",
+    "workshops": "Workshops",
+    "exhibits": "Exhibits",
+    "toggleSearch": "Toggle search",
+    "toggleMenu": "Toggle menu"
+  },
+  "home": {
+    "hero": {
+      "title": "Welcome to Our Museum",
+      "subtitle": "Explore history and heritage through time",
+      "cta": "About Us"
+    },
+    "about": {
+      "title": "About Us",
+      "paragraph1": "This platform supports the initiative of the Museum Friends team, Faculty of Tourism and Hotels, Minia University. The launch of the initiative coincides with the inauguration of the Grand Egyptian Museum, which is scheduled to open officially on November 1st.",
+      "paragraph2": "This Initiative named \"It's your own: Protect your Identity,\" to foster the Egyptian Identity and urge the preservation of Heritage.",
+      "paragraph3": "Additionally, the platform sheds light on the educational museum, which contains many replicas of archaeological artefacts, accompanied by identification labels in Arabic and English, thereby contributing to public heritage awareness."
+    },
+    "aims": {
+      "title": "Our Aims",
+      "paragraph1": "One of Egypt's Vision 2030 goals is \"enriching cultural and sporting life,\" which includes preserving Egypt's tangible and intangible heritage.",
+      "paragraph2": "The faculty's scientific research plan is to encourage researches in technological applications to preserve Egyptian culture. Numerous digital and technological programs have been implemented in museums and archaeological sites, and ancient historical archives have been documented through. In addition to, the daily launch of countless international and local platforms to serve this purpose. So, launching our initiative is necessary to contribute in supporting our heritage and strengthen our identity.",
+      "mainGoals": "The main goals of our platform are summarized as follows:",
+      "goal1": "Conducting workshops about Heritage awareness and Artificial applications for Heritage preservation.",
+      "goal2": "Training the museum team, implementing museum practices and disseminating them at the college level to serve the primary aim of the initiative.",
+      "goal3": "Upgrading the educational museum catalog.",
+      "goal4": "Updating the museum database.",
+      "goal5": "Publishing announcements about Museology and Heritage fields."
+    }
+  },
+  "exhibits": {
+    "title": "Our Exhibits",
+    "subtitle": "Explore our curated collection of exhibits from around the world",
+    "searchPlaceholder": "Search exhibits...",
+    "sortBy": "Sort by:",
+    "sortNewest": "Newest",
+    "sortOldest": "Oldest",
+    "sortAZ": "A–Z",
+    "sortZA": "Z–A",
+    "noResults": "No exhibits found",
+    "noResultsDescription": "Try adjusting your search or filters",
+    "loading": "Loading exhibits...",
+    "error": "Failed to load exhibits. Please try again.",
+    "showing": "Showing {count} {exhibitText}",
+    "matching": "matching \"{query}\"",
+    "exhibit": "exhibit",
+    "exhibits": "exhibits",
+    "page": "Page {current} of {total}",
+    "previous": "Previous",
+    "next": "Next",
+    "firstPage": "First Page",
+    "lastPage": "Last Page",
+    "filterAll": "All Categories"
+  },
+  "workshops": {
+    "title": "Workshops",
+    "subtitle": "Heritage awareness workshops and educational programs",
+    "emptyTitle": "Coming Soon",
+    "emptyDescription": "Workshop information will be added through the dashboard."
+  },
+  "team": {
+    "title": "Our Team",
+    "subtitle": "Meet the dedicated individuals behind the Tourist Guidance Museum initiative",
+    "faculty": "Faculty & Leadership",
+    "initiativeTeam": "Initiative Team",
+    "roles": {
+      "collegeDean": "College Dean",
+      "collegeViceDean": "College Vice Dean",
+      "initiativeCoordinator": "Initiative coordinator",
+      "webDeveloper": "Web Developer",
+      "teamLeader": "Team Leader",
+      "curator": "Curator"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Friends Of Museum. All rights reserved."
+  },
+  "dashboard": {
+    "title": "Museum Dashboard",
+    "signOut": "Sign Out",
+    "overview": {
+      "title": "Dashboard Overview",
+      "subtitle": "Welcome to the Museum Dashboard. Use the sidebar to navigate.",
+      "totalExhibits": "Total Exhibits",
+      "published": "Published",
+      "drafts": "Drafts",
+      "workshops": "Workshops"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "upload": "Upload",
+      "exhibits": "Exhibits",
+      "workshops": "Workshops",
+      "toggleMenu": "Toggle menu"
+    },
+    "exhibits": {
+      "title": "Manage Exhibits",
+      "subtitle": "View, edit, and manage your exhibit collection",
+      "refresh": "Refresh",
+      "emptyTitle": "No exhibits yet",
+      "emptyDescription": "Start by uploading your first exhibit using the Upload page.",
+      "editButton": "Edit",
+      "deleteButton": "Delete",
+      "confirmDelete": "Are you sure you want to delete this exhibit?",
+      "deleteSuccess": "Exhibit deleted successfully",
+      "deleteError": "Failed to delete exhibit"
+    },
+    "upload": {
+      "title": "Upload New Exhibit",
+      "subtitle": "Add a new exhibit to your collection",
+      "form": {
+        "title": "Title",
+        "titlePlaceholder": "Enter exhibit title",
+        "description": "Description",
+        "descriptionPlaceholder": "Enter exhibit description",
+        "category": "Category",
+        "categoryPlaceholder": "Enter category (optional)",
+        "image": "Image",
+        "chooseImage": "Choose Image",
+        "changeImage": "Change Image",
+        "published": "Published",
+        "draft": "Draft",
+        "uploadButton": "Upload Exhibit",
+        "uploadingButton": "Uploading...",
+        "updateButton": "Update Exhibit",
+        "updatingButton": "Updating...",
+        "successMessage": "Exhibit uploaded successfully!",
+        "updateSuccessMessage": "Exhibit updated successfully!",
+        "errorMessage": "Failed to upload exhibit. Please try again."
+      }
+    },
+    "workshopsPage": {
+      "title": "Manage Workshops",
+      "subtitle": "View, edit, and manage your workshops",
+      "addNew": "Add New Workshop",
+      "refresh": "Refresh",
+      "emptyTitle": "No workshops yet",
+      "emptyDescription": "Start by creating your first workshop.",
+      "editButton": "Edit",
+      "deleteButton": "Delete",
+      "confirmDelete": "Are you sure you want to delete this workshop?",
+      "deleteSuccess": "Workshop deleted successfully",
+      "deleteError": "Failed to delete workshop",
+      "form": {
+        "title": "Title",
+        "titlePlaceholder": "Enter workshop title",
+        "description": "Description",
+        "descriptionPlaceholder": "Enter workshop description",
+        "date": "Date",
+        "order": "Order",
+        "orderPlaceholder": "Enter display order",
+        "image": "Banner Image",
+        "chooseImage": "Choose Image",
+        "changeImage": "Change Image",
+        "published": "Published",
+        "draft": "Draft",
+        "createButton": "Create Workshop",
+        "creatingButton": "Creating...",
+        "updateButton": "Update Workshop",
+        "updatingButton": "Updating...",
+        "cancel": "Cancel",
+        "successMessage": "Workshop created successfully!",
+        "updateSuccessMessage": "Workshop updated successfully!",
+        "errorMessage": "Failed to create workshop. Please try again."
+      }
+    }
+  },
+  "search": {
+    "placeholder": "Search exhibits, workshops...",
+    "noResults": "No results found for \"{query}\"",
+    "exhibitsFound": "{count} exhibit(s) found",
+    "workshopsFound": "{count} workshop(s) found"
+  }
+}

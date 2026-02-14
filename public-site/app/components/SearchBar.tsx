@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import type { Exhibit } from "../../../shared/types";
+import { useLanguage } from "../../../shared/i18n/LanguageContext";
 
 interface SearchBarProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [showResults, setShowResults] = useState<boolean>(false);
   const router = useRouter();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (isOpen && searchInputRef.current) {
@@ -63,7 +65,7 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
               exhibit.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
               exhibit.description
                 .toLowerCase()
-                .includes(searchQuery.toLowerCase())
+                .includes(searchQuery.toLowerCase()),
           );
           setSearchResults(filtered.slice(0, 5)); // Show max 5 results
         }
@@ -119,7 +121,7 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
         <input
           ref={searchInputRef}
           type="text"
-          placeholder="Search exhibits by name or description..."
+          placeholder={t("search.placeholder")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 outline-none focus:outline-none focus-visible:outline-none focus:border-white/40 transition-all duration-200"

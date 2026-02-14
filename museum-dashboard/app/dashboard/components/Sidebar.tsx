@@ -2,13 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: "📊" },
-  { name: "Upload", href: "/dashboard/upload", icon: "📤" },
-  { name: "Exhibits", href: "/dashboard/exhibits", icon: "🖼️" },
-  { name: "Workshops", href: "/dashboard/workshops", icon: "🎓" },
-];
+import { useLanguage } from "../../../../shared/i18n/LanguageContext";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -17,6 +11,22 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const { t } = useLanguage();
+
+  const navigation = [
+    { name: t("dashboard.nav.dashboard"), href: "/dashboard", icon: "📊" },
+    { name: t("dashboard.nav.upload"), href: "/dashboard/upload", icon: "📤" },
+    {
+      name: t("dashboard.nav.exhibits"),
+      href: "/dashboard/exhibits",
+      icon: "🖼️",
+    },
+    {
+      name: t("dashboard.nav.workshops"),
+      href: "/dashboard/workshops",
+      icon: "🎓",
+    },
+  ];
 
   return (
     <>

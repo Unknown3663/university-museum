@@ -2,6 +2,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { Metadata as NextMetadata } from "next";
+import { LanguageProvider } from "../../shared/i18n/LanguageContext";
 
 export const metadata: NextMetadata = {
   title: "Tourist Guidance Museum - Explore History and Heritage",
@@ -28,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
         <SpeedInsights />
         <Analytics />
       </body>

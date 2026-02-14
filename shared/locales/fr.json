@@ -1,0 +1,183 @@
+{
+  "common": {
+    "search": "Rechercher",
+    "close": "Fermer",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "comingSoon": "Prochainement",
+    "clickToView": "Cliquez pour voir les détails",
+    "allRightsReserved": "Tous droits réservés"
+  },
+  "nav": {
+    "home": "Accueil",
+    "team": "Équipe",
+    "workshops": "Ateliers",
+    "exhibits": "Expositions",
+    "toggleSearch": "Basculer la recherche",
+    "toggleMenu": "Basculer le menu"
+  },
+  "home": {
+    "hero": {
+      "title": "Bienvenue à Notre Musée",
+      "subtitle": "Explorez l'histoire et le patrimoine à travers le temps",
+      "cta": "À Propos"
+    },
+    "about": {
+      "title": "À Propos de Nous",
+      "paragraph1": "Cette plateforme soutient l'initiative de l'équipe des Amis du Musée, Faculté du Tourisme et de l'Hôtellerie, Université de Minia. Le lancement de l'initiative coïncide avec l'inauguration du Grand Musée Égyptien, qui devrait ouvrir officiellement le 1er novembre.",
+      "paragraph2": "Cette Initiative nommée \"C'est à vous : Protégez votre Identité\", pour favoriser l'Identité Égyptienne et encourager la préservation du Patrimoine.",
+      "paragraph3": "De plus, la plateforme met en lumière le musée éducatif, qui contient de nombreuses répliques d'artefacts archéologiques, accompagnées d'étiquettes d'identification en arabe et en anglais, contribuant ainsi à la sensibilisation du public au patrimoine."
+    },
+    "aims": {
+      "title": "Nos Objectifs",
+      "paragraph1": "L'un des objectifs de la Vision 2030 de l'Égypte est \"d'enrichir la vie culturelle et sportive\", qui comprend la préservation du patrimoine matériel et immatériel de l'Égypte.",
+      "paragraph2": "Le plan de recherche scientifique de la faculté est d'encourager la recherche dans les applications technologiques pour préserver la culture égyptienne. De nombreux programmes numériques et technologiques ont été mis en œuvre dans les musées et les sites archéologiques, et d'anciennes archives historiques ont été documentées. De plus, le lancement quotidien d'innombrables plateformes internationales et locales pour servir cet objectif. Ainsi, le lancement de notre initiative est nécessaire pour contribuer à soutenir notre patrimoine et renforcer notre identité.",
+      "mainGoals": "Les principaux objectifs de notre plateforme sont résumés comme suit :",
+      "goal1": "Conduite d'ateliers sur la sensibilisation au patrimoine et les applications artificielles pour la préservation du patrimoine.",
+      "goal2": "Formation de l'équipe du musée, mise en œuvre des pratiques muséales et leur diffusion au niveau universitaire pour servir l'objectif principal de l'initiative.",
+      "goal3": "Mise à jour du catalogue du musée éducatif.",
+      "goal4": "Mise à jour de la base de données du musée.",
+      "goal5": "Publication d'annonces sur les domaines de la Muséologie et du Patrimoine."
+    }
+  },
+  "exhibits": {
+    "title": "Expositions",
+    "subtitle": "Explorez notre collection d'artefacts historiques",
+    "searchPlaceholder": "Rechercher des expositions...",
+    "sortBy": "Trier par",
+    "sortNewest": "Plus récents d'abord",
+    "sortOldest": "Plus anciens d'abord",
+    "sortAZ": "A-Z",
+    "sortZA": "Z-A",
+    "noResults": "Aucune exposition trouvée",
+    "noResultsDescription": "Essayez d'ajuster votre recherche ou vos filtres",
+    "loading": "Chargement des expositions...",
+    "error": "Échec du chargement des expositions. Veuillez réessayer.",
+    "showing": "Affichage de {start}-{end} sur {total} expositions",
+    "page": "Page {current} sur {total}",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "firstPage": "Première page",
+    "lastPage": "Dernière page",
+    "filterAll": "Toutes les catégories"
+  },
+  "workshops": {
+    "title": "Ateliers",
+    "subtitle": "Ateliers de sensibilisation au patrimoine et programmes éducatifs",
+    "emptyTitle": "Prochainement",
+    "emptyDescription": "Les informations sur l'atelier seront ajoutées via le tableau de bord."
+  },
+  "team": {
+    "title": "Notre Équipe",
+    "subtitle": "Rencontrez les personnes dévouées derrière l'initiative du Musée d'Orientation Touristique",
+    "faculty": "Faculté et Direction",
+    "initiativeTeam": "Équipe de l'Initiative",
+    "roles": {
+      "collegeDean": "Doyen du Collège",
+      "collegeViceDean": "Vice-doyen du Collège",
+      "initiativeCoordinator": "Coordinateur de l'initiative",
+      "webDeveloper": "Développeur Web",
+      "teamLeader": "Chef d'Équipe",
+      "curator": "Conservateur"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Friends Of Museum. Tous droits réservés."
+  },
+  "dashboard": {
+    "title": "Tableau de Bord du Musée",
+    "signOut": "Se Déconnecter",
+    "overview": {
+      "title": "Aperçu du Tableau de Bord",
+      "subtitle": "Bienvenue sur le Tableau de Bord du Musée. Utilisez la barre latérale pour naviguer.",
+      "totalExhibits": "Total des Expositions",
+      "published": "Publié",
+      "drafts": "Brouillons",
+      "workshops": "Ateliers"
+    },
+    "nav": {
+      "dashboard": "Tableau de Bord",
+      "upload": "Télécharger",
+      "exhibits": "Expositions",
+      "workshops": "Ateliers",
+      "toggleMenu": "Basculer le menu"
+    },
+    "exhibits": {
+      "title": "Gérer les Expositions",
+      "subtitle": "Afficher, modifier et gérer votre collection d'expositions",
+      "refresh": "Actualiser",
+      "emptyTitle": "Aucune exposition pour le moment",
+      "emptyDescription": "Commencez par télécharger votre première exposition en utilisant la page Télécharger.",
+      "editButton": "Modifier",
+      "deleteButton": "Supprimer",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette exposition ?",
+      "deleteSuccess": "Exposition supprimée avec succès",
+      "deleteError": "Échec de la suppression de l'exposition"
+    },
+    "upload": {
+      "title": "Télécharger une Nouvelle Exposition",
+      "subtitle": "Ajoutez une nouvelle exposition à votre collection",
+      "form": {
+        "title": "Titre",
+        "titlePlaceholder": "Entrez le titre de l'exposition",
+        "description": "Description",
+        "descriptionPlaceholder": "Entrez la description de l'exposition",
+        "category": "Catégorie",
+        "categoryPlaceholder": "Entrez la catégorie (facultatif)",
+        "image": "Image",
+        "chooseImage": "Choisir une Image",
+        "changeImage": "Changer l'Image",
+        "published": "Publié",
+        "draft": "Brouillon",
+        "uploadButton": "Télécharger l'Exposition",
+        "uploadingButton": "Téléchargement...",
+        "updateButton": "Mettre à Jour l'Exposition",
+        "updatingButton": "Mise à jour...",
+        "successMessage": "Exposition téléchargée avec succès !",
+        "updateSuccessMessage": "Exposition mise à jour avec succès !",
+        "errorMessage": "Échec du téléchargement de l'exposition. Veuillez réessayer."
+      }
+    },
+    "workshopsPage": {
+      "title": "Gérer les Ateliers",
+      "subtitle": "Afficher, modifier et gérer vos ateliers",
+      "addNew": "Ajouter un Nouvel Atelier",
+      "refresh": "Actualiser",
+      "emptyTitle": "Aucun atelier pour le moment",
+      "emptyDescription": "Commencez par créer votre premier atelier.",
+      "editButton": "Modifier",
+      "deleteButton": "Supprimer",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet atelier ?",
+      "deleteSuccess": "Atelier supprimé avec succès",
+      "deleteError": "Échec de la suppression de l'atelier",
+      "form": {
+        "title": "Titre",
+        "titlePlaceholder": "Entrez le titre de l'atelier",
+        "description": "Description",
+        "descriptionPlaceholder": "Entrez la description de l'atelier",
+        "date": "Date",
+        "order": "Ordre",
+        "orderPlaceholder": "Entrez l'ordre d'affichage",
+        "image": "Image de Bannière",
+        "chooseImage": "Choisir une Image",
+        "changeImage": "Changer l'Image",
+        "published": "Publié",
+        "draft": "Brouillon",
+        "createButton": "Créer un Atelier",
+        "creatingButton": "Création...",
+        "updateButton": "Mettre à Jour l'Atelier",
+        "updatingButton": "Mise à jour...",
+        "cancel": "Annuler",
+        "successMessage": "Atelier créé avec succès !",
+        "updateSuccessMessage": "Atelier mis à jour avec succès !",
+        "errorMessage": "Échec de la création de l'atelier. Veuillez réessayer."
+      }
+    }
+  },
+  "search": {
+    "placeholder": "Rechercher des expositions, des ateliers...",
+    "noResults": "Aucun résultat trouvé pour \"{query}\"",
+    "exhibitsFound": "{count} exposition(s) trouvée(s)",
+    "workshopsFound": "{count} atelier(s) trouvé(s)"
+  }
+}

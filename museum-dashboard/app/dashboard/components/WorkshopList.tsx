@@ -59,14 +59,14 @@ export default function WorkshopList({ onEdit }: WorkshopListProps) {
 
   const handleTogglePublish = async (
     id: string,
-    currentStatus: boolean
+    currentStatus: boolean,
   ): Promise<void> => {
     try {
       await toggleWorkshopPublish(id, !currentStatus);
       setWorkshops(
         workshops.map((w) =>
-          w.id === id ? { ...w, published: !currentStatus } : w
-        )
+          w.id === id ? { ...w, published: !currentStatus } : w,
+        ),
       );
     } catch (err) {
       alert("Failed to update publish status");

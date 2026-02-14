@@ -45,9 +45,8 @@ export default function ExhibitsPage() {
 
   const handleTogglePublish = async (id: string): Promise<void> => {
     // Import here to avoid circular dependency
-    const { updateExhibit, getExhibits } = await import(
-      "../../../lib/supabaseClient"
-    );
+    const { updateExhibit, getExhibits } =
+      await import("../../../lib/supabaseClient");
     try {
       const allExhibits = await getExhibits();
       const exhibit = allExhibits.find((e) => e.id === id);
