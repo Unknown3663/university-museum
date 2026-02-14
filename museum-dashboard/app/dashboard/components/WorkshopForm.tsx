@@ -16,6 +16,8 @@ interface WorkshopFormData {
   date: string;
   order: string;
   published: boolean;
+  title_translations: Record<string, string>;
+  description_translations: Record<string, string>;
 }
 
 interface WorkshopFormProps {
@@ -37,7 +39,10 @@ export default function WorkshopForm({
     date: "",
     order: "",
     published: false,
+    title_translations: {},
+    description_translations: {},
   });
+  const [showTranslations, setShowTranslations] = useState<boolean>(false);
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -55,6 +60,8 @@ export default function WorkshopForm({
         date: initialData.date || "",
         order: initialData.order?.toString() || "",
         published: initialData.published || false,
+        title_translations: initialData.title_translations || {},
+        description_translations: initialData.description_translations || {},
       });
       // Set existing image preview if available
       if (initialData.image_url) {
@@ -76,6 +83,20 @@ export default function WorkshopForm({
     if (fieldErrors[name]) {
       setFieldErrors((prev) => ({ ...prev, [name]: "" }));
     }
+  };
+
+  const handleTranslationChange = (
+    field: "title_translations" | "description_translations",
+    lang: string,
+    value: string,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        [lang]: value,
+      },
+    }));
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -128,6 +149,8 @@ export default function WorkshopForm({
       date: "",
       order: "",
       published: false,
+      title_translations: {},
+      description_translations: {},
     });
     setImage(null);
     setImagePreview(null);
@@ -195,6 +218,8 @@ export default function WorkshopForm({
           order: parseInt(formData.order),
           published: formData.published,
           image_url: imageUrl,
+          title_translations: formData.title_translations,
+          description_translations: formData.description_translations,
         });
       } else {
         await createWorkshop({
@@ -204,6 +229,8 @@ export default function WorkshopForm({
           order: parseInt(formData.order),
           published: formData.published,
           image_url: imageUrl,
+          title_translations: formData.title_translations,
+          description_translations: formData.description_translations,
         });
       }
 
@@ -379,6 +406,270 @@ export default function WorkshopForm({
             className="w-full px-3 py-2 sm:px-4 text-sm sm:text-base border border-gray-300 rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 resize-none"
             placeholder="Brief description of the workshop..."
           />
+        </div>
+
+        {/* Translations Section */}
+        <div className="border border-gray-300 rounded-lg p-4">
+          <button
+            type="button"
+            onClick={() => setShowTranslations(!showTranslations)}
+            className="flex items-center justify-between w-full text-left"
+          >
+            <span className="text-sm font-medium text-gray-700">
+              🌍 Translations (Optional)
+            </span>
+            <svg
+              className={`w-5 h-5 text-gray-500 transition-transform ${
+                showTranslations ? "rotate-180" : ""
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {showTranslations && (
+            <div className="mt-4 space-y-4">
+              <p className="text-xs text-gray-600">
+                Add translations for this workshop in different languages. Leave
+                blank if not available.
+              </p>
+
+              {/* Arabic */}
+              <div className="border-l-4 border-blue-500 pl-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">
+                  🇪🇬 Arabic (العربية)
+                </h4>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.title_translations["ar-EG"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "title_translations",
+                          "ar-EG",
+                          e.target.value,
+                        )
+                      }
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="العنوان بالعربية"
+                      dir="rtl"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Description
+                    </label>
+                    <textarea
+                      value={formData.description_translations["ar-EG"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "description_translations",
+                          "ar-EG",
+                          e.target.value,
+                        )
+                      }
+                      rows={3}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="الوصف بالعربية"
+                      dir="rtl"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* German */}
+              <div className="border-l-4 border-red-500 pl-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">
+                  🇩🇪 German (Deutsch)
+                </h4>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.title_translations["de"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "title_translations",
+                          "de",
+                          e.target.value,
+                        )
+                      }
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Titel auf Deutsch"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Description
+                    </label>
+                    <textarea
+                      value={formData.description_translations["de"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "description_translations",
+                          "de",
+                          e.target.value,
+                        )
+                      }
+                      rows={3}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Beschreibung auf Deutsch"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Spanish */}
+              <div className="border-l-4 border-yellow-500 pl-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">
+                  🇪🇸 Spanish (Español)
+                </h4>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.title_translations["es"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "title_translations",
+                          "es",
+                          e.target.value,
+                        )
+                      }
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Título en español"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Description
+                    </label>
+                    <textarea
+                      value={formData.description_translations["es"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "description_translations",
+                          "es",
+                          e.target.value,
+                        )
+                      }
+                      rows={3}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Descripción en español"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Italian */}
+              <div className="border-l-4 border-green-500 pl-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">
+                  🇮🇹 Italian (Italiano)
+                </h4>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.title_translations["it"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "title_translations",
+                          "it",
+                          e.target.value,
+                        )
+                      }
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Titolo in italiano"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Description
+                    </label>
+                    <textarea
+                      value={formData.description_translations["it"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "description_translations",
+                          "it",
+                          e.target.value,
+                        )
+                      }
+                      rows={3}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Descrizione in italiano"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* French */}
+              <div className="border-l-4 border-purple-500 pl-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">
+                  🇫🇷 French (Français)
+                </h4>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.title_translations["fr"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "title_translations",
+                          "fr",
+                          e.target.value,
+                        )
+                      }
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Titre en français"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">
+                      Description
+                    </label>
+                    <textarea
+                      value={formData.description_translations["fr"] || ""}
+                      onChange={(e) =>
+                        handleTranslationChange(
+                          "description_translations",
+                          "fr",
+                          e.target.value,
+                        )
+                      }
+                      rows={3}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Description en français"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Date and Order Row */}

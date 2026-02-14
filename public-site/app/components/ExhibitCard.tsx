@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import type { Exhibit } from "../../../shared/types";
+import { useLanguage } from "../../../shared/i18n/LanguageContext";
 
 interface ExhibitCardProps {
   exhibit: Exhibit;
@@ -16,6 +17,12 @@ export default function ExhibitCard({
   priority = false,
 }: ExhibitCardProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { locale } = useLanguage();
+
+  // Get translated content or fallback to default
+  const title = exhibit.title_translations?.[locale] || exhibit.title;
+  const description =
+    exhibit.description_translations?.[locale] || exhibit.description;
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -54,7 +61,7 @@ export default function ExhibitCard({
           <div className="relative w-full aspect-video overflow-hidden bg-gray-100">
             <Image
               src={exhibit.image_url}
-              alt={exhibit.title}
+              alt={title}
               fill
               loading={priority ? "eager" : "lazy"}
               priority={priority}
@@ -65,10 +72,10 @@ export default function ExhibitCard({
         )}
         <div className="p-4 sm:p-5 md:p-6 flex-1 flex flex-col">
           <h3 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-gray-900 mb-2 line-clamp-2">
-            {exhibit.title}
+            {title}
           </h3>
           <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 line-clamp-3 flex-1">
-            {exhibit.description}
+            {description}
           </p>
           {exhibit.category && (
             <span className="inline-block bg-blue-100 text-blue-800 text-xs sm:text-sm px-2.5 sm:px-3 py-1 rounded-full self-start">
@@ -114,7 +121,7 @@ export default function ExhibitCard({
               <div className="relative w-full bg-gray-100 flex items-center justify-center">
                 <Image
                   src={exhibit.image_url}
-                  alt={exhibit.title}
+                  alt={title}
                   width={1200}
                   height={800}
                   className="w-full h-auto max-h-[60vh] object-contain"
@@ -132,11 +139,11 @@ export default function ExhibitCard({
                   </span>
                 )}
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900">
-                  {exhibit.title}
+                  {title}
                 </h2>
               </div>
               <p className="text-base sm:text-lg text-gray-700 leading-relaxed whitespace-pre-wrap">
-                {exhibit.description}
+                {description}
               </p>
             </div>
           </div>

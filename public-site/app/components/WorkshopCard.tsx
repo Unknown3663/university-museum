@@ -2,16 +2,8 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-
-interface Workshop {
-  id: string;
-  title: string;
-  description: string | null;
-  date: string;
-  order: number;
-  image_url: string | null;
-  published: boolean;
-}
+import type { Workshop } from "../../../shared/types";
+import { useLanguage } from "../../../shared/i18n/LanguageContext";
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -19,6 +11,12 @@ interface WorkshopCardProps {
 
 export default function WorkshopCard({ workshop }: WorkshopCardProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { locale } = useLanguage();
+
+  // Get translated content or fallback to default
+  const title = workshop.title_translations?.[locale] || workshop.title;
+  const description =
+    workshop.description_translations?.[locale] || workshop.description;
 
   const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -68,7 +66,7 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
           <div className="relative w-full aspect-[3/1]">
             <Image
               src={workshop.image_url}
-              alt={`${workshop.title} banner`}
+              alt={`${title} banner`}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1200px"
@@ -92,7 +90,7 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
             {/* Content */}
             <div className="flex-1">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                {workshop.title}
+                {title}
               </h3>
               <div className="flex items-center gap-2 mb-3">
                 <svg
@@ -112,9 +110,9 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
                   {formatDate(workshop.date)}
                 </span>
               </div>
-              {workshop.description && (
+              {description && (
                 <p className="text-gray-200 leading-relaxed line-clamp-3">
-                  {workshop.description}
+                  {description}
                 </p>
               )}
               <div className="mt-4 flex items-center text-blue-300 text-sm font-medium">
@@ -174,7 +172,7 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
               <div className="relative w-full bg-gray-100 flex items-center justify-center">
                 <Image
                   src={workshop.image_url}
-                  alt={workshop.title}
+                  alt={title}
                   width={1200}
                   height={400}
                   className="w-full h-auto max-h-[50vh] object-contain"
@@ -194,7 +192,7 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
                 </div>
                 <div>
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900">
-                    {workshop.title}
+                    {title}
                   </h2>
                 </div>
               </div>
@@ -220,9 +218,9 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
               </div>
 
               {/* Description */}
-              {workshop.description && (
+              {description && (
                 <p className="text-base sm:text-lg text-gray-700 leading-relaxed whitespace-pre-wrap">
-                  {workshop.description}
+                  {description}
                 </p>
               )}
             </div>

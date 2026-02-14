@@ -3,6 +3,8 @@ export interface Exhibit {
   id?: string;
   title: string;
   description: string;
+  title_translations?: Record<string, string> | null;
+  description_translations?: Record<string, string> | null;
   image_url: string | null;
   category?: string | null;
   published: boolean;
@@ -13,6 +15,8 @@ export interface Workshop {
   id?: string;
   title: string;
   description: string | null;
+  title_translations?: Record<string, string> | null;
+  description_translations?: Record<string, string> | null;
   date: string;
   order: number;
   image_url: string | null;
