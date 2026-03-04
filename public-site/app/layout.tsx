@@ -48,6 +48,9 @@ export const metadata: NextMetadata = {
   alternates: {
     canonical: BASE_URL,
   },
+  verification: {
+    google: "LPSxqAm6YvkQpeSAKok-IKYLk5akbTIUsvvOa0d9qNk",
+  },
   icons: {
     icon: "/logos/tgm-public.png",
     shortcut: "/logos/tgm-public.png",
