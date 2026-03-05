@@ -20,8 +20,14 @@ interface Workshop {
   published: boolean;
 }
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error(
+    "Missing Supabase environment variables. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.",
+  );
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
@@ -33,7 +39,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 
 // Fetch exhibits with optional published filter
 export async function getExhibits(
-  publishedOnly: boolean = false
+  publishedOnly: boolean = false,
 ): Promise<Exhibit[]> {
   let query = supabase
     .from("exhibits")
@@ -61,7 +67,7 @@ export async function getPublishedExhibits(): Promise<Exhibit[]> {
 
 // Fetch workshops with optional published filter
 export async function getWorkshops(
-  publishedOnly: boolean = true
+  publishedOnly: boolean = true,
 ): Promise<Workshop[]> {
   let query = supabase
     .from("workshops")

@@ -11,6 +11,14 @@ import {
 import type { Exhibit } from "../../../../shared/types";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+const MAX_TITLE_LENGTH = 255;
+const MAX_DESCRIPTION_LENGTH = 5000;
+const ALLOWED_IMAGE_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+]);
 
 interface FormData {
   title: string;
@@ -100,6 +108,17 @@ export default function UploadForm({
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
+      // Validate file MIME type
+      if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
+        const errorMsg = "Only JPEG, PNG, WebP, and GIF images are allowed.";
+        setError(errorMsg);
+        setFieldErrors((prev) => ({ ...prev, image: errorMsg }));
+        e.target.value = "";
+        setImage(null);
+        setImagePreview(null);
+        return;
+      }
+
       // Check file size (5MB limit)
       if (file.size > MAX_FILE_SIZE) {
         const errorMsg = `Image size must be less than 5MB. Your file is ${(
@@ -160,10 +179,14 @@ export default function UploadForm({
 
     if (!formData.title.trim()) {
       errors.title = "Title is required";
+    } else if (formData.title.length > MAX_TITLE_LENGTH) {
+      errors.title = `Title must be ${MAX_TITLE_LENGTH} characters or less`;
     }
 
     if (!formData.description.trim()) {
       errors.description = "Description is required";
+    } else if (formData.description.length > MAX_DESCRIPTION_LENGTH) {
+      errors.description = `Description must be ${MAX_DESCRIPTION_LENGTH} characters or less`;
     }
 
     // Image is required for new exhibits, optional for edits
@@ -653,7 +676,7 @@ export default function UploadForm({
           <input
             id="image"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp,image/gif"
             onChange={handleImageChange}
             aria-label="Upload exhibit image"
             className={`w-full px-3 py-2 sm:px-4 text-xs sm:text-sm border rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 ${

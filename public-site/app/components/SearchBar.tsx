@@ -56,18 +56,13 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
       setShowResults(true);
 
       try {
-        const response = await fetch(`/api/exhibits?limit=100`);
+        const response = await fetch(
+          `/api/exhibits?search=${encodeURIComponent(searchQuery.trim())}&limit=5`,
+        );
         const data = await response.json();
 
         if (data.exhibits) {
-          const filtered = data.exhibits.filter(
-            (exhibit: Exhibit) =>
-              exhibit.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              exhibit.description
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase()),
-          );
-          setSearchResults(filtered.slice(0, 5)); // Show max 5 results
+          setSearchResults(data.exhibits.slice(0, 5));
         }
       } catch (error) {
         console.error("Search error:", error);

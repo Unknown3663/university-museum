@@ -5,6 +5,14 @@ import { NextRequest } from "next/server";
 // Disable caching to always fetch fresh data
 export const revalidate = 0;
 
+// Allowed sort values
+const ALLOWED_SORTS = new Set(["newest", "oldest", "az", "za"]);
+
+// Max search query length
+const MAX_SEARCH_LENGTH = 100;
+const MAX_CATEGORY_LENGTH = 100;
+const MAX_PAGE = 10000;
+
 export async function GET(request: NextRequest) {
   try {
     // Parse query parameters from URL
@@ -16,10 +24,18 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "6") || 6;
 
     // Validate pagination parameters
-    if (page < 1 || limit < 1 || limit > 100) {
+    if (page < 1 || limit < 1 || limit > 100 || page > MAX_PAGE) {
       return NextResponse.json(
         { error: "Invalid pagination parameters" },
-        { status: 400 }
+        { status: 400 },
+      );
+    }
+
+    // Validate sort parameter against whitelist
+    if (!ALLOWED_SORTS.has(sort)) {
+      return NextResponse.json(
+        { error: "Invalid sort parameter" },
+        { status: 400 },
       );
     }
 
@@ -29,17 +45,30 @@ export async function GET(request: NextRequest) {
       .select("*", { count: "exact" })
       .eq("published", true);
 
-    // Apply category filter
+    // Apply category filter with validation
     if (category && category !== "All") {
+      if (category.length > MAX_CATEGORY_LENGTH) {
+        return NextResponse.json(
+          { error: "Invalid category parameter" },
+          { status: 400 },
+        );
+      }
       query = query.eq("category", category);
     }
 
-    // Apply search filter (case-insensitive match on title or description)
+    // Apply search filter with sanitization
     if (search && search.trim()) {
-      query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+      const sanitizedSearch = search.trim().slice(0, MAX_SEARCH_LENGTH);
+      // Escape special PostgREST filter characters to prevent filter injection
+      const escapedSearch = sanitizedSearch.replace(/[%_\\(),.]/g, "");
+      if (escapedSearch.length > 0) {
+        query = query.or(
+          `title.ilike.%${escapedSearch}%,description.ilike.%${escapedSearch}%`,
+        );
+      }
     }
 
-    // Apply sorting
+    // Apply sorting (already validated against whitelist above)
     switch (sort) {
       case "newest":
         query = query.order("created_at", { ascending: false });
@@ -53,8 +82,6 @@ export async function GET(request: NextRequest) {
       case "za":
         query = query.order("title", { ascending: false });
         break;
-      default:
-        query = query.order("created_at", { ascending: false });
     }
 
     // Apply pagination using range
@@ -69,11 +96,8 @@ export async function GET(request: NextRequest) {
     if (error) {
       console.error("Supabase error:", error);
       return NextResponse.json(
-        {
-          error: "Failed to fetch exhibits",
-          message: error.message,
-        },
-        { status: 500 }
+        { error: "Failed to fetch exhibits" },
+        { status: 500 },
       );
     }
 
@@ -98,16 +122,13 @@ export async function GET(request: NextRequest) {
         headers: {
           "Cache-Control": "no-store, must-revalidate",
         },
-      }
+      },
     );
   } catch (error) {
     console.error("API route error:", error);
     return NextResponse.json(
-      {
-        error: "Internal server error",
-        message: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }

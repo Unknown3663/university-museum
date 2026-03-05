@@ -71,7 +71,7 @@ export async function isAuthenticated(): Promise<boolean> {
 
 // ============ EXHIBIT FUNCTIONS ============
 export async function getExhibits(
-  publishedOnly: boolean = false
+  publishedOnly: boolean = false,
 ): Promise<Exhibit[]> {
   try {
     let query = supabase
@@ -109,7 +109,7 @@ export async function createExhibit(exhibit: Exhibit): Promise<Exhibit> {
 
 export async function updateExhibit(
   id: string,
-  updates: Partial<Exhibit>
+  updates: Partial<Exhibit>,
 ): Promise<Exhibit> {
   try {
     const { data, error } = await supabase
@@ -152,16 +152,23 @@ export async function deleteExhibit(id: string): Promise<void> {
  */
 export async function togglePublish(
   id: string,
-  publishStatus: boolean
+  publishStatus: boolean,
 ): Promise<Exhibit> {
   return await updateExhibit(id, { published: publishStatus });
 }
 
 // ============ IMAGE FUNCTIONS ============
+const MIME_TO_EXT: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "image/gif": "gif",
+};
+
 export async function uploadImage(file: File): Promise<string> {
   try {
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+    const fileExt = MIME_TO_EXT[file.type] ?? "jpg";
+    const fileName = `${crypto.randomUUID()}.${fileExt}`;
     const filePath = `${fileName}`;
 
     const { error: uploadError } = await supabase.storage
@@ -175,7 +182,7 @@ export async function uploadImage(file: File): Promise<string> {
         uploadError.message?.includes("policy")
       ) {
         throw new Error(
-          "Storage permission error. Please configure Supabase Storage policies to allow authenticated users to upload images. See console for details."
+          "Storage permission error. Please configure Supabase Storage policies to allow authenticated users to upload images. See console for details.",
         );
       }
       throw uploadError;
@@ -193,8 +200,14 @@ export async function uploadImage(file: File): Promise<string> {
 
 export async function deleteImage(imageUrl: string): Promise<void> {
   try {
+    // Validate URL belongs to our Supabase instance to prevent path manipulation
+    if (!supabaseUrl || !imageUrl.startsWith(supabaseUrl)) return;
+
     const path = imageUrl.split("/exhibit-images/")[1];
     if (!path) return;
+
+    // Guard against path traversal
+    if (path.includes("..") || path.includes("/")) return;
 
     const { error } = await supabase.storage
       .from("exhibit-images")
@@ -228,7 +241,7 @@ export async function getWorkshops(): Promise<Workshop[]> {
  * Create a new workshop
  */
 export async function createWorkshop(
-  workshopData: Workshop
+  workshopData: Workshop,
 ): Promise<Workshop> {
   try {
     const { data, error } = await supabase
@@ -249,7 +262,7 @@ export async function createWorkshop(
  */
 export async function updateWorkshop(
   id: string,
-  updates: Partial<Workshop>
+  updates: Partial<Workshop>,
 ): Promise<Workshop> {
   try {
     const { data, error } = await supabase
@@ -284,7 +297,7 @@ export async function deleteWorkshop(id: string): Promise<void> {
  */
 export async function toggleWorkshopPublish(
   id: string,
-  publishStatus: boolean
+  publishStatus: boolean,
 ): Promise<Workshop> {
   return await updateWorkshop(id, { published: publishStatus });
 }

@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
     setError("");
@@ -23,7 +23,8 @@ export default function LoginPage() {
       router.push("/dashboard");
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to sign in");
+      // Generic error message to prevent user enumeration
+      setError("Invalid email or password");
     } finally {
       setLoading(false);
     }

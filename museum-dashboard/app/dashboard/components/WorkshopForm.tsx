@@ -9,6 +9,14 @@ import {
 import type { Workshop } from "../../../../shared/types";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+const MAX_TITLE_LENGTH = 255;
+const MAX_DESCRIPTION_LENGTH = 5000;
+const ALLOWED_IMAGE_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+]);
 
 interface WorkshopFormData {
   title: string;
@@ -106,6 +114,17 @@ export default function WorkshopForm({
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
+      // Validate file MIME type
+      if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
+        const errorMsg = "Only JPEG, PNG, WebP, and GIF images are allowed.";
+        setError(errorMsg);
+        setFieldErrors((prev) => ({ ...prev, image: errorMsg }));
+        e.target.value = "";
+        setImage(null);
+        setImagePreview(null);
+        return;
+      }
+
       // Check file size (5MB limit)
       if (file.size > MAX_FILE_SIZE) {
         const errorMsg = `Image size must be less than 5MB. Your file is ${(
@@ -169,6 +188,15 @@ export default function WorkshopForm({
 
     if (!formData.title.trim()) {
       errors.title = "Title is required";
+    } else if (formData.title.length > MAX_TITLE_LENGTH) {
+      errors.title = `Title must be ${MAX_TITLE_LENGTH} characters or less`;
+    }
+
+    if (
+      formData.description &&
+      formData.description.length > MAX_DESCRIPTION_LENGTH
+    ) {
+      errors.description = `Description must be ${MAX_DESCRIPTION_LENGTH} characters or less`;
     }
 
     if (!formData.date) {
@@ -345,7 +373,7 @@ export default function WorkshopForm({
           <input
             id="image"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp,image/gif"
             onChange={handleImageChange}
             disabled={submitting}
             className={`w-full px-3 py-2 sm:px-4 text-sm sm:text-base border rounded-lg transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed ${
