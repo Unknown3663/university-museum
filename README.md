@@ -48,7 +48,7 @@ University-Museum/
 Create `.env.local` in both `public-site/` and `museum-dashboard/`:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://gzmouasbhzucflpcgsfu.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=<public URL>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key>
 ```
 
@@ -66,15 +66,15 @@ cd museum-dashboard && npm install && npm run dev
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript (strict) |
-| Styling | Tailwind CSS |
-| Animations | Framer Motion (public site only) |
-| Backend | Supabase (Auth, PostgreSQL, Storage) |
-| Hosting | Vercel |
-| Analytics | Vercel Analytics + Speed Insights |
+| Layer      | Technology                           |
+| ---------- | ------------------------------------ |
+| Framework  | Next.js 16 (App Router)              |
+| Language   | TypeScript (strict)                  |
+| Styling    | Tailwind CSS                         |
+| Animations | Framer Motion (public site only)     |
+| Backend    | Supabase (Auth, PostgreSQL, Storage) |
+| Hosting    | Vercel                               |
+| Analytics  | Vercel Analytics + Speed Insights    |
 
 ---
 
@@ -93,21 +93,21 @@ cd museum-dashboard && npm install && npm run dev
 
 Full documentation is in the [`docs/`](./docs/) folder:
 
-| Doc | Description |
-|-----|-------------|
-| [Architecture](./docs/architecture.md) | Monorepo structure, data flow, package relationships |
-| [Setup](./docs/setup.md) | Local dev, environment variables, build commands |
-| [API Reference](./docs/api.md) | REST API routes, request/response schemas |
-| [Database](./docs/database.md) | Tables, columns, RLS policies, storage |
-| [Authentication](./docs/auth.md) | Login flow, protected routes, server proxy |
-| [i18n](./docs/i18n.md) | Internationalization system, adding languages |
-| [Components](./docs/components.md) | All UI components — props and behaviour |
-| [Security](./docs/security.md) | Security hardening applied |
-| [Performance](./docs/performance.md) | Caching, ISR, optimisations |
-| [Responsive Design](./docs/responsive.md) | Breakpoints, mobile-first details |
-| [Deployment](./docs/deployment.md) | Vercel setup, environment variables |
-| [Types](./docs/types.md) | TypeScript types reference |
-| [Changelog](./docs/changelog.md) | Project history |
+| Doc                                       | Description                                          |
+| ----------------------------------------- | ---------------------------------------------------- |
+| [Architecture](./docs/architecture.md)    | Monorepo structure, data flow, package relationships |
+| [Setup](./docs/setup.md)                  | Local dev, environment variables, build commands     |
+| [API Reference](./docs/api.md)            | REST API routes, request/response schemas            |
+| [Database](./docs/database.md)            | Tables, columns, RLS policies, storage               |
+| [Authentication](./docs/auth.md)          | Login flow, protected routes, server proxy           |
+| [i18n](./docs/i18n.md)                    | Internationalization system, adding languages        |
+| [Components](./docs/components.md)        | All UI components — props and behaviour              |
+| [Security](./docs/security.md)            | Security hardening applied                           |
+| [Performance](./docs/performance.md)      | Caching, ISR, optimisations                          |
+| [Responsive Design](./docs/responsive.md) | Breakpoints, mobile-first details                    |
+| [Deployment](./docs/deployment.md)        | Vercel setup, environment variables                  |
+| [Types](./docs/types.md)                  | TypeScript types reference                           |
+| [Changelog](./docs/changelog.md)          | Project history                                      |
 
 ---
 
