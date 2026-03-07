@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo, Suspense } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback, Suspense } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../components/Navbar";
@@ -21,24 +21,64 @@ function ExhibitsContent() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>(urlSearch);
+  const [debouncedSearch, setDebouncedSearch] = useState<string>(urlSearch);
   const [sortBy, setSortBy] = useState<string>("newest");
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState<number>(0);
   const { t } = useLanguage();
 
-  // Update search query when URL params change
+  // Scroll to top and change page.
+  // Temporarily override CSS scroll-behavior:smooth so the jump is truly instant —
+  // if we don't, the smooth animation gets cut short by the loading-state reflow.
+  const goToPage = useCallback((page: number) => {
+    const html = document.documentElement;
+    html.style.scrollBehavior = "auto";
+    html.scrollTop = 0;
+    document.body.scrollTop = 0; // Safari fallback
+    requestAnimationFrame(() => {
+      html.style.scrollBehavior = "";
+    });
+    setCurrentPage(page);
+  }, []);
+
+  // Sync URL search param on initial load
   useEffect(() => {
     if (urlSearch) {
       setSearchQuery(urlSearch);
+      setDebouncedSearch(urlSearch);
     }
   }, [urlSearch]);
 
-  const fetchExhibits = async () => {
+  // Debounce search input (300 ms) and reset to first page
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+      setCurrentPage(1);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Reset to page 1 when sort changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sortBy]);
+
+  const fetchExhibits = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
-      // Fetch all exhibits by setting a high limit
-      const response = await fetch("/api/exhibits?limit=100");
+      const params = new URLSearchParams({
+        page: String(currentPage),
+        limit: String(EXHIBITS_PER_PAGE),
+        sort: sortBy,
+      });
+      if (debouncedSearch.trim()) {
+        params.set("search", debouncedSearch.trim());
+      }
+
+      const response = await fetch(`/api/exhibits?${params}`);
       const result = await response.json();
 
       if (!response.ok) {
@@ -46,73 +86,19 @@ function ExhibitsContent() {
       }
 
       setExhibits(result.exhibits || []);
+      setTotalPages(result.pagination?.totalPages ?? 1);
+      setTotalCount(result.pagination?.total ?? 0);
     } catch (err) {
       console.error("Error fetching exhibits:", err);
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, debouncedSearch, sortBy]);
 
   useEffect(() => {
     fetchExhibits();
-  }, []);
-
-  // Filter, search, and sort exhibits
-  const processedExhibits = useMemo(() => {
-    let filtered = exhibits;
-
-    // Search by title or description
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (exhibit) =>
-          exhibit.title.toLowerCase().includes(query) ||
-          exhibit.description.toLowerCase().includes(query),
-      );
-    }
-
-    // Sort
-    const sorted = [...filtered];
-    switch (sortBy) {
-      case "newest":
-        sorted.sort(
-          (a, b) =>
-            new Date(b.created_at || 0).getTime() -
-            new Date(a.created_at || 0).getTime(),
-        );
-        break;
-      case "oldest":
-        sorted.sort(
-          (a, b) =>
-            new Date(a.created_at || 0).getTime() -
-            new Date(b.created_at || 0).getTime(),
-        );
-        break;
-      case "a-z":
-        sorted.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case "z-a":
-        sorted.sort((a, b) => b.title.localeCompare(a.title));
-        break;
-      default:
-        break;
-    }
-
-    return sorted;
-  }, [exhibits, searchQuery, sortBy]);
-
-  // Pagination
-  const totalPages = Math.ceil(processedExhibits.length / EXHIBITS_PER_PAGE);
-  const paginatedExhibits = useMemo(() => {
-    const startIndex = (currentPage - 1) * EXHIBITS_PER_PAGE;
-    return processedExhibits.slice(startIndex, startIndex + EXHIBITS_PER_PAGE);
-  }, [processedExhibits, currentPage]);
-
-  // Reset to page 1 when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchQuery, sortBy]);
+  }, [fetchExhibits]);
 
   // Skeleton loader component
   const SkeletonCard = () => (
@@ -229,8 +215,8 @@ function ExhibitsContent() {
                   >
                     <option value="newest">{t("exhibits.sortNewest")}</option>
                     <option value="oldest">{t("exhibits.sortOldest")}</option>
-                    <option value="a-z">{t("exhibits.sortAZ")}</option>
-                    <option value="z-a">{t("exhibits.sortZA")}</option>
+                    <option value="az">{t("exhibits.sortAZ")}</option>
+                    <option value="za">{t("exhibits.sortZA")}</option>
                   </select>
                 </div>
 
@@ -239,9 +225,9 @@ function ExhibitsContent() {
                   style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
                 >
                   {t("exhibits.showing", {
-                    count: processedExhibits.length,
+                    count: totalCount,
                     exhibitText:
-                      processedExhibits.length === 1
+                      totalCount === 1
                         ? t("exhibits.exhibit")
                         : t("exhibits.exhibits"),
                   })}
@@ -301,7 +287,7 @@ function ExhibitsContent() {
           )}
 
           {/* Empty State */}
-          {!loading && !error && processedExhibits.length === 0 && (
+          {!loading && !error && exhibits.length === 0 && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -339,40 +325,31 @@ function ExhibitsContent() {
           )}
 
           {/* Exhibits Grid */}
-          {!loading && !error && paginatedExhibits.length > 0 && (
+          {!loading && !error && exhibits.length > 0 && (
             <>
-              <motion.div
-                layout
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
-              >
-                <AnimatePresence mode="popLayout">
-                  {paginatedExhibits.map((exhibit, index) => {
-                    const globalIndex =
-                      (currentPage - 1) * EXHIBITS_PER_PAGE + index;
-                    const isPriority = globalIndex < 3; // First 3 images get priority
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                {exhibits.map((exhibit, index) => {
+                  const isPriority = index < 3; // First 3 images get priority
 
-                    return (
-                      <motion.div
-                        key={exhibit.id}
-                        layout
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{
-                          duration: 0.4,
-                          delay: index * 0.1,
-                        }}
-                      >
-                        <ExhibitCard
-                          exhibit={exhibit}
-                          index={index}
-                          priority={isPriority}
-                        />
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-              </motion.div>
+                  return (
+                    <motion.div
+                      key={exhibit.id}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.3,
+                        delay: index * 0.05,
+                      }}
+                    >
+                      <ExhibitCard
+                        exhibit={exhibit}
+                        index={index}
+                        priority={isPriority}
+                      />
+                    </motion.div>
+                  );
+                })}
+              </div>
 
               {/* Pagination */}
               {totalPages > 1 && (
@@ -383,9 +360,7 @@ function ExhibitsContent() {
                   className="mt-8 sm:mt-12 flex flex-row justify-center items-center gap-2 sm:gap-4"
                 >
                   <button
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.max(1, prev - 1))
-                    }
+                    onClick={() => goToPage(Math.max(1, currentPage - 1))}
                     disabled={currentPage === 1}
                     className="px-3 sm:px-6 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md text-sm sm:text-base"
                   >
@@ -404,7 +379,7 @@ function ExhibitsContent() {
                         return (
                           <button
                             key={pageNum}
-                            onClick={() => setCurrentPage(pageNum)}
+                            onClick={() => goToPage(pageNum)}
                             className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg font-medium transition-all text-sm sm:text-base ${
                               currentPage === pageNum
                                 ? "bg-blue-600 text-white shadow-md"
@@ -433,7 +408,7 @@ function ExhibitsContent() {
 
                   <button
                     onClick={() =>
-                      setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                      goToPage(Math.min(totalPages, currentPage + 1))
                     }
                     disabled={currentPage === totalPages}
                     className="px-3 sm:px-6 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md text-sm sm:text-base"

@@ -2,22 +2,20 @@ import { supabase } from "../../../lib/supabaseClient";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-// Disable caching to always fetch fresh data
-export const revalidate = 0;
+// ISR: revalidate cached response every 30 seconds
+export const revalidate = 30;
 
 // Allowed sort values
 const ALLOWED_SORTS = new Set(["newest", "oldest", "az", "za"]);
 
 // Max search query length
 const MAX_SEARCH_LENGTH = 100;
-const MAX_CATEGORY_LENGTH = 100;
 const MAX_PAGE = 10000;
 
 export async function GET(request: NextRequest) {
   try {
     // Parse query parameters from URL
     const { searchParams } = new URL(request.url);
-    const category = searchParams.get("category");
     const search = searchParams.get("search");
     const sort = searchParams.get("sort") || "newest";
     const page = parseInt(searchParams.get("page") || "1") || 1;
@@ -39,22 +37,14 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Start building the query - only fetch published exhibits
+    // Start building the query - only fetch published exhibits, project only needed columns
     let query = supabase
       .from("exhibits")
-      .select("*", { count: "exact" })
+      .select(
+        "id,title,description,title_translations,description_translations,image_url,published,created_at",
+        { count: "exact" },
+      )
       .eq("published", true);
-
-    // Apply category filter with validation
-    if (category && category !== "All") {
-      if (category.length > MAX_CATEGORY_LENGTH) {
-        return NextResponse.json(
-          { error: "Invalid category parameter" },
-          { status: 400 },
-        );
-      }
-      query = query.eq("category", category);
-    }
 
     // Apply search filter with sanitization
     if (search && search.trim()) {
@@ -120,7 +110,8 @@ export async function GET(request: NextRequest) {
       {
         status: 200,
         headers: {
-          "Cache-Control": "no-store, must-revalidate",
+          // Allow Vercel CDN edge-caching; stale-while-revalidate keeps responses fast
+          "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
         },
       },
     );

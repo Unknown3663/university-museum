@@ -43,7 +43,9 @@ export async function getExhibits(
 ): Promise<Exhibit[]> {
   let query = supabase
     .from("exhibits")
-    .select("*")
+    .select(
+      "id,title,description,title_translations,description_translations,image_url,published,created_at",
+    )
     .order("created_at", { ascending: false });
 
   if (publishedOnly) {
@@ -71,7 +73,7 @@ export async function getWorkshops(
 ): Promise<Workshop[]> {
   let query = supabase
     .from("workshops")
-    .select("*")
+    .select("id,title,description,date,order,image_url,published,created_at")
     .order("order", { ascending: true });
 
   if (publishedOnly) {

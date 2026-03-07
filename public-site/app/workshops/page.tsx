@@ -26,10 +26,9 @@ export default function Workshops() {
   useEffect(() => {
     async function fetchWorkshops() {
       try {
-        // Import the function dynamically on client side
-        const { getWorkshops } = await import("../../lib/supabaseClient");
-        const data = await getWorkshops(true);
-        setWorkshops(data);
+        const response = await fetch("/api/workshops");
+        const result = await response.json();
+        setWorkshops(result.workshops || []);
       } catch (error) {
         console.error("Error fetching workshops:", error);
       } finally {

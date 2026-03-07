@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { Metadata as NextMetadata } from "next";
 import { LanguageProvider } from "../../shared/i18n/LanguageContext";
+import PageTransition from "./components/PageTransition";
 import Script from "next/script";
 
 const BASE_URL = "https://tgm-chi.vercel.app";
@@ -125,7 +126,9 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <PageTransition>{children}</PageTransition>
+        </LanguageProvider>
         <SpeedInsights />
         <Analytics />
       </body>
