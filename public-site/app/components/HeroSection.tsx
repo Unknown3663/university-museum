@@ -9,7 +9,7 @@ export default function HeroSection() {
   return (
     <div className="flex items-center min-h-screen px-4 sm:px-6 lg:px-8 pt-16 sm:pt-0">
       <div className="max-w-4xl w-full animate-fade-in">
-        <div className="space-y-4 sm:space-y-6 text-left pl-4 sm:pl-8 lg:pl-16">
+        <div className="space-y-4 sm:space-y-6 text-left pl-4 sm:pl-20 md:pl-24 lg:pl-28 pr-4 sm:pr-20 md:pr-24 lg:pr-28">
           {/* Main Heading - Responsive sizing */}
           <h1
             className="text-4xl xs:text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-bold text-white leading-tight"

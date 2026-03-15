@@ -15,9 +15,9 @@ const nextConfig = {
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://cdn.vercel-insights.com",
-              "style-src 'self' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: blob: https://*.supabase.co",
-              "font-src 'self'",
+              "font-src 'self' https://fonts.gstatic.com",
               "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://va.vercel-scripts.com https://vitals.vercel-insights.com",
               "frame-ancestors 'none'",
               "base-uri 'self'",
@@ -45,6 +45,12 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     // Allow imports from parent directory (shared folder)
     config.resolve.modules.push(path.resolve(__dirname, "../"));
+
+    // Explicit alias so HMR can track shared/ files properly (fixes Fast Refresh full-reload on navigation)
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      shared: path.resolve(__dirname, "../shared"),
+    };
 
     // Add shared folder to webpack compilation
     if (!isServer) {
