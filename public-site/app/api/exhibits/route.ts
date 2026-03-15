@@ -14,8 +14,8 @@ const MAX_PAGE = 10000;
 
 export async function GET(request: NextRequest) {
   try {
-    // Parse query parameters from URL
-    const { searchParams } = new URL(request.url);
+    // Parse query parameters (use nextUrl to avoid dynamic server usage in static analysis)
+    const searchParams = request.nextUrl.searchParams;
     const search = searchParams.get("search");
     const sort = searchParams.get("sort") || "newest";
     const page = parseInt(searchParams.get("page") || "1") || 1;
