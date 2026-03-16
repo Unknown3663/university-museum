@@ -101,7 +101,7 @@ export default function Workshops() {
               </div>
             </div>
           ) : (
-            <div className="space-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {workshops.map((workshop) => (
                 <WorkshopCard key={workshop.id} workshop={workshop} />
               ))}
