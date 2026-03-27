@@ -19,7 +19,7 @@ Set the following in the Vercel project settings for **each** app:
 
 | Variable                        | Description                                                            |
 | ------------------------------- | ---------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL (e.g. `https://gzmouasbhzucflpcgsfu.supabase.co`) |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL (e.g. `https://your-project-ref.supabase.co`)     |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key                                               |
 
 Both apps throw `Error: Missing Supabase environment variables` if these are absent.

@@ -16,7 +16,7 @@ No other global installs are required.
 Create a `.env.local` file in **both** `public-site/` and `museum-dashboard/`:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://gzmouasbhzucflpcgsfu.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key from Supabase dashboard>
 ```
 

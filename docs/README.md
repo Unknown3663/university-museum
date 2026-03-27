@@ -4,12 +4,13 @@ This folder contains the complete documentation for the Tourist Guidance Museum 
 
 ## Contents
 
+
 | File                                 | Description                                                     |
 | ------------------------------------ | --------------------------------------------------------------- |
 | [architecture.md](./architecture.md) | Monorepo structure, package relationships, data flow            |
 | [setup.md](./setup.md)               | Prerequisites, environment variables, local dev setup           |
 | [api.md](./api.md)                   | Public-site API routes, request/response schemas                |
-| [database.md](./database.md)         | Supabase tables, columns, RLS policies, storage                 |
+| [database.md](./database.md)         | Schema diagram, table details, RLS policies, storage            |
 | [auth.md](./auth.md)                 | Dashboard authentication, protected routes, proxy               |
 | [i18n.md](./i18n.md)                 | Internationalization system, adding languages, RTL              |
 | [components.md](./components.md)     | All UI components — props, behaviour, usage                     |
@@ -20,7 +21,9 @@ This folder contains the complete documentation for the Tourist Guidance Museum 
 | [types.md](./types.md)               | Shared TypeScript types reference                               |
 | [changelog.md](./changelog.md)       | Full project history and change log                             |
 
+
 ---
 
-> **Live URL:** https://tgm-chi.vercel.app  
-> **Supabase project:** `gzmouasbhzucflpcgsfu` (museum-db, eu-west-1)
+> **Live URL:** [https://tgm-chi.vercel.app](https://tgm-chi.vercel.app)  
+> **Database platform:** Supabase (`eu-west-1`)
+

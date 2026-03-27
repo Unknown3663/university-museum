@@ -103,7 +103,7 @@ Extension is derived from the validated MIME type via a hardcoded map:
 
 Before removing a storage object, the URL is checked:
 
-1. Must start with `https://gzmouasbhzucflpcgsfu.supabase.co` (Supabase origin)
+1. Must start with the configured Supabase origin (`NEXT_PUBLIC_SUPABASE_URL`)
 2. Must not contain `..` (prevents path traversal attacks)
 
 ### Bucket MIME Restriction

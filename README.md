@@ -98,7 +98,7 @@ Full documentation is in the [`docs/`](./docs/) folder:
 | [Architecture](./docs/architecture.md)    | Monorepo structure, data flow, package relationships |
 | [Setup](./docs/setup.md)                  | Local dev, environment variables, build commands     |
 | [API Reference](./docs/api.md)            | REST API routes, request/response schemas            |
-| [Database](./docs/database.md)            | Tables, columns, RLS policies, storage               |
+| [Database](./docs/database.md)            | Schema diagram, table details, RLS policies, storage |
 | [Authentication](./docs/auth.md)          | Login flow, protected routes, server proxy           |
 | [i18n](./docs/i18n.md)                    | Internationalization system, adding languages        |
 | [Components](./docs/components.md)        | All UI components — props and behaviour              |

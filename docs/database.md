@@ -1,10 +1,68 @@
 # Database
 
-Hosted on **Supabase** (project ID: `gzmouasbhzucflpcgsfu`, region: `eu-west-1`).
+Hosted on **Supabase** (region: `eu-west-1`).
 
 ---
 
-## Tables
+## Schema Overview
+
+The database has a small content model with two main entities:
+
+- `exhibits` for museum items shown on the public site
+- `workshops` for events and scheduled activities
+
+```mermaid
+erDiagram
+    EXHIBITS {
+        uuid id PK
+        text title
+        text description
+        jsonb title_translations
+        jsonb description_translations
+        text image_url
+        bool published
+        timestamptz created_at
+    }
+
+    WORKSHOPS {
+        uuid id PK
+        text title
+        text description
+        text_or_date date
+        int order
+        text image_url
+        bool published
+        timestamptz created_at
+    }
+
+    STORAGE_BUCKET {
+        text name
+        bool public
+        int max_file_size_mb
+        text allowed_mime_types
+    }
+
+    EXHIBITS }o--|| STORAGE_BUCKET : "uses image_url"
+    WORKSHOPS }o--|| STORAGE_BUCKET : "uses image_url"
+```
+
+---
+
+## Abstraction Layers
+
+There are a few layers of abstraction here, and each one serves a different group of people.
+
+| Layer | What it shows | Primary audience |
+| ----- | ------------- | ---------------- |
+| Conceptual | The museum manages two kinds of content: exhibits and workshops. | Stakeholders, product owners, museum staff |
+| Logical | The entities, their fields, publication state, translations, and image linkage. | Developers, technical reviewers, maintainers |
+| Physical | Supabase tables, RLS policies, storage bucket rules, and auth constraints. | Engineers operating the system |
+
+The schema diagram above is the logical view. The sections below document the physical implementation details.
+
+---
+
+## Table Details
 
 ### `exhibits`
 
@@ -99,7 +157,7 @@ File extension is derived from the MIME type using an internal map:
 
 Before deleting a storage object, `deleteImage()` validates that the URL:
 
-1. Starts with the Supabase origin (`https://gzmouasbhzucflpcgsfu.supabase.co`)
+1. Starts with the configured Supabase origin (`NEXT_PUBLIC_SUPABASE_URL`)
 2. Does not contain `..` (path traversal prevention)
 
 ---
