@@ -14,11 +14,11 @@ export default function Button({
   className = "",
 }: ButtonProps) {
   const baseStyles =
-    "inline-block px-6 sm:px-8 py-2.5 sm:py-3 font-medium text-sm sm:text-base rounded-lg transition-all duration-300";
+    "inline-block px-6 sm:px-8 py-2.5 sm:py-3 font-medium text-sm sm:text-base rounded-lg transition-[transform,background-color,border-color,color] duration-300";
 
   const variants = {
     primary:
-      "bg-white/20 backdrop-blur-md text-white border border-white/30 hover:bg-white/30 hover:scale-105",
+      "bg-black/35 backdrop-blur-md text-white border border-white/40 hover:bg-black/50 hover:scale-[1.03]",
     secondary:
       "bg-transparent border-2 border-white text-white hover:bg-white hover:text-black",
   };

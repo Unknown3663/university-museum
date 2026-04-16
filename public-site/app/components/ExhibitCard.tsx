@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import type { Exhibit } from "../../../shared/types";
 import { useLanguage } from "../../../shared/i18n/LanguageContext";
+import { supabaseImageLoader } from "../../lib/supabaseImageLoader";
 
 interface ExhibitCardProps {
   exhibit: Exhibit;
@@ -48,24 +49,28 @@ export default function ExhibitCard({
 
     return () => {
       document.removeEventListener("keydown", handleEscKey);
+      document.body.style.overflow = "";
     };
   }, [isModalOpen]);
 
   return (
     <>
       <div
-        className="bg-white rounded-lg sm:rounded-xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group h-full flex flex-col cursor-pointer"
+        className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-lg bg-white shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-2xl will-change-transform sm:rounded-xl"
         onClick={openModal}
       >
         {exhibit.image_url && (
-          <div className="relative w-full aspect-video overflow-hidden bg-gray-100">
+          <div className="overflow-hidden bg-gray-100">
             <Image
+              loader={supabaseImageLoader}
               src={exhibit.image_url}
               alt={title}
-              fill
+              width={1200}
+              height={675}
               loading={priority ? "eager" : "lazy"}
               priority={priority}
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              fetchPriority={priority ? "high" : "auto"}
+              className="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           </div>
@@ -120,12 +125,13 @@ export default function ExhibitCard({
             {exhibit.image_url && (
               <div className="relative w-full bg-gray-100 flex items-center justify-center">
                 <Image
+                  loader={supabaseImageLoader}
                   src={exhibit.image_url}
                   alt={title}
                   width={1200}
                   height={800}
                   className="w-full h-auto max-h-[60vh] object-contain"
-                  priority
+                  loading="eager"
                 />
               </div>
             )}

@@ -1,10 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Global styles */
+:root {
+  color-scheme: light;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -35,6 +37,18 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  .surface-skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(224, 224, 224, 0.92) 25%,
+      rgba(240, 240, 240, 1) 50%,
+      rgba(224, 224, 224, 0.92) 75%
+    );
+    background-size: 2000px 100%;
+    animation: shimmer 1.5s linear infinite;
+    border-radius: 0.75rem;
+  }
 }
 
 /* Keyframe animations */
@@ -60,7 +74,31 @@ body {
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
 /* Ensure smooth transitions */
 * {
   @apply transition-colors duration-200;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

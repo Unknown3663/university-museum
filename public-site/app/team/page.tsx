@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import SignatureLogo from "../components/SignatureLogo";
 import Footer from "../components/Footer";
 import { useLanguage } from "../../../shared/i18n/LanguageContext";
+import teamBackground from "../../public/backgrounds/team-background.jpg";
 
 const FACULTY = [
   { name: "Prof. Samar Mustafa", role: "collegeDean" },
@@ -38,15 +39,16 @@ export default function Team() {
       {/* Background Image */}
       <div className="fixed inset-0 w-full h-full -z-10">
         <Image
-          src="/backgrounds/team-background.jpg"
+          src={teamBackground}
           alt="Museum Team Background"
           fill
           priority
-          quality={80}
+          placeholder="blur"
+          quality={70}
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
       <Navbar />
@@ -62,7 +64,7 @@ export default function Team() {
               {t("team.title")}
             </h1>
             <p
-              className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto"
+              className="text-base sm:text-lg text-slate-100 max-w-2xl mx-auto"
               style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
             >
               {t("team.subtitle")}
@@ -81,7 +83,7 @@ export default function Team() {
               {FACULTY.map((member, index) => (
                 <div
                   key={index}
-                  className="bg-white/10 backdrop-blur-md rounded-lg border border-white/20 shadow-lg p-6 hover:bg-white/20 transition-all duration-300"
+                  className="rounded-lg border border-white/20 bg-black/30 p-6 shadow-lg backdrop-blur-md transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-1 hover:bg-black/40 hover:shadow-xl will-change-transform"
                 >
                   <div className="flex items-center gap-4">
                     {/* Placeholder for future profile picture */}
@@ -106,7 +108,7 @@ export default function Team() {
                         {member.name}
                       </h3>
                       <p
-                        className="text-sm sm:text-base text-gray-300"
+                        className="text-sm sm:text-base text-slate-100"
                         style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
                       >
                         {t(`team.roles.${member.role}`)}
@@ -130,7 +132,7 @@ export default function Team() {
               {TEAM_MEMBERS.map((member, index) => (
                 <div
                   key={index}
-                  className="bg-white/10 backdrop-blur-md rounded-lg border border-white/20 shadow-lg p-6 hover:bg-white/20 transition-all duration-300"
+                  className="rounded-lg border border-white/20 bg-black/30 p-6 shadow-lg backdrop-blur-md transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-1 hover:bg-black/40 hover:shadow-xl will-change-transform"
                 >
                   <div className="flex items-center gap-4">
                     {/* Placeholder for future profile picture */}
@@ -155,7 +157,7 @@ export default function Team() {
                         {member.name}
                       </h3>
                       <p
-                        className="text-sm sm:text-base text-gray-300"
+                        className="text-sm sm:text-base text-slate-100"
                         style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
                       >
                         {t(`team.roles.${member.role}`)}

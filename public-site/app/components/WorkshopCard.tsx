@@ -4,12 +4,17 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import type { Workshop } from "../../../shared/types";
 import { useLanguage } from "../../../shared/i18n/LanguageContext";
+import { supabaseImageLoader } from "../../lib/supabaseImageLoader";
 
 interface WorkshopCardProps {
   workshop: Workshop;
+  priority?: boolean;
 }
 
-export default function WorkshopCard({ workshop }: WorkshopCardProps) {
+export default function WorkshopCard({
+  workshop,
+  priority = false,
+}: WorkshopCardProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { locale } = useLanguage();
 
@@ -51,6 +56,7 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
 
     return () => {
       document.removeEventListener("keydown", handleEscKey);
+      document.body.style.overflow = "";
     };
   }, [isModalOpen]);
 
@@ -59,17 +65,22 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
       {/* Workshop Card with integrated banner */}
       <div
         onClick={openModal}
-        className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 hover:bg-white/15 transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-xl overflow-hidden"
+        className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 hover:bg-white/15 transition-[transform,box-shadow,background-color,border-color] duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-xl overflow-hidden will-change-transform"
       >
         {/* Workshop Banner Image (if exists) */}
         {workshop.image_url && (
-          <div className="relative w-full aspect-[3/1]">
+          <div className="relative w-full overflow-hidden bg-slate-800/30">
             <Image
+              loader={supabaseImageLoader}
               src={workshop.image_url}
               alt={`${title} banner`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1200px"
+              width={1200}
+              height={400}
+              priority={priority}
+              fetchPriority={priority ? "high" : "auto"}
+              loading={priority ? "eager" : "lazy"}
+              className="h-auto w-full object-cover"
+              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
           </div>
@@ -106,16 +117,16 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                   />
                 </svg>
-                <span className="text-blue-200 font-medium">
+                <span className="text-sky-100 font-medium">
                   {formatDate(workshop.date)}
                 </span>
               </div>
               {description && (
-                <p className="text-gray-200 leading-relaxed line-clamp-3">
+                <p className="text-slate-100 leading-relaxed line-clamp-3">
                   {description}
                 </p>
               )}
-              <div className="mt-4 flex items-center text-blue-300 text-sm font-medium">
+              <div className="mt-4 flex items-center text-sky-200 text-sm font-medium">
                 <span>Click to view details</span>
                 <svg
                   className="w-4 h-4 ml-1"
@@ -171,12 +182,13 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
             {workshop.image_url && (
               <div className="relative w-full bg-gray-100 flex items-center justify-center">
                 <Image
+                  loader={supabaseImageLoader}
                   src={workshop.image_url}
                   alt={title}
                   width={1200}
                   height={400}
                   className="w-full h-auto max-h-[50vh] object-contain"
-                  priority
+                  loading="eager"
                 />
               </div>
             )}

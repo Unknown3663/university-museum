@@ -22,8 +22,7 @@ export default function SideLogos() {
             alt="College Logo"
             width={80}
             height={80}
-            quality={100}
-            priority
+            quality={85}
             className="object-contain w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20"
             draggable={false}
           />
@@ -42,8 +41,7 @@ export default function SideLogos() {
             alt="University Logo"
             width={80}
             height={80}
-            quality={100}
-            priority
+            quality={85}
             className="object-contain w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20"
             draggable={false}
           />

@@ -2,11 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import SearchBar from "./SearchBar";
 import LanguageSwitcher from "../../../shared/components/LanguageSwitcher";
 import { useLanguage } from "../../../shared/i18n/LanguageContext";
+
+const SearchBar = dynamic(() => import("./SearchBar"), {
+  loading: () => <div className="h-0" aria-hidden="true" />,
+});
 
 const SITE_CONFIG = {
   name: "Tourist Guidance Museum",
@@ -33,7 +37,7 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md border-b border-white/10">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/45 backdrop-blur-md border-b border-white/10">
       <div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         suppressHydrationWarning
@@ -183,29 +187,11 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 text-center ${
-                    pathname === link.href ? "" : ""
-                  }`}
-                  style={
+                  className={`text-white px-4 py-3 rounded-lg font-medium text-center backdrop-blur-sm transition-[background-color,color] duration-200 ${
                     pathname === link.href
-                      ? { backgroundColor: "#3b82f6" }
-                      : {
-                          backgroundColor: "rgba(100, 116, 139, 0.3)",
-                          backdropFilter: "blur(8px)",
-                        }
-                  }
-                  onMouseEnter={(e) => {
-                    if (pathname !== link.href) {
-                      e.currentTarget.style.backgroundColor =
-                        "rgba(100, 116, 139, 0.5)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (pathname !== link.href) {
-                      e.currentTarget.style.backgroundColor =
-                        "rgba(100, 116, 139, 0.3)";
-                    }
-                  }}
+                      ? "bg-blue-600"
+                      : "bg-slate-500/30 hover:bg-slate-500/50"
+                  }`}
                 >
                   {link.label}
                 </Link>

@@ -1,19 +1,15 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
-import BackgroundImage from "./components/BackgroundImage";
+import Navbar from "./components/Navbar";
 import Hero from "./components/HeroSection";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SideLogos from "./components/SideLogos";
 import SignatureLogo from "./components/SignatureLogo";
 import Footer from "./components/Footer";
 import { useLanguage } from "../../shared/i18n/LanguageContext";
-
-// Dynamically import Navbar
-const Navbar = dynamic(() => import("./components/Navbar"), {
-  loading: () => <div className="h-20 bg-black/20" />,
-});
+import buildingBackground from "../public/backgrounds/college-background.jpg";
+import teamBackground from "../public/backgrounds/team-background.jpg";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -24,19 +20,20 @@ export default function Home() {
       <SignatureLogo hideOnHeroSection={true} />
 
       {/* Hero Section with Background */}
-      <div className="relative min-h-screen w-full overflow-hidden">
+      <div id="hero-section" className="relative min-h-screen w-full overflow-hidden">
         {/* Hero Background - Moves with hero section */}
         <div className="absolute inset-0 w-full h-full -z-10">
           <Image
-            src="/backgrounds/college-background.jpg"
+            src={buildingBackground}
             alt="Tourist Guidance Museum Building"
             fill
             priority
-            quality={80}
+            placeholder="blur"
+            quality={70}
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/10"></div>
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
 
         <Navbar />
@@ -79,9 +76,10 @@ export default function Home() {
             {/* Image */}
             <div className="relative h-64 sm:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-xl order-first lg:order-last">
               <Image
-                src="/backgrounds/team-background.jpg"
+                src={teamBackground}
                 alt="Museum Team"
                 fill
+                placeholder="blur"
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />

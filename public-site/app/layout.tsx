@@ -3,10 +3,12 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { Metadata as NextMetadata } from "next";
 import { LanguageProvider } from "../../shared/i18n/LanguageContext";
-import PageTransition from "./components/PageTransition";
 import Script from "next/script";
 
 const BASE_URL = "https://tgm-chi.vercel.app";
+const supabaseOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL
+  ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin
+  : null;
 
 export const metadata: NextMetadata = {
   metadataBase: new URL(BASE_URL),
@@ -119,6 +121,12 @@ export default function RootLayout({
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <head>
+        {supabaseOrigin && (
+          <>
+            <link rel="dns-prefetch" href={supabaseOrigin} />
+            <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" />
+          </>
+        )}
         <Script
           id="json-ld-museum"
           type="application/ld+json"
@@ -127,7 +135,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         <LanguageProvider>
-          <PageTransition>{children}</PageTransition>
+          {children}
         </LanguageProvider>
         <SpeedInsights />
         <Analytics />

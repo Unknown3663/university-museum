@@ -2,6 +2,7 @@
   "name": "public-site",
   "version": "1.0.0",
   "private": true,
+  "browserslist": ["> 0.5%", "last 2 versions", "not dead", "not IE 11"],
   "scripts": {
     "dev": "next dev --webpack",
     "build": "npm run install:shared && next build --webpack",

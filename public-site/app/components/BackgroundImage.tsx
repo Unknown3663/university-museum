@@ -11,7 +11,7 @@ export default function BackgroundImage({
   src,
   alt,
   overlay = true,
-  overlayOpacity = 40,
+  overlayOpacity = 50,
 }: BackgroundImageProps) {
   return (
     <div className="fixed inset-0 w-full h-full -z-10">
@@ -25,7 +25,10 @@ export default function BackgroundImage({
         className="object-cover"
       />
       {overlay && (
-        <div className={`absolute inset-0 bg-black/${overlayOpacity}`}></div>
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: `rgba(0, 0, 0, ${overlayOpacity / 100})` }}
+        ></div>
       )}
     </div>
   );

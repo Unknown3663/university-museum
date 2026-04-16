@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import type { Exhibit } from "../../../shared/types";
 import { useLanguage } from "../../../shared/i18n/LanguageContext";
+import { supabaseImageLoader } from "../../lib/supabaseImageLoader";
 
 interface SearchBarProps {
   isOpen: boolean;
@@ -88,7 +89,7 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [showResults]);
 
-  const handleResultClick = (exhibitId: number): void => {
+  const handleResultClick = (): void => {
     const query = searchQuery;
     setSearchQuery("");
     setShowResults(false);
@@ -115,13 +116,17 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
       <div className="pb-3 sm:pb-4 relative">
         <input
           ref={searchInputRef}
-          type="text"
+          id="navbar-search"
+          name="q"
+          type="search"
           placeholder={t("search.placeholder")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 outline-none focus:outline-none focus-visible:outline-none focus:border-white/40 transition-all duration-200"
           suppressHydrationWarning
           tabIndex={isOpen ? 0 : -1}
+          aria-label={t("search.placeholder")}
+          autoComplete="off"
         />
 
         {/* Search Results Dropdown */}
@@ -146,17 +151,19 @@ export default function SearchBar({ isOpen, onClose }: SearchBarProps) {
                   {searchResults.map((exhibit) => (
                     <button
                       key={exhibit.id}
-                      onClick={() => handleResultClick(Number(exhibit.id))}
+                      onClick={handleResultClick}
                       className="w-full p-3 hover:bg-gray-50 transition-colors text-left flex items-start gap-3"
                     >
                       <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
                         {exhibit.image_url ? (
                           <Image
+                            loader={supabaseImageLoader}
                             src={exhibit.image_url}
                             alt={exhibit.title}
-                            fill
+                            width={64}
+                            height={64}
                             sizes="64px"
-                            className="object-cover"
+                            className="h-full w-full object-cover"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
