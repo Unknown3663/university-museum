@@ -1,10 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "../../lib/supabaseClient";
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginShell />}>
+      <LoginContent />
+    </Suspense>
+  );
+}
+
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState<string>("");
@@ -32,6 +40,28 @@ export default function LoginPage() {
     }
   };
 
+  return <LoginShell {...{ email, setEmail, password, setPassword, error, loading, handleSubmit }} />;
+}
+
+interface LoginShellProps {
+  email?: string;
+  setEmail?: React.Dispatch<React.SetStateAction<string>>;
+  password?: string;
+  setPassword?: React.Dispatch<React.SetStateAction<string>>;
+  error?: string;
+  loading?: boolean;
+  handleSubmit?: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+}
+
+function LoginShell({
+  email = "",
+  setEmail,
+  password = "",
+  setPassword,
+  error = "",
+  loading = false,
+  handleSubmit,
+}: LoginShellProps = {}) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100">
       <div className="card max-w-md w-full mx-4">
@@ -60,7 +90,7 @@ export default function LoginPage() {
               id="email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail?.(e.target.value)}
               className="input-field"
               placeholder="your@email.com"
               required
@@ -78,7 +108,7 @@ export default function LoginPage() {
               id="password"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword?.(e.target.value)}
               className="input-field"
               placeholder="••••••••"
               required
