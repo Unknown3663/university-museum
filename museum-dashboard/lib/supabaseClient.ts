@@ -1,5 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
 import type { Exhibit, Workshop } from "../../shared/types";
+import {
+  buildExpiredSessionCookieString,
+  buildSessionCookieString,
+} from "./authCookie";
 
 // ============ ENVIRONMENT VALIDATION ============
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -11,6 +15,26 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 // ============ SUPABASE CLIENT ============
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+if (typeof window !== "undefined") {
+  const syncSessionCookie = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    document.cookie = session
+      ? buildSessionCookieString(session)
+      : buildExpiredSessionCookieString();
+  };
+
+  void syncSessionCookie();
+
+  supabase.auth.onAuthStateChange((_event, session) => {
+    document.cookie = session
+      ? buildSessionCookieString(session)
+      : buildExpiredSessionCookieString();
+  });
+}
 
 // ============ ERROR HANDLER ============
 /**
@@ -32,6 +56,9 @@ export async function signIn(email: string, password: string) {
       password,
     });
     if (error) throw error;
+    if (typeof document !== "undefined" && data.session) {
+      document.cookie = buildSessionCookieString(data.session);
+    }
     return data;
   } catch (error) {
     handleError(error, "Signing in");
@@ -42,6 +69,9 @@ export async function signOut(): Promise<void> {
   try {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
+    if (typeof document !== "undefined") {
+      document.cookie = buildExpiredSessionCookieString();
+    }
   } catch (error) {
     handleError(error, "Signing out");
   }

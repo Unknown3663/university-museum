@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { isAuthenticated } from "../../../lib/supabaseClient";
 
 interface ProtectedRouteProps {
@@ -10,20 +10,22 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const checkAuth = async () => {
       const authenticated = await isAuthenticated();
       if (!authenticated) {
-        router.push("/login");
+        const redirectTarget = pathname || "/dashboard";
+        router.replace(`/login?redirect=${encodeURIComponent(redirectTarget)}`);
       } else {
         setLoading(false);
       }
     };
 
     checkAuth();
-  }, [router]);
+  }, [pathname, router]);
 
   if (loading) {
     return (

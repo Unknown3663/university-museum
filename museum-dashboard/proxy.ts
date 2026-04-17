@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { AUTH_COOKIE_NAME, parseSessionCookieValue } from "./lib/authCookie";
 
 export async function proxy(request: NextRequest) {
   // Only protect /dashboard routes
@@ -8,13 +9,21 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Get the Supabase access token from the cookie
-  // Supabase stores its session in cookies with the format: sb-<project-ref>-auth-token
   const cookies = request.cookies;
   let accessToken: string | null = null;
 
-  // Look for the Supabase auth token in cookies
+  const appSessionCookie = parseSessionCookieValue(
+    request.cookies.get(AUTH_COOKIE_NAME)?.value,
+  );
+
+  if (appSessionCookie?.access_token) {
+    accessToken = appSessionCookie.access_token;
+  }
+
+  // Backward-compatible support for legacy Supabase cookie names.
   for (const [name, cookie] of cookies) {
+    if (accessToken) break;
+
     if (name.startsWith("sb-") && name.endsWith("-auth-token")) {
       try {
         // Supabase stores a JSON array [access_token, refresh_token] or base64 encoded
@@ -30,7 +39,6 @@ export async function proxy(request: NextRequest) {
         // Try using the raw value
         accessToken = cookie.value;
       }
-      break;
     }
   }
 

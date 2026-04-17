@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "../../lib/supabaseClient";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const redirectTarget = searchParams.get("redirect") || "/dashboard";
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -20,7 +22,7 @@ export default function LoginPage() {
 
     try {
       await signIn(email, password);
-      router.push("/dashboard");
+      router.replace(redirectTarget);
       router.refresh();
     } catch (err) {
       // Generic error message to prevent user enumeration
