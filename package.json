@@ -1,0 +1,9 @@
+{
+  "name": "university-museum",
+  "private": true,
+  "scripts": {
+    "dev:public": "pnpm -F public-site dev",
+    "dev:dashboard": "pnpm -F museum-dashboard dev",
+    "dev": "pnpm -F public-site dev"
+  }
+}
