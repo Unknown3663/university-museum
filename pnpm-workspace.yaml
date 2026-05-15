@@ -1,0 +1,7 @@
+packages:
+  - 'shared'
+  - 'public-site'
+  - 'museum-dashboard'
+allowBuilds:
+  sharp: true
+  unrs-resolver: true

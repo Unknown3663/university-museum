@@ -5,8 +5,8 @@
   "browserslist": ["> 0.5%", "last 2 versions", "not dead", "not IE 11"],
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "npm run install:shared && next build --webpack",
-    "install:shared": "cd ../shared && npm install",
+    "build": "pnpm install:shared && next build --webpack",
+    "install:shared": "cd ../shared && pnpm install",
     "start": "next start",
     "lint": "next lint"
   },
