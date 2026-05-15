@@ -6,6 +6,8 @@ settings:
 
 importers:
 
+  .: {}
+
   museum-dashboard:
     dependencies:
       '@supabase/supabase-js':
