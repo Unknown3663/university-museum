@@ -25,6 +25,11 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+
+# pnpm
+.pnpm-store
+.npmrc
 
 # Local env files
 .env
@@ -48,8 +53,15 @@ next-env.d.ts
 *.swo
 *~
 
-# Claude
+# AI Assistants & Tools
 .claude/
+.copilot/
+.codex/
+.opencode/
+.antigravity/
+.cursor/
+.continue/
+.cody/
 
 # OS
 .DS_Store
