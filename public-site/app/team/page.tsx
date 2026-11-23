@@ -19,13 +19,11 @@ const TEAM_MEMBERS = [
   { name: "Ziad Khalaf", role: "curator" },
   { name: "Mahmoud Farghly", role: "curator" },
   { name: "Malak Amr", role: "curator" },
-  { name: "Romaysaa Mohamed", role: "curator" },
   { name: "Rogena Hany", role: "curator" },
   { name: "Shahd Esaam", role: "curator" },
   { name: "Shahd Ahmad", role: "curator" },
   { name: "Hanin Ahmed", role: "curator" },
   { name: "Login Ahmed", role: "curator" },
-  { name: "Samuil Hany", role: "curator" },
 ];
 
 export default function Team() {
