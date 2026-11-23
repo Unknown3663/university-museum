@@ -24,6 +24,8 @@ const TEAM_MEMBERS = [
   { name: "Shahd Ahmad", role: "curator" },
   { name: "Hanin Ahmed", role: "curator" },
   { name: "Login Ahmed", role: "curator" },
+  { name: "Wannas Rizk", role: "curator" },
+  { name: "Mustafa Amir", role: "curator" },
 ];
 
 export default function Team() {
