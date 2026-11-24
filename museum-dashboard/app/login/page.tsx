@@ -2,6 +2,7 @@
 
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { getDashboardRedirect } from "../../lib/dashboardRedirect";
 import { signIn } from "../../lib/supabaseClient";
 
 export default function LoginPage() {
@@ -19,7 +20,6 @@ function LoginContent() {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const redirectTarget = searchParams.get("redirect") || "/dashboard";
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -30,7 +30,9 @@ function LoginContent() {
 
     try {
       await signIn(email, password);
-      router.replace(redirectTarget);
+      router.replace(
+        getDashboardRedirect(searchParams.get("redirect"), window.location.origin),
+      );
       router.refresh();
     } catch (err) {
       // Generic error message to prevent user enumeration

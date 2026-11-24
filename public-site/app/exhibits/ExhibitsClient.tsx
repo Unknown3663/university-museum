@@ -141,7 +141,7 @@ export default function ExhibitsClient({
       }
 
       const response = await fetch(`/api/exhibits?${params.toString()}`, {
-        cache: "force-cache",
+        cache: "no-store",
       });
       const result = (await response.json()) as ExhibitPageData & {
         error?: string;

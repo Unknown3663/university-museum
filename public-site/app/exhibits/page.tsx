@@ -1,6 +1,13 @@
 import ExhibitsClient from "./ExhibitsClient";
 import { getExhibitPage } from "../../lib/publicData";
-import { EXHIBITS_PER_PAGE, type ExhibitPageData } from "../../lib/publicDataTypes";
+import {
+  EXHIBITS_PER_PAGE,
+  MAX_EXHIBIT_SEARCH_LENGTH,
+  isValidExhibitPagination,
+  type ExhibitPageData,
+} from "../../lib/publicDataTypes";
+
+export const fetchCache = "default-no-store";
 
 type SearchParamValue = string | string[] | undefined;
 
@@ -19,23 +26,27 @@ export default async function ExhibitsPage({
 }: ExhibitsPageProps) {
   const params = (await searchParams) ?? {};
   const rawPage = Number.parseInt(getFirstValue(params.page) || "1", 10);
-  const rawSearch = getFirstValue(params.search).trim();
+  const initialSearch = getFirstValue(params.search)
+    .trim()
+    .slice(0, MAX_EXHIBIT_SEARCH_LENGTH);
   const rawSort = getFirstValue(params.sort) || "newest";
-  const initialPage = Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
+  const initialPage = isValidExhibitPagination(rawPage, EXHIBITS_PER_PAGE)
+    ? rawPage
+    : 1;
   const initialSort = ALLOWED_SORTS.has(rawSort) ? rawSort : "newest";
 
   try {
     const initialData = await getExhibitPage({
       page: initialPage,
       limit: EXHIBITS_PER_PAGE,
-      search: rawSearch,
+      search: initialSearch,
       sort: initialSort as "newest" | "oldest" | "az" | "za",
     });
 
     return (
       <ExhibitsClient
         initialData={initialData}
-        initialSearch={rawSearch}
+        initialSearch={initialSearch}
         initialSort={initialSort}
       />
     );
@@ -56,7 +67,7 @@ export default async function ExhibitsPage({
     return (
       <ExhibitsClient
         initialData={fallbackData}
-        initialSearch={rawSearch}
+        initialSearch={initialSearch}
         initialSort={initialSort}
         initialError
       />

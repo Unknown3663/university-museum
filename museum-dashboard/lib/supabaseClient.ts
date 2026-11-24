@@ -14,7 +14,9 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 // ============ SUPABASE CLIENT ============
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: { detectSessionInUrl: false },
+});
 
 if (typeof window !== "undefined") {
   const syncSessionCookie = async () => {
